@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="main_one">#24b18e</color>
+    <color name="main_two">#d9443e</color>
+    <color name="main_third">#1aabda</color>
+    <color name="main_four">#ecbb55</color>
+    
+    <color name="white_1">#f1f2f4</color>
+</resources>
