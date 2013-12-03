@@ -12,26 +12,41 @@
         android:background="@drawable/gradient_main_first_bg" >
 
         <TextView
+            android:id="@+id/tv_activity_main_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/my_apps"
+            android:shadowColor="@color/black"
+            android:shadowRadius="1"
+            android:shadowDx="1"
+            android:shadowDy="1"
             android:textColor="@color/white_1"
-            android:textSize="@dimen/dp_30" />
+            android:textSize="@dimen/dp_40" />
 
         <ImageView
-            android:layout_margin="10dp"
-            android:layout_gravity="right|top"
+            android:id="@+id/iv_activity_main_menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="right|top"
+            android:layout_margin="10dp"
             android:src="@drawable/btn_icon_menu" />
     </FrameLayout>
 
-    <LinearLayout
+<!--     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" >
+        android:layout_weight="1" > -->
 
+        <com.nathan.myapps.custom.MyFrameLayout
+            android:id="@+id/mf_activity_main_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/black"
+            android:layout_weight="1"
+            />
+
+        <!--
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -42,14 +57,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:background="@drawable/gradient_main_one_bg" >
+                android:clickable="true"
+                android:background="@drawable/bbuton_success" >
             </FrameLayout>
 
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:background="@color/main_third" >
+                android:clickable="true"
+                android:background="@drawable/bbuton_info" >
             </FrameLayout>
         </LinearLayout>
 
@@ -63,16 +80,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:background="@drawable/gradient_main_two_bg" >
+                android:clickable="true"
+                android:background="@drawable/bbuton_danger" >
             </FrameLayout>
 
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:background="@color/main_four" >
+                android:clickable="true"
+                android:background="@drawable/bbuton_warning" >
             </FrameLayout>
         </LinearLayout>
+        
     </LinearLayout>
-
+-->
 </LinearLayout>

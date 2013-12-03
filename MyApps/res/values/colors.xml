@@ -1,9 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    
+    <color name="backgroundColor_at">#ffe8e8e0</color>
+    <color name="backgroundColorPress_at">#ffdbdbd3</color>
+    <color name="videoListItemContentColor_at">#ff909090</color>
+    <color name="black">#ff000000</color>
+    
     <color name="main_one">#24b18e</color>
     <color name="main_two">#d9443e</color>
     <color name="main_third">#1aabda</color>
     <color name="main_four">#ecbb55</color>
-    
     <color name="white_1">#f1f2f4</color>
+    
+    <color name="bbutton_danger">#ffd9534f</color>
+    <color name="bbutton_danger_edge">#ffd43f3a</color>
+    <color name="bbutton_danger_pressed">#ffd2322d</color>
+    <color name="bbutton_danger_pressed_edge">#ffac2925</color>
+    <color name="bbutton_danger_disabled">#a5d9534f</color>
+    <color name="bbutton_danger_disabled_edge">#a5d43f3a</color>
+    
+    <color name="bbutton_success">#ff24b18e</color>
+    <color name="bbutton_success_edge">#ff23a07E</color>
+    <color name="bbutton_success_pressed">#ff209B8E</color>
+    <color name="bbutton_success_pressed_edge">#ff152B3E</color>
+    <color name="bbutton_success_disabled">#a55cb85c</color>
+    <color name="bbutton_success_disabled_edge">#a54cae4c</color>
+    
+    <color name="bbutton_warning">#fff0ad4e</color>
+    <color name="bbutton_warning_edge">#ffeea236</color>
+    <color name="bbutton_warning_pressed">#ffed9c28</color>
+    <color name="bbutton_warning_pressed_edge">#ffd58512</color>
+    <color name="bbutton_warning_disabled">#a5f0ad4e</color>
+    <color name="bbutton_warning_disabled_edge">#a5eea236</color>
+    
+    <color name="bbutton_info">#ff5bc0de</color>
+    <color name="bbutton_info_edge">#ff46b8da</color>
+    <color name="bbutton_info_pressed">#ff39b3d7</color>
+    <color name="bbutton_info_pressed_edge">#ff269abc</color>
+    <color name="bbutton_info_disabled">#a55bc0de</color>
+    <color name="bbutton_info_disabled_edge">#a546b8da</color>
+
 </resources>
