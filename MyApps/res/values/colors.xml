@@ -5,6 +5,7 @@
     <color name="backgroundColorPress_at">#ffdbdbd3</color>
     <color name="videoListItemContentColor_at">#ff909090</color>
     <color name="black">#ff000000</color>
+    <color name="indicatorBlue">#ff4c9aec</color>
     
     <color name="main_one">#24b18e</color>
     <color name="main_two">#d9443e</color>

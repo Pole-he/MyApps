@@ -15,15 +15,24 @@ import com.nathan.myapps.request.RequestManager;
 import com.nathan.myapps.utils.DataHandler;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class AnimeTasteActivity extends Activity {
 
     private ListView lvVideo;
-
+    private TextView tvLoading;
+    private LayoutInflater mLayoutInflater;
+    private ViewPager mShowPager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -39,16 +48,22 @@ public class AnimeTasteActivity extends Activity {
                 .instance().getList(0), ListJson.class, VideoItem.class,
                 createMyReqSuccessListener(), createMyReqErrorListener());
         RequestManager.getRequestQueue().add(request);
-
+        
+        tvLoading.setVisibility(View.VISIBLE);
+        Animation loading = AnimationUtils.loadAnimation(this, R.anim.rotate_loading);
+        tvLoading.startAnimation(loading);
     }
 
     private void init() {
-        
+        Typeface typeFace = Typeface.createFromAsset(getAssets(), "fonts/BelshawDonutRobot.ttf");
+        // 应用字体
+        tvLoading.setTypeface(typeFace);
     }
 
     
     private void findViewById() {
         lvVideo = (ListView) this.findViewById(R.id.videoList);
+        tvLoading = (TextView) this.findViewById(R.id.loading);
     }
 
     @SuppressWarnings("rawtypes")
@@ -58,6 +73,8 @@ public class AnimeTasteActivity extends Activity {
 
             @Override
             public void onResponse(ListJson response) {
+                tvLoading.clearAnimation();
+                tvLoading.setVisibility(View.GONE);
                 @SuppressWarnings("unchecked")
                 VideoListAdapter adapter = new VideoListAdapter(AnimeTasteActivity.this,
                         (List<VideoItem>)response.list);
@@ -73,6 +90,8 @@ public class AnimeTasteActivity extends Activity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("", error.getMessage() + "");
+                tvLoading.clearAnimation();
+                tvLoading.setVisibility(View.GONE);
             }
         };
     }
