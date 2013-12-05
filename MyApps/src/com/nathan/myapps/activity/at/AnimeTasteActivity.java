@@ -1,4 +1,4 @@
-package com.nathan.myapps.activity;
+package com.nathan.myapps.activity.at;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -21,16 +21,10 @@ import com.nathan.myapps.custom.FixedSpeedScroller;
 import com.nathan.myapps.request.GsonRequest;
 import com.nathan.myapps.request.RequestManager;
 import com.nathan.myapps.utils.DataHandler;
-import com.viewpagerindicator.PageIndicator;
 import com.viewpagerindicator.UnderlinePageIndicator;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.PointF;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -44,8 +38,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.View.OnTouchListener;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
@@ -58,7 +52,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class AnimeTasteActivity extends ActionBarActivity implements OnScrollListener {
+public class AnimeTasteActivity extends ActionBarActivity implements OnScrollListener,OnClickListener {
 
     private ListView lvVideo;
     private TextView tvLoading;
@@ -82,12 +76,10 @@ public class AnimeTasteActivity extends ActionBarActivity implements OnScrollLis
     private Timer timer;
 
     private static boolean isSleep = true;
-
     /**
      * 设置viewpager的初始页面
      */
     private static final int initPositon = 50000;
-
     /**
      * viewpager的当前页面
      */
@@ -101,6 +93,8 @@ public class AnimeTasteActivity extends ActionBarActivity implements OnScrollLis
         setContentView(R.layout.at_activity_start);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setBackgroundDrawable(
+                getResources().getDrawable(R.drawable.bbuton_info));
         findViewById();
         init();
         getData(mCurrentPage);
@@ -227,10 +221,10 @@ public class AnimeTasteActivity extends ActionBarActivity implements OnScrollLis
                             isReversible = false;
                         }
                         if (isReversible) {
-                            currentPosition++;
+                            ++currentPosition;
                         }
                         else {
-                            currentPosition--;
+                            --currentPosition;
                         }
                         mHandler.sendEmptyMessage(0);
                         sleep(4000);
@@ -250,6 +244,8 @@ public class AnimeTasteActivity extends ActionBarActivity implements OnScrollLis
             FadeInNetworkImageView mImageView = new FadeInNetworkImageView(this);
             mImageView.setLayoutParams(mParams);
             mImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            mImageView.setTag(list.get(i));
+            mImageView.setOnClickListener(this);
             mImageView.setImageUrl(list.get(i).DetailPic, MyApplication.getInstance().mImageLoader);
             mViews.add(mImageView);
         }
@@ -355,7 +351,7 @@ public class AnimeTasteActivity extends ActionBarActivity implements OnScrollLis
     }
 
     public boolean onCreateOptionsMenu(Menu paramMenu) {
-        getMenuInflater().inflate(R.menu.start, paramMenu);
+        getMenuInflater().inflate(R.menu.at_start, paramMenu);
         return true;
     }
 
@@ -380,5 +376,12 @@ public class AnimeTasteActivity extends ActionBarActivity implements OnScrollLis
         }
         return super.onOptionsItemSelected(paramMenuItem);
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(this, AnimeTasteDetailActivity.class);
+        intent.putExtra("VideoItem", (VideoItem)v.getTag());
+        startActivity(intent);
     }
 }

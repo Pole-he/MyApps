@@ -1,26 +1,17 @@
 package com.nathan.myapps.activity;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.Request.Method;
-import com.android.volley.Response.Listener;
+
 import com.nathan.myapps.R;
-import com.nathan.myapps.bean.at.ListJson;
-import com.nathan.myapps.bean.at.VideoItem;
+import com.nathan.myapps.activity.at.AnimeTasteActivity;
 import com.nathan.myapps.custom.MyFrameLayout;
-import com.nathan.myapps.request.GsonRequest;
-import com.nathan.myapps.request.RequestManager;
-import com.nathan.myapps.utils.DataHandler;
 
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.animation.AnimationSet;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;

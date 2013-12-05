@@ -31,12 +31,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.nathan.myapps.activity.VideoViewPlayingActivity"
+            android:name="com.nathan.myapps.activity.at.VideoViewPlayingActivity"
             android:configChanges="keyboardHidden|orientation"
             android:exported="true"
             android:label="PlayingActivity"
-            android:screenOrientation="landscape"
-            >
+            android:screenOrientation="landscape" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -45,11 +44,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.nathan.myapps.activity.AnimeTasteActivity"
+            android:name="com.nathan.myapps.activity.at.AnimeTasteActivityity"
             android:logo="@drawable/ab_icon"
-            android:label="MYAPPS"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name="com.nathan.myapps.activity.at.AnimeTasteDetailActivityity"
+            android:logo="@drawable/ab_icon"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
     </application>
 
 </manifest>

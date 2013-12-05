@@ -6,7 +6,8 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.ImageLoader.ImageListener;
 import com.nathan.myapps.MyApplication;
 import com.nathan.myapps.R;
-import com.nathan.myapps.activity.VideoViewPlayingActivity;
+import com.nathan.myapps.activity.at.AnimeTasteDetailActivity;
+import com.nathan.myapps.activity.at.VideoViewPlayingActivity;
 import com.nathan.myapps.bean.at.VideoItem;
 import com.nathan.myapps.custom.FadeInNetworkImageView;
 import com.nathan.myapps.utils.VideoUtils;
@@ -88,10 +89,13 @@ public class VideoListAdapter extends BaseAdapter {
 
         @Override
         public void onClick(View v) {
-            String source = ((VideoItem)((ViewHolder)v.getTag()).iv_pic.getTag()).VideoUrl;
-            Intent intent = new Intent(mContext, VideoViewPlayingActivity.class);
-            intent.setData(Uri.parse(VideoUtils.getHDVideoUrl(source)));
-            mContext.startActivity(intent);
+//            String source = ((VideoItem)((ViewHolder)v.getTag()).iv_pic.getTag()).VideoUrl;
+//            Intent intent = new Intent(mContext, VideoViewPlayingActivity.class);
+//            intent.setData(Uri.parse(VideoUtils.getHDVideoUrl(source)));
+//            mContext.startActivity(intent);
+          Intent intent = new Intent(mContext, AnimeTasteDetailActivity.class);
+          intent.putExtra("VideoItem", (VideoItem)((ViewHolder)v.getTag()).iv_pic.getTag());
+          mContext.startActivity(intent);
 
         }
     };

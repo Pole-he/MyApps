@@ -7,5 +7,6 @@
     <string name="my_apps">MY APPS</string>
     
     <string name="loading_anim">LOADING&#8230;</string>
-
+    <string name="write_someting">写下你的感想……</string>
+    <string name="recommend">相关推荐</string>
 </resources>

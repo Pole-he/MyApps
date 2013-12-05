@@ -1,4 +1,4 @@
-﻿package com.nathan.myapps.activity;
+﻿package com.nathan.myapps.activity.at;
 
 import com.baidu.cyberplayer.core.BMediaController;
 import com.baidu.cyberplayer.core.BVideoView;

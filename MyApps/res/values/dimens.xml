@@ -8,5 +8,14 @@
     <dimen name="placehold_thumb_height">65.0dip</dimen>
     <dimen name="video_list_content">13.0sp</dimen>
     <dimen name="video_list_title">17.0sp</dimen>
-
+    <dimen name="player_height">200.0dip</dimen>
+    <dimen name="play_outer_content_padding">13.0dip</dimen>
+    <dimen name="play_inner_content_padding">15.0dip</dimen>
+    <dimen name="play_innser_recommend_margin_top">10.0dip</dimen>
+    <dimen name="play_inner_recommend_padding_top">8.0dip</dimen>
+    <dimen name="play_title_size">26.0sp</dimen>
+    <dimen name="play_content_size">15.0sp</dimen>
+    <dimen name="play_author_size">20.0sp</dimen>
+    <dimen name="play_content_part_margin">16.0dip</dimen>
+    <dimen name="seprate_line">1.0px</dimen>
 </resources>

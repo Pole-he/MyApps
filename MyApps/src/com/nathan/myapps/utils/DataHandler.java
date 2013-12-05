@@ -56,4 +56,22 @@ public class DataHandler {
                 .format("http://i.animetaste.net/api/animelist_v2/?api_key=%s&timestamp=%d&page=%d&access_token=%s",
                         arrayOfObject);
     }
+    
+    
+    public String getRandom(int paramInt)
+    {
+      long l = System.currentTimeMillis() / 1000L;
+      TreeMap<String, String> localTreeMap = new TreeMap<String, String>();
+      localTreeMap.put("api_key", "ios");
+      localTreeMap.put("timestamp", String.valueOf(l));
+      localTreeMap.put("order", "random");
+      localTreeMap.put("limit", String.valueOf(paramInt));
+      String str = ApiUtils.getAccessToken(localTreeMap, "8ce32e9a0072037578899a53e155441f");
+      Object[] arrayOfObject = new Object[4];
+      arrayOfObject[0] = "ios";
+      arrayOfObject[1] = Long.valueOf(l);
+      arrayOfObject[2] = Integer.valueOf(paramInt);
+      arrayOfObject[3] = str;
+      return String.format("http://i.animetaste.net/api/animelist_v3/?api_key=%s&timestamp=%d&order=random&limit=%d&access_token=%s", arrayOfObject);
+    }
 }

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
+    <color name="videoListItemContentColor">#ff909090</color>
+    <color name="divide_line">#ffe4e4e4</color>
+    <color name="textColor">#ff909090</color>
     <color name="backgroundColor_at">#ffe8e8e0</color>
     <color name="backgroundColorPress_at">#ffdbdbd3</color>
     <color name="videoListItemContentColor_at">#ff909090</color>
