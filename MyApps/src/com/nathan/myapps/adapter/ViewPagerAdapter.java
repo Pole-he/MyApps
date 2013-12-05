@@ -27,6 +27,11 @@ public class ViewPagerAdapter extends PagerAdapter
     {
         this.mViews = mViews;
     }
+    
+    public int getRealCount()
+    {
+        return mViews.size();
+    }
     /**
      * 获取当前页面数
      */
@@ -34,7 +39,8 @@ public class ViewPagerAdapter extends PagerAdapter
     public int getCount()
     {
        // Log.v(TAG, "getCount" + mViews.size());
-        return Integer.MAX_VALUE;
+        //return Integer.MAX_VALUE;
+        return mViews.size();
     }
     
     @Override
@@ -50,10 +56,12 @@ public class ViewPagerAdapter extends PagerAdapter
     @Override
     public Object instantiateItem(ViewGroup container, int position)
     {
-        Log.v(TAG, "instantiateItem" + position);
-    
+        Log.e(TAG, "instantiateItem" + position);
         position = position % mViews.size();
+
+        if(mViews.get(position).getParent() ==null)
         container.addView(mViews.get(position), 0);
+        
         return mViews.get(position);
         
     }
@@ -63,9 +71,9 @@ public class ViewPagerAdapter extends PagerAdapter
     @Override
     public void destroyItem(ViewGroup container, int position, Object object)
     {
-        Log.v(TAG, "destroyItem" + position);
-        position = position % mViews.size();
-        container.removeView(mViews.get(position));        
+        Log.e(TAG, "destroyItem" + position);
+//        position = position % mViews.size();
+//        container.removeView(mViews.get(position));        
     }  
 
 }

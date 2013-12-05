@@ -11,13 +11,13 @@
         android:layout_width="fill_parent"
         android:layout_height="198.0dip" />
 
-<!--     <com.viewpagerindicator.UnderlinePageIndicator
+    <com.viewpagerindicator.UnderlinePageIndicator
         android:id="@+id/indicator"
         android:layout_width="fill_parent"
         android:layout_height="2.0dip"
         android:background="#ffcccccc"
         app:fadeDelay="1000"
         app:fadeLength="1000"
-        app:selectedColor="@color/indicatorBlue" /> -->
+        app:selectedColor="@color/indicatorBlue" />
 
 </LinearLayout>

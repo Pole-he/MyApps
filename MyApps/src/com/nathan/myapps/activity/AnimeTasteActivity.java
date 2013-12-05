@@ -1,69 +1,150 @@
 package com.nathan.myapps.activity;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.Request.Method;
 import com.android.volley.Response.Listener;
+import com.nathan.myapps.MyApplication;
 import com.nathan.myapps.R;
 import com.nathan.myapps.adapter.VideoListAdapter;
+import com.nathan.myapps.adapter.ViewPagerAdapter;
 import com.nathan.myapps.bean.at.ListJson;
 import com.nathan.myapps.bean.at.VideoItem;
+import com.nathan.myapps.custom.FadeInNetworkImageView;
+import com.nathan.myapps.custom.FixedSpeedScroller;
 import com.nathan.myapps.request.GsonRequest;
 import com.nathan.myapps.request.RequestManager;
 import com.nathan.myapps.utils.DataHandler;
+import com.viewpagerindicator.PageIndicator;
+import com.viewpagerindicator.UnderlinePageIndicator;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.PointF;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
+import android.view.View.OnTouchListener;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class AnimeTasteActivity extends Activity {
+public class AnimeTasteActivity extends Activity implements OnScrollListener {
 
     private ListView lvVideo;
     private TextView tvLoading;
     private LayoutInflater mLayoutInflater;
+    private UnderlinePageIndicator mShowIndicator;
     private ViewPager mShowPager;
+    private Boolean mUpdating = true;// 防止多次加载
+    private int mCurrentPage = 0;
+    private VideoListAdapter mVideoListAdapter;
+    private List<VideoItem> listVideo = new ArrayList<VideoItem>();
+    private FrameLayout flLoading;
+
+    private boolean isReversible = true;
+    /**
+     * 记录当前自动滑动的状态，true就滑动，false停止滑动
+     */
+    private boolean isContinue = true;
+
+    private Handler mHandler;
+
+    private Timer timer;
+
+    private static boolean isSleep = true;
+
+    /**
+     * 设置viewpager的初始页面
+     */
+    private static final int initPositon = 50000;
+
+    /**
+     * viewpager的当前页面
+     */
+    private static int currentPosition = 0;
+
+    @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+       // requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fav);
+        getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.bbuton_info));
+        
         findViewById();
         init();
-        getData();
+        getData(mCurrentPage);
     }
 
-    private void getData() {
+    private void getData(int mCurrentPage) {
         GsonRequest<ListJson> request = new GsonRequest<ListJson>(Method.GET, DataHandler
-                .instance().getList(0), ListJson.class, VideoItem.class,
+                .instance().getList(mCurrentPage), ListJson.class, VideoItem.class,
                 createMyReqSuccessListener(), createMyReqErrorListener());
         RequestManager.getRequestQueue().add(request);
-        
         tvLoading.setVisibility(View.VISIBLE);
+        flLoading.setVisibility(View.VISIBLE);
         Animation loading = AnimationUtils.loadAnimation(this, R.anim.rotate_loading);
         tvLoading.startAnimation(loading);
     }
 
     private void init() {
+        mVideoListAdapter = new VideoListAdapter(AnimeTasteActivity.this, listVideo);
+        lvVideo.setAdapter(mVideoListAdapter);
+
         Typeface typeFace = Typeface.createFromAsset(getAssets(), "fonts/BelshawDonutRobot.ttf");
         // 应用字体
         tvLoading.setTypeface(typeFace);
+
+        try {
+            Field mField = ViewPager.class.getDeclaredField("mScroller");
+            mField.setAccessible(true);
+            FixedSpeedScroller mScroller = new FixedSpeedScroller(mShowPager.getContext(),
+                    new AccelerateInterpolator());
+            // 可以用setDuration的方式调整速率
+            // mScroller.setmDuration(10000);
+            mField.set(mShowPager, mScroller);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    
     private void findViewById() {
         lvVideo = (ListView) this.findViewById(R.id.videoList);
         tvLoading = (TextView) this.findViewById(R.id.loading);
+        flLoading = (FrameLayout) this.findViewById(R.id.loading_layout);
+        mLayoutInflater = LayoutInflater.from(this);
+        this.lvVideo.setOnScrollListener(this);
+        View localView = this.mLayoutInflater.inflate(R.layout.gallery_item, null, false);
+        this.lvVideo.addHeaderView(localView);
+        this.mShowPager = ((ViewPager) localView.findViewById(R.id.pager));
+        this.mShowIndicator = ((UnderlinePageIndicator) localView.findViewById(R.id.indicator));
     }
 
     @SuppressWarnings("rawtypes")
@@ -71,14 +152,34 @@ public class AnimeTasteActivity extends Activity {
         return new Listener<ListJson>()
         {
 
+            @SuppressWarnings("unchecked")
             @Override
             public void onResponse(ListJson response) {
+                mUpdating = false;
                 tvLoading.clearAnimation();
                 tvLoading.setVisibility(View.GONE);
-                @SuppressWarnings("unchecked")
-                VideoListAdapter adapter = new VideoListAdapter(AnimeTasteActivity.this,
-                        (List<VideoItem>)response.list);
-                lvVideo.setAdapter(adapter);
+                flLoading.setVisibility(View.GONE);
+                if (mCurrentPage == 0) {
+                    listVideo.addAll((List<VideoItem>) response.list);
+                    mVideoListAdapter.notifyDataSetChanged();
+
+                    ViewPagerAdapter mVpAdapter = new ViewPagerAdapter(
+                            getViewPager((List<VideoItem>) response.feature));
+                    mShowPager.setAdapter(mVpAdapter);
+                    // mShowPager.setCurrentItem(initPositon);
+                    // mShowPager.setOnPageChangeListener(new
+                    // MyPageChangeListener());
+                    mShowPager.setOnTouchListener(new MyTouchListener());
+                    // mShowIndicator.setCount(response.feature.size());
+                    startTimer(response.feature.size());
+                    mShowIndicator.setOnPageChangeListener(new MyPageChangeListener());
+                    mShowIndicator.setViewPager(mShowPager);
+                    mShowIndicator.setFades(false);
+                }
+                else {
+                    listVideo.addAll((List<VideoItem>) response.list);
+                    mVideoListAdapter.notifyDataSetChanged();
+                }
             }
         };
     }
@@ -90,9 +191,162 @@ public class AnimeTasteActivity extends Activity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("", error.getMessage() + "");
+                mUpdating = false;
                 tvLoading.clearAnimation();
                 tvLoading.setVisibility(View.GONE);
+                flLoading.setVisibility(View.GONE);
             }
         };
+    }
+
+    private void startTimer(final int count) {
+        // Handler对象更新UI
+        mHandler = new Handler()
+        {
+
+            public void handleMessage(Message msg) {
+                mShowPager.setCurrentItem(currentPosition);
+            }
+        };
+        // 启动线程，监控是否要自动滑动
+        timer = new Timer();
+        timer.schedule(new TimerTask()
+        {
+
+            public void run() {
+                while (true) {
+                    if (isContinue) {
+                        if (currentPosition == 0) {
+                            isReversible = true;
+                        }
+                        if (currentPosition == count-1) {
+                            isReversible = false;
+                        }
+                        if (isReversible) {
+                            currentPosition++;
+                        }
+                        else {
+                            currentPosition--;
+                        }
+                        mHandler.sendEmptyMessage(0);
+                        sleep(4000);
+                    }
+                }
+            }
+        }, 4000);
+    }
+
+    // 为ViewPager添加图片
+    private List<View> getViewPager(List<VideoItem> list) {
+        List<View> mViews = new ArrayList<View>();
+
+        LinearLayout.LayoutParams mParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        for (int i = 0; i < list.size(); i++) {
+            FadeInNetworkImageView mImageView = new FadeInNetworkImageView(this);
+            mImageView.setLayoutParams(mParams);
+            mImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            mImageView.setImageUrl(list.get(i).DetailPic, MyApplication.getInstance().mImageLoader);
+            mViews.add(mImageView);
+        }
+        return mViews;
+    }
+
+    @Override
+    public void onScroll(AbsListView paramAbsListView, int paramInt1, int paramInt2, int paramInt3) {
+        if ((!mUpdating) && (paramInt3 != 0)
+                && (paramAbsListView.getLastVisiblePosition() == paramInt3 - 1)) {
+            mUpdating = true;
+            mCurrentPage = mCurrentPage + 1;
+            getData(mCurrentPage);
+        }
+
+    }
+
+    @Override
+    public void onScrollStateChanged(AbsListView arg0, int arg1) {
+        // TODO Auto-generated method stub
+
+    }
+
+    /**
+     * viewpager页面变化的监听器
+     * 
+     * @author user
+     * 
+     */
+    class MyPageChangeListener implements OnPageChangeListener {
+
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            Log.e("", position + "");
+            currentPosition = position;
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+            // TODO Auto-generated method stub
+
+        }
+
+    }
+
+    /**
+     * 监听手势监听器
+     * 
+     * @author user
+     * 
+     */
+    class MyTouchListener implements OnTouchListener {
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+
+            // PointF localPointF1 = new PointF();
+            // PointF localPointF2 = new PointF();
+            // int i = event.getAction();
+            // if ((i == 0) || (i == 2) || (i == 1)) {
+            // ((ViewGroup) v).requestDisallowInterceptTouchEvent(true);
+            // if ((localPointF1.x != localPointF2.x) || (localPointF1.y !=
+            // localPointF2.y))
+            // ;
+            // }
+
+            switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_MOVE:
+                isContinue = false;
+                ((ViewGroup) v).requestDisallowInterceptTouchEvent(true);
+                break;
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                ((ViewGroup) v).requestDisallowInterceptTouchEvent(false);
+
+            default:
+                isContinue = true;
+                isSleep = true;
+                break;
+            }
+            return false;
+        }
+
+    }
+
+    /**
+     * 设置线程间隔
+     */
+    private void sleep(long time) {
+        try {
+            Thread.sleep(time);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -9,6 +9,7 @@ import android.graphics.drawable.TransitionDrawable;
 import android.util.AttributeSet;
 
 import com.android.volley.toolbox.NetworkImageView;
+import com.nathan.myapps.R;
 
 
 public class FadeInNetworkImageView extends NetworkImageView {
@@ -17,24 +18,33 @@ public class FadeInNetworkImageView extends NetworkImageView {
  
     public FadeInNetworkImageView(Context context) {
         super(context);
+        init();
     }
  
     public FadeInNetworkImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init();
     }
  
     public FadeInNetworkImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        init();
+    }
+    
+    private void init()
+    {
+        setDefaultImageResId(R.drawable.placeholder_thumb);
+        setErrorImageResId(R.drawable.placeholder_fail);
     }
  
-    @Override
-    public void setImageBitmap(Bitmap bm) {
-        TransitionDrawable td = new TransitionDrawable(new Drawable[]{
-                new ColorDrawable(android.R.color.transparent),
-                new BitmapDrawable(getContext().getResources(), bm)
-        });
- 
-        setImageDrawable(td);
-        td.startTransition(FADE_IN_TIME_MS);
-    }
+//    @Override
+//    public void setImageBitmap(Bitmap bm) {
+//        TransitionDrawable td = new TransitionDrawable(new Drawable[]{
+//                new ColorDrawable(android.R.color.transparent),
+//                new BitmapDrawable(getContext().getResources(), bm)
+//        });
+// 
+//        setImageDrawable(td);
+//        td.startTransition(FADE_IN_TIME_MS);
+//    }
 }

@@ -72,8 +72,6 @@ public class VideoListAdapter extends BaseAdapter {
         // R.drawable.placeholder_thumb, R.drawable.placeholder_fail);
         // MyApplication.getInstance().mImageLoader.get(video.HomePic,
         // listener);
-        viewHolder.iv_pic.setDefaultImageResId(R.drawable.placeholder_thumb);
-        viewHolder.iv_pic.setErrorImageResId(R.drawable.placeholder_fail);
         viewHolder.iv_pic.setImageUrl(video.HomePic, MyApplication.getInstance().mImageLoader);
         viewHolder.iv_pic.setTag(video);
         
