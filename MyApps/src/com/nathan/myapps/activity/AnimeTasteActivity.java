@@ -26,6 +26,7 @@ import com.viewpagerindicator.UnderlinePageIndicator;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -36,8 +37,11 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,7 +58,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class AnimeTasteActivity extends Activity implements OnScrollListener {
+public class AnimeTasteActivity extends ActionBarActivity implements OnScrollListener {
 
     private ListView lvVideo;
     private TextView tvLoading;
@@ -92,11 +96,11 @@ public class AnimeTasteActivity extends Activity implements OnScrollListener {
     @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-       // requestWindowFeature(Window.FEATURE_NO_TITLE);
+        // requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fav);
-        getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.bbuton_info));
-        
+        setContentView(R.layout.at_activity_start);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         findViewById();
         init();
         getData(mCurrentPage);
@@ -141,7 +145,7 @@ public class AnimeTasteActivity extends Activity implements OnScrollListener {
         flLoading = (FrameLayout) this.findViewById(R.id.loading_layout);
         mLayoutInflater = LayoutInflater.from(this);
         this.lvVideo.setOnScrollListener(this);
-        View localView = this.mLayoutInflater.inflate(R.layout.gallery_item, null, false);
+        View localView = this.mLayoutInflater.inflate(R.layout.at_gallery_item, null, false);
         this.lvVideo.addHeaderView(localView);
         this.mShowPager = ((ViewPager) localView.findViewById(R.id.pager));
         this.mShowIndicator = ((UnderlinePageIndicator) localView.findViewById(R.id.indicator));
@@ -219,7 +223,7 @@ public class AnimeTasteActivity extends Activity implements OnScrollListener {
                         if (currentPosition == 0) {
                             isReversible = true;
                         }
-                        if (currentPosition == count-1) {
+                        if (currentPosition == count - 1) {
                             isReversible = false;
                         }
                         if (isReversible) {
@@ -348,5 +352,33 @@ public class AnimeTasteActivity extends Activity implements OnScrollListener {
         catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean onCreateOptionsMenu(Menu paramMenu) {
+        getMenuInflater().inflate(R.menu.start, paramMenu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem paramMenuItem) {
+
+        // boolean bool = true;
+        // if (paramMenuItem.getItemId() == 2131034241)
+        // //startActivity(new Intent(this.mContext, SettingActivity.class));
+        // while (true)
+        // {
+        // return bool;
+        // if (paramMenuItem.getItemId() == 2131034239)
+        // {
+        // startActivity(new Intent(this.mContext, FavActivity.class));
+        // continue;
+        // }
+
+        switch (paramMenuItem.getItemId()) {
+        case android.R.id.home:
+            finish();
+            break;
+        }
+        return super.onOptionsItemSelected(paramMenuItem);
+
     }
 }

@@ -46,6 +46,8 @@
         </activity>
         <activity
             android:name="com.nathan.myapps.activity.AnimeTasteActivity"
+            android:logo="@drawable/ab_icon"
+            android:label="MYAPPS"
             android:screenOrientation="portrait" >
         </activity>
     </application>

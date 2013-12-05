@@ -1,20 +1,18 @@
 <resources>
 
-    <!--
-        Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
-    -->
-    <style name="AppBaseTheme" parent="android:Theme.Light">
-        <!--
-            Theme customizations available in newer API levels can go in
-            res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
-        -->
+    <style name="AppBaseTheme" parent="@style/Theme.AppCompat" />
+
+    <style name="AppTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+        <item name="switchStyle">@style/Widget.Holo.Light.CompoundButton.Switch</item>
     </style>
 
-    <!-- Application theme. -->
-    <style name="AppTheme" parent="AppBaseTheme">
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    <style name="Widget.Holo.Light.CompoundButton.Switch" parent="@android:style/Widget.CompoundButton">
+        <item name="thumb">@drawable/switch_inner_holo_light</item>
+        <item name="track">@drawable/switch_track_holo_light</item>
+        <item name="thumbTextPadding">12.0dip</item>
+        <item name="switchTextAppearance">@android:style/TextAppearance.Small</item>
+        <item name="switchMinWidth">96.0dip</item>
+        <item name="switchPadding">16.0dip</item>
     </style>
 
 </resources>

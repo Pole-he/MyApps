@@ -55,7 +55,7 @@ public class VideoListAdapter extends BaseAdapter {
     public View getView(int i, View convertView, ViewGroup viewgroup) {
         final ViewHolder viewHolder;
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.video_item, null);
+            convertView = mInflater.inflate(R.layout.at_video_item, null);
             viewHolder = new ViewHolder();
             viewHolder.iv_pic = (FadeInNetworkImageView) convertView.findViewById(R.id.thumb);
             viewHolder.tv_title = (TextView) convertView.findViewById(R.id.title);

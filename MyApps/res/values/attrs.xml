@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="gif" format="reference" />
+    <attr name="paused" format="boolean" />
+    <attr name="gifMoviewViewStyle" format="reference" />
+    <attr name="summaryOn" format="reference" />
+    <attr name="summaryOff" format="reference" />
+    <attr name="switchTextOn" format="reference" />
+    <attr name="switchTextOff" format="reference" />
+    <attr name="disableDependentsState" format="boolean" />
+    <attr name="thumb" format="reference" />
+    <attr name="track" format="reference" />
+    <attr name="textOn" format="reference" />
+    <attr name="textOff" format="reference" />
+    <attr name="thumbTextPadding" format="dimension" />
+    <attr name="switchTextAppearance" format="reference" />
+    <attr name="switchMinWidth" format="dimension" />
+    <attr name="switchPadding" format="dimension" />
+    <attr name="switchStyle" format="reference" />
+    <attr name="switchPreferenceStyle" format="reference" />
+
+</resources>
