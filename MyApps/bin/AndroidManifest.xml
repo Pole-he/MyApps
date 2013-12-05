@@ -44,12 +44,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.nathan.myapps.activity.at.AnimeTasteActivityity"
+            android:name="com.nathan.myapps.activity.at.AnimeTasteActivity"
             android:logo="@drawable/ab_icon"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.nathan.myapps.activity.at.AnimeTasteDetailActivityity"
+            android:name="com.nathan.myapps.activity.at.AnimeTasteDetailActivity"
             android:logo="@drawable/ab_icon"
             android:configChanges="keyboardHidden|orientation|screenSize" />
     </application>
