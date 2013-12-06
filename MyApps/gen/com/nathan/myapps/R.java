@@ -2977,7 +2977,6 @@ containing a value of this type.
         public static final int left=0x7f05002a;
         public static final int left_icon=0x7f050060;
         public static final int listMode=0x7f050006;
-        public static final int list_ablum=0x7f050072;
         public static final int list_item=0x7f050056;
         public static final int loading=0x7f050085;
         public static final int loading_layout=0x7f050084;
@@ -3033,6 +3032,7 @@ containing a value of this type.
         public static final int singleChoice=0x7f050044;
         public static final int software=0x7f05002c;
         public static final int split_action_bar=0x7f05004b;
+        public static final int staggeredGridView1=0x7f050072;
         public static final int submit_area=0x7f05006e;
         public static final int tabMode=0x7f050007;
         public static final int textEnd=0x7f050036;

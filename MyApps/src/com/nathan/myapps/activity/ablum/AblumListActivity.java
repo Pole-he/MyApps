@@ -7,7 +7,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.Response.Listener;
 import com.nathan.myapps.R;
-import com.nathan.myapps.adapter.StaggeredAdapter;
+import com.nathan.myapps.adapter.WaterFallAdapter;
 import com.nathan.myapps.adapter.WaterFallAdapter;
 import com.nathan.myapps.bean.ablum.PicItem;
 import com.nathan.myapps.bean.ablum.PicListJson;
@@ -17,6 +17,7 @@ import com.nathan.myapps.request.HttpVolleyRequest;
 import com.nathan.myapps.utils.DataHandler;
 import com.nathan.myapps.utils.Logger;
 
+import com.nathan.myapps.widget.gridview.StaggeredGridView;
 import com.nathan.myapps.widget.waterfall.MultiColumnListView.OnLoadMoreListener;
 import com.nathan.myapps.widget.waterfall.MultiColumnPTRListView;
 import com.nathan.myapps.widget.waterfall.MultiColumnPTRListView.OnRefreshListener;
@@ -30,10 +31,9 @@ public class AblumListActivity extends ActionBarActivity {
     // private MultiColumnPTRListView mMCLVEvent;
 
     private List<PicItem> mPicList = new ArrayList<PicItem>();
-    private StaggeredAdapter adapter;
+    private WaterFallAdapter adapter;
     private int mCurrentPage = 0;
-
-    private ListView listView;
+    private StaggeredGridView gridView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,17 +60,24 @@ public class AblumListActivity extends ActionBarActivity {
 
     private void init() {
 
+        int margin = getResources().getDimensionPixelSize(R.dimen.play_innser_recommend_margin_top);
 
-        adapter = new StaggeredAdapter(this, mPicList);
+        gridView.setItemMargin(margin); // set the GridView margin
 
-        listView.setAdapter(adapter);
+        gridView.setPadding(margin, 0, margin, 0); // have the margin on the
+                                                   // sides as well
+
+        adapter = new WaterFallAdapter(this, mPicList);
+
+        gridView.setAdapter(adapter);
+
         
     }
 
     private void findViewById() {
         // mMCLVEvent = (MultiColumnPTRListView)
         // this.findViewById(R.id.mclv_theme_waterfall);
-        listView = (ListView) this.findViewById(R.id.list_ablum);
+        gridView = (StaggeredGridView) this.findViewById(R.id.staggeredGridView1);
     }
 
     private OnRefreshListener mOnRefreshListener = new OnRefreshListener()

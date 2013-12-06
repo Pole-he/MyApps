@@ -75,16 +75,16 @@ public class StaggeredAdapter extends BaseAdapter {
         // MyApplication.getInstance().mImageLoader.get(pic.picture_small_url,
         // listener);
         
-        holder.imageView.getViewTreeObserver().addOnPreDrawListener(new OnPreDrawListener()
-        {
-            
-            @Override
-            public boolean onPreDraw() {
-                holder.imageView.setImageUrl(pic.picture_small_url,
-                        MyApplication.getInstance().mImageLoader);
-                return true;
-            }
-        });
+//        holder.imageView.getViewTreeObserver().addOnPreDrawListener(new OnPreDrawListener()
+//        {
+//            
+//            @Override
+//            public boolean onPreDraw() {
+//                holder.imageView.setImageUrl(pic.picture_small_url,
+//                        MyApplication.getInstance().mImageLoader);
+//                return true;
+//            }
+//        });
 
         holder.imageView.setTag(pic);
         holder.imageView.setOnClickListener(mClickListener);

@@ -66,7 +66,7 @@ public class MainActivity extends Activity implements OnClickListener {
             mfLayout.startAnimationChild();
             break;
         case 1:
-            startActivity(new Intent(MainActivity.this,AblumMainActivity.class));
+            startActivity(new Intent(MainActivity.this,AblumListActivity.class));
             break;
         case 2:
             break;

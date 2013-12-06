@@ -2,18 +2,24 @@ package com.nathan.myapps.adapter;
 
 import java.util.List;
 
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.ImageLoader.ImageListener;
 import com.nathan.myapps.MyApplication;
 import com.nathan.myapps.R;
 import com.nathan.myapps.bean.ablum.PicItem;
-
 import com.nathan.myapps.utils.Logger;
-import com.nathan.myapps.widget.FadeInNetworkImageView;
+import com.nathan.myapps.widget.AtNetworkImageView;
+import com.nathan.myapps.widget.ScaleImageView;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver.OnPreDrawListener;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 
 public class WaterFallAdapter extends BaseAdapter {
@@ -25,7 +31,6 @@ public class WaterFallAdapter extends BaseAdapter {
     public WaterFallAdapter(Context context, List<PicItem> list) {
         this.mContext = context;
         this.list = list;
-        Logger.e("", list.size()+"///");
         mInflater = LayoutInflater.from(mContext);
     }
 
@@ -48,38 +53,54 @@ public class WaterFallAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View convertView, ViewGroup viewgroup) {
-        final ViewHolder viewHolder;
+    public View getView(int position, View convertView, ViewGroup parent) {
+
+        final ViewHolder holder;
+
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.ablum_item, null);
-            viewHolder = new ViewHolder();
-            viewHolder.iv_pic = (FadeInNetworkImageView) convertView.findViewById(R.id.fade_pic);
-            convertView.setTag(viewHolder);
+            convertView = mInflater.inflate(R.layout.row_staggered_demo, null);
+            holder = new ViewHolder();
+            holder.imageView = (ScaleImageView) convertView.findViewById(R.id.imageView1);
+            convertView.setTag(holder);
         }
         else {
-            viewHolder = (ViewHolder) convertView.getTag();
+            holder = (ViewHolder) convertView.getTag();
         }
 
-        PicItem pic = list.get(i);
-        viewHolder.iv_pic.setImageUrl(pic.picture_small_url,
-                MyApplication.getInstance().mImageLoader);
-        viewHolder.iv_pic.setTag(pic);
-        viewHolder.iv_pic.setOnClickListener(mOnClickListener);
+        final PicItem pic = list.get(position);
+
+        ImageListener listener = ImageLoader.getImageListener(holder.imageView,
+                R.drawable.placeholder_thumb, R.drawable.placeholder_fail);
+        MyApplication.getInstance().mImageLoader.get(pic.picture_small_url, listener);
+
+        // holder.imageView.getViewTreeObserver().addOnPreDrawListener(new
+        // OnPreDrawListener()
+        // {
+        //
+        // @Override
+        // public boolean onPreDraw() {
+        // holder.imageView.setImageUrl(pic.picture_small_url,
+        // MyApplication.getInstance().mImageLoader);
+        // return true;
+        // }
+        // });
+
+        holder.imageView.setTag(pic);
+        holder.imageView.setOnClickListener(mClickListener);
         return convertView;
     }
 
-    private OnClickListener mOnClickListener = new OnClickListener()
+    private OnClickListener mClickListener = new OnClickListener()
     {
 
         @Override
-        public void onClick(View arg0) {
-            // TODO Auto-generated method stub
+        public void onClick(View v) {
 
         }
     };
 
     static class ViewHolder {
 
-        FadeInNetworkImageView iv_pic;
+        ScaleImageView imageView;
     }
 }

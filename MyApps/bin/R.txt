@@ -630,7 +630,6 @@ int id iv_activity_main_menu 0x7f050075
 int id left 0x7f05002a
 int id left_icon 0x7f050060
 int id listMode 0x7f050006
-int id list_ablum 0x7f050072
 int id list_item 0x7f050056
 int id loading 0x7f050085
 int id loading_layout 0x7f050084
@@ -686,6 +685,7 @@ int id show_gallery 0x7f050086
 int id singleChoice 0x7f050044
 int id software 0x7f05002c
 int id split_action_bar 0x7f05004b
+int id staggeredGridView1 0x7f050072
 int id submit_area 0x7f05006e
 int id tabMode 0x7f050007
 int id textEnd 0x7f050036
