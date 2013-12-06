@@ -71,7 +71,6 @@ public class AblumListActivity extends ActionBarActivity {
 
         gridView.setAdapter(adapter);
 
-        
     }
 
     private void findViewById() {
