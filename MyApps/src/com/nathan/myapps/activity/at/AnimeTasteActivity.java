@@ -10,17 +10,19 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.Request.Method;
 import com.android.volley.Response.Listener;
+import com.baidu.cyberplayer.utils.T;
 import com.nathan.myapps.MyApplication;
 import com.nathan.myapps.R;
 import com.nathan.myapps.adapter.VideoListAdapter;
 import com.nathan.myapps.adapter.ViewPagerAdapter;
 import com.nathan.myapps.bean.at.ListJson;
 import com.nathan.myapps.bean.at.VideoItem;
-import com.nathan.myapps.custom.FadeInNetworkImageView;
-import com.nathan.myapps.custom.FixedSpeedScroller;
 import com.nathan.myapps.request.GsonRequest;
+import com.nathan.myapps.request.HttpVolleyRequest;
 import com.nathan.myapps.request.RequestManager;
 import com.nathan.myapps.utils.DataHandler;
+import com.nathan.myapps.widget.AtNetworkImageView;
+import com.nathan.myapps.widget.FixedSpeedScroller;
 import com.viewpagerindicator.UnderlinePageIndicator;
 
 import android.annotation.SuppressLint;
@@ -52,7 +54,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class AnimeTasteActivity extends ActionBarActivity implements OnScrollListener,OnClickListener {
+public class AnimeTasteActivity extends ActionBarActivity implements OnScrollListener,
+        OnClickListener {
 
     private ListView lvVideo;
     private TextView tvLoading;
@@ -100,11 +103,12 @@ public class AnimeTasteActivity extends ActionBarActivity implements OnScrollLis
         getData(mCurrentPage);
     }
 
+    @SuppressWarnings("rawtypes")
     private void getData(int mCurrentPage) {
-        GsonRequest<ListJson> request = new GsonRequest<ListJson>(Method.GET, DataHandler
-                .instance().getList(mCurrentPage), ListJson.class, VideoItem.class,
-                createMyReqSuccessListener(), createMyReqErrorListener());
-        RequestManager.getRequestQueue().add(request);
+
+        HttpVolleyRequest<ListJson> request = new HttpVolleyRequest<ListJson>(this);
+        request.HttpVolleyRequestGet(DataHandler.instance().getList(mCurrentPage), ListJson.class,
+                VideoItem.class, createMyReqSuccessListener(), createMyReqErrorListener());
         tvLoading.setVisibility(View.VISIBLE);
         flLoading.setVisibility(View.VISIBLE);
         Animation loading = AnimationUtils.loadAnimation(this, R.anim.rotate_loading);
@@ -158,8 +162,6 @@ public class AnimeTasteActivity extends ActionBarActivity implements OnScrollLis
                 tvLoading.setVisibility(View.GONE);
                 flLoading.setVisibility(View.GONE);
                 if (mCurrentPage == 0) {
-                    listVideo.addAll((List<VideoItem>) response.list);
-                    mVideoListAdapter.notifyDataSetChanged();
 
                     ViewPagerAdapter mVpAdapter = new ViewPagerAdapter(
                             getViewPager((List<VideoItem>) response.feature));
@@ -174,10 +176,10 @@ public class AnimeTasteActivity extends ActionBarActivity implements OnScrollLis
                     mShowIndicator.setViewPager(mShowPager);
                     mShowIndicator.setFades(false);
                 }
-                else {
-                    listVideo.addAll((List<VideoItem>) response.list);
-                    mVideoListAdapter.notifyDataSetChanged();
-                }
+
+                listVideo.addAll((List<VideoItem>) response.list);
+                mVideoListAdapter.notifyDataSetChanged();
+
             }
         };
     }
@@ -188,7 +190,6 @@ public class AnimeTasteActivity extends ActionBarActivity implements OnScrollLis
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("", error.getMessage() + "");
                 mUpdating = false;
                 tvLoading.clearAnimation();
                 tvLoading.setVisibility(View.GONE);
@@ -241,7 +242,7 @@ public class AnimeTasteActivity extends ActionBarActivity implements OnScrollLis
         LinearLayout.LayoutParams mParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         for (int i = 0; i < list.size(); i++) {
-            FadeInNetworkImageView mImageView = new FadeInNetworkImageView(this);
+            AtNetworkImageView mImageView = new AtNetworkImageView(this);
             mImageView.setLayoutParams(mParams);
             mImageView.setScaleType(ImageView.ScaleType.FIT_XY);
             mImageView.setTag(list.get(i));
@@ -381,7 +382,7 @@ public class AnimeTasteActivity extends ActionBarActivity implements OnScrollLis
     @Override
     public void onClick(View v) {
         Intent intent = new Intent(this, AnimeTasteDetailActivity.class);
-        intent.putExtra("VideoItem", (VideoItem)v.getTag());
+        intent.putExtra("VideoItem", (VideoItem) v.getTag());
         startActivity(intent);
     }
 }

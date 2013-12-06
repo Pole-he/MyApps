@@ -13,10 +13,11 @@ import com.nathan.myapps.activity.at.AnimeTasteActivity.MyTouchListener;
 import com.nathan.myapps.adapter.ViewPagerAdapter;
 import com.nathan.myapps.bean.at.ListJson;
 import com.nathan.myapps.bean.at.VideoItem;
-import com.nathan.myapps.custom.FadeInNetworkImageView;
 import com.nathan.myapps.request.GsonRequest;
+import com.nathan.myapps.request.HttpVolleyRequest;
 import com.nathan.myapps.request.RequestManager;
 import com.nathan.myapps.utils.DataHandler;
+import com.nathan.myapps.widget.AtNetworkImageView;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -36,7 +37,7 @@ import android.widget.TextView;
 
 public class AnimeTasteDetailActivity extends ActionBarActivity implements OnClickListener {
 
-    private FadeInNetworkImageView mDetailImageView;
+    private AtNetworkImageView mDetailImageView;
     private ImageButton mPrePlayButton;
     private TextView mAutherTextView;
     private TextView mContentTextView;
@@ -62,11 +63,11 @@ public class AnimeTasteDetailActivity extends ActionBarActivity implements OnCli
     }
 
     private void getData(int mCurrentPage) {
-        GsonRequest<ListJson> request = new GsonRequest<ListJson>(Method.GET, DataHandler
-                .instance().getRandom(mCurrentPage), ListJson.class, VideoItem.class,
-                createMyReqSuccessListener(), createMyReqErrorListener());
-        RequestManager.getRequestQueue().add(request);
 
+        HttpVolleyRequest<ListJson> request = new HttpVolleyRequest<ListJson>(this);
+        request.HttpVolleyRequestGet(DataHandler.instance().getRandom(mCurrentPage),
+                ListJson.class, VideoItem.class, createMyReqSuccessListener(),
+                createMyReqErrorListener());
     }
 
     private void setListener() {
@@ -85,7 +86,7 @@ public class AnimeTasteDetailActivity extends ActionBarActivity implements OnCli
     }
 
     private void findViewById() {
-        mDetailImageView = (FadeInNetworkImageView) this.findViewById(R.id.detailPic);
+        mDetailImageView = (AtNetworkImageView) this.findViewById(R.id.detailPic);
         mPrePlayButton = (ImageButton) this.findViewById(R.id.pre_play_button);
         mTitleTextView = (TextView) this.findViewById(R.id.title);
         mAutherTextView = (TextView) this.findViewById(R.id.author);
@@ -155,7 +156,7 @@ public class AnimeTasteDetailActivity extends ActionBarActivity implements OnCli
                     {
                         LinearLayout localLinearLayout = (LinearLayout) AnimeTasteDetailActivity.this.mLayoutInflater
                                 .inflate(R.layout.at_recommend_item, null);
-                        FadeInNetworkImageView localImageView = (FadeInNetworkImageView) localLinearLayout
+                        AtNetworkImageView localImageView = (AtNetworkImageView) localLinearLayout
                                 .findViewById(R.id.thumb);
                         TextView localTextView1 = (TextView) localLinearLayout
                                 .findViewById(R.id.recommand_title);

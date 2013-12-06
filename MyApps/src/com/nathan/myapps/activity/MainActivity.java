@@ -2,8 +2,10 @@ package com.nathan.myapps.activity;
 
 
 import com.nathan.myapps.R;
+import com.nathan.myapps.activity.ablum.AblumListActivity;
+import com.nathan.myapps.activity.ablum.AblumMainActivity;
 import com.nathan.myapps.activity.at.AnimeTasteActivity;
-import com.nathan.myapps.custom.MyFrameLayout;
+import com.nathan.myapps.widget.MyFrameLayout;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -64,6 +66,7 @@ public class MainActivity extends Activity implements OnClickListener {
             mfLayout.startAnimationChild();
             break;
         case 1:
+            startActivity(new Intent(MainActivity.this,AblumMainActivity.class));
             break;
         case 2:
             break;

@@ -10,7 +10,7 @@
         android:layout_marginBottom="10.0dip"
         android:layout_marginTop="10.0dip" >
 
-        <com.nathan.myapps.custom.FadeInNetworkImageView
+        <com.nathan.myapps.widget.AtNetworkImageView
             android:id="@+id/thumb"
             android:layout_width="@dimen/placehold_thumb_width"
             android:layout_height="@dimen/placehold_thumb_height"

@@ -9,8 +9,8 @@ import com.nathan.myapps.R;
 import com.nathan.myapps.activity.at.AnimeTasteDetailActivity;
 import com.nathan.myapps.activity.at.VideoViewPlayingActivity;
 import com.nathan.myapps.bean.at.VideoItem;
-import com.nathan.myapps.custom.FadeInNetworkImageView;
 import com.nathan.myapps.utils.VideoUtils;
+import com.nathan.myapps.widget.AtNetworkImageView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -58,7 +58,7 @@ public class VideoListAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.at_video_item, null);
             viewHolder = new ViewHolder();
-            viewHolder.iv_pic = (FadeInNetworkImageView) convertView.findViewById(R.id.thumb);
+            viewHolder.iv_pic = (AtNetworkImageView) convertView.findViewById(R.id.thumb);
             viewHolder.tv_title = (TextView) convertView.findViewById(R.id.title);
             viewHolder.tv_content = (TextView) convertView.findViewById(R.id.content);
             convertView.setTag(viewHolder);
@@ -102,7 +102,7 @@ public class VideoListAdapter extends BaseAdapter {
 
     static class ViewHolder {
 
-        FadeInNetworkImageView iv_pic;
+        AtNetworkImageView iv_pic;
         TextView tv_title, tv_content;
     }
 }

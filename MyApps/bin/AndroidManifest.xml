@@ -50,8 +50,16 @@
         </activity>
         <activity
             android:name="com.nathan.myapps.activity.at.AnimeTasteDetailActivity"
-            android:logo="@drawable/ab_icon"
-            android:configChanges="keyboardHidden|orientation|screenSize" />
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:logo="@drawable/ab_icon" />
+        <activity
+            android:name="com.nathan.myapps.activity.ablum.AblumMainActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.nathan.myapps.activity.ablum.AblumListActivity"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>

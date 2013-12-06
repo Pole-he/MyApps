@@ -5,8 +5,12 @@
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="my_apps">MY APPS</string>
-    
     <string name="loading_anim">LOADING&#8230;</string>
     <string name="write_someting">写下你的感想……</string>
     <string name="recommend">相关推荐</string>
+    <string name="pull_to_refresh_pull_label">下拉刷新…</string>
+    <string name="pull_to_refresh_release_label">松手刷新…</string>
+    <string name="pull_to_refresh_refreshing_label">载入中…</string>
+    <string name="pull_to_refresh_done_label">刷新完毕</string>
+
 </resources>

@@ -38,7 +38,7 @@
         android:layout_height="0dp"
         android:layout_weight="1" > -->
 
-        <com.nathan.myapps.custom.MyFrameLayout
+        <com.nathan.myapps.widget.MyFrameLayout
             android:id="@+id/mf_activity_main_layout"
             android:layout_width="match_parent"
             android:layout_height="0dp"

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list android:oneshot="false"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:duration="100" android:drawable="@drawable/icon_pull_refresh_process_1" />
+    <item android:duration="100" android:drawable="@drawable/icon_pull_refresh_process_2" />
+    <item android:duration="100" android:drawable="@drawable/icon_pull_refresh_process_3" />
+    <item android:duration="100" android:drawable="@drawable/icon_pull_refresh_process_4" />
+    <item android:duration="100" android:drawable="@drawable/icon_pull_refresh_process_5" />
+    <item android:duration="100" android:drawable="@drawable/icon_pull_refresh_process_6" />
+    <item android:duration="100" android:drawable="@drawable/icon_pull_refresh_process_7" />
+    <item android:duration="100" android:drawable="@drawable/icon_pull_refresh_process_8" />
+    <item android:duration="100" android:drawable="@drawable/icon_pull_refresh_process_9" />
+    <item android:duration="100" android:drawable="@drawable/icon_pull_refresh_process_10" />
+    <item android:duration="100" android:drawable="@drawable/icon_pull_refresh_process_11" />
+    <item android:duration="100" android:drawable="@drawable/icon_pull_refresh_process_12" />
+</animation-list>

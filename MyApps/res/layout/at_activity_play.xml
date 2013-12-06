@@ -97,7 +97,7 @@
                 android:layout_height="fill_parent"
                 android:layout_alignParentTop="true" >
 
-                <com.nathan.myapps.custom.FadeInNetworkImageView
+                <com.nathan.myapps.widget.AtNetworkImageView
                     android:id="@+id/detailPic"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
