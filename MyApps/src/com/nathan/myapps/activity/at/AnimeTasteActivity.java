@@ -59,6 +59,7 @@ public class AnimeTasteActivity extends ActionBarActivity implements OnScrollLis
 
     private ListView lvVideo;
     private TextView tvLoading;
+    private FrameLayout flLoading;
     private LayoutInflater mLayoutInflater;
     private UnderlinePageIndicator mShowIndicator;
     private ViewPager mShowPager;
@@ -66,7 +67,6 @@ public class AnimeTasteActivity extends ActionBarActivity implements OnScrollLis
     private int mCurrentPage = 0;
     private VideoListAdapter mVideoListAdapter;
     private List<VideoItem> listVideo = new ArrayList<VideoItem>();
-    private FrameLayout flLoading;
 
     private boolean isReversible = true;
     /**

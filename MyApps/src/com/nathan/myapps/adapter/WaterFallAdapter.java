@@ -9,6 +9,7 @@ import com.nathan.myapps.R;
 import com.nathan.myapps.bean.ablum.PicItem;
 import com.nathan.myapps.utils.Logger;
 import com.nathan.myapps.widget.AtNetworkImageView;
+import com.nathan.myapps.widget.WaterFallNetworkImageView ;
 import com.nathan.myapps.widget.ScaleImageView;
 
 import android.app.Activity;
@@ -60,7 +61,9 @@ public class WaterFallAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.row_staggered_demo, null);
             holder = new ViewHolder();
-            holder.imageView = (ScaleImageView) convertView.findViewById(R.id.imageView1);
+            holder.imageView = (WaterFallNetworkImageView) convertView.findViewById(R.id.imageView1);
+//            holder.imageView.setDefaultImageResId ( R.drawable.placeholder_thumb ) ;
+//            holder.imageView.setErrorImageResId ( R.drawable.placeholder_fail ) ;
             convertView.setTag(holder);
         }
         else {
@@ -68,22 +71,23 @@ public class WaterFallAdapter extends BaseAdapter {
         }
 
         final PicItem pic = list.get(position);
+        holder.imageView.mWidth = pic.picture_width;
+        holder.imageView.mHeight = pic.picture_height;
+//        ImageListener listener = ImageLoader.getImageListener(holder.imageView,
+//                android.R.color.black, R.drawable.placeholder_fail);
+//        MyApplication.getInstance().mImageLoader.get(pic.picture_small_url, listener);
 
-        ImageListener listener = ImageLoader.getImageListener(holder.imageView,
-                R.drawable.placeholder_thumb, R.drawable.placeholder_fail);
-        MyApplication.getInstance().mImageLoader.get(pic.picture_small_url, listener);
-
-        // holder.imageView.getViewTreeObserver().addOnPreDrawListener(new
-        // OnPreDrawListener()
-        // {
-        //
-        // @Override
-        // public boolean onPreDraw() {
-        // holder.imageView.setImageUrl(pic.picture_small_url,
-        // MyApplication.getInstance().mImageLoader);
-        // return true;
-        // }
-        // });
+//         holder.imageView.getViewTreeObserver().addOnPreDrawListener(new
+//         OnPreDrawListener()
+//         {
+//        
+//         @Override
+//         public boolean onPreDraw() {
+//         return true;
+//         }
+//         });
+         holder.imageView.setImageUrl(pic.picture_small_url,
+                         MyApplication.getInstance().mImageLoader);
 
         holder.imageView.setTag(pic);
         holder.imageView.setOnClickListener(mClickListener);
@@ -101,6 +105,6 @@ public class WaterFallAdapter extends BaseAdapter {
 
     static class ViewHolder {
 
-        ScaleImageView imageView;
+            WaterFallNetworkImageView imageView;
     }
 }

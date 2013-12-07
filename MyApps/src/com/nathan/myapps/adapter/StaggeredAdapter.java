@@ -85,7 +85,8 @@ public class StaggeredAdapter extends BaseAdapter {
 //                return true;
 //            }
 //        });
-
+        holder.imageView.setImageUrl(pic.picture_small_url,
+                      MyApplication.getInstance().mImageLoader);
         holder.imageView.setTag(pic);
         holder.imageView.setOnClickListener(mClickListener);
         return convertView;

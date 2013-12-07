@@ -21,7 +21,7 @@ import android.widget.Scroller;
 
 /**
  * Provides access to new {@link android.widget.Scroller Scroller} APIs when available.
- *
+ * <p/>
  * <p>This class provides a platform version-independent mechanism for obeying the
  * current device's preferred scroll physics and fling behavior. It offers a subset of
  * the APIs from Scroller or OverScroller.</p>
@@ -89,14 +89,14 @@ class ScrollerCompat {
 
     /**
      * Returns the current velocity.
-     *
+     * <p/>
      * TODO: Approximate a sane result for older platform versions. Right now
      * this will return 0 for platforms earlier than ICS. This is acceptable
      * at the moment only since it is only used for EdgeEffect, which is also only
      * present in ICS+, and ScrollerCompat is not public.
      *
      * @return The original velocity less the deceleration. Result may be
-     * negative.
+     *         negative.
      */
     public float getCurrVelocity() {
         return 0;
@@ -117,13 +117,13 @@ class ScrollerCompat {
      * duration.
      *
      * @param startX Starting horizontal scroll offset in pixels. Positive
-     *        numbers will scroll the content to the left.
+     *               numbers will scroll the content to the left.
      * @param startY Starting vertical scroll offset in pixels. Positive numbers
-     *        will scroll the content up.
-     * @param dx Horizontal distance to travel. Positive numbers will scroll the
-     *        content to the left.
-     * @param dy Vertical distance to travel. Positive numbers will scroll the
-     *        content up.
+     *               will scroll the content up.
+     * @param dx     Horizontal distance to travel. Positive numbers will scroll the
+     *               content to the left.
+     * @param dy     Vertical distance to travel. Positive numbers will scroll the
+     *               content up.
      */
     public void startScroll(int startX, int startY, int dx, int dy) {
         mScroller.startScroll(startX, startY, dx, dy);
@@ -132,14 +132,14 @@ class ScrollerCompat {
     /**
      * Start scrolling by providing a starting point and the distance to travel.
      *
-     * @param startX Starting horizontal scroll offset in pixels. Positive
-     *        numbers will scroll the content to the left.
-     * @param startY Starting vertical scroll offset in pixels. Positive numbers
-     *        will scroll the content up.
-     * @param dx Horizontal distance to travel. Positive numbers will scroll the
-     *        content to the left.
-     * @param dy Vertical distance to travel. Positive numbers will scroll the
-     *        content up.
+     * @param startX   Starting horizontal scroll offset in pixels. Positive
+     *                 numbers will scroll the content to the left.
+     * @param startY   Starting vertical scroll offset in pixels. Positive numbers
+     *                 will scroll the content up.
+     * @param dx       Horizontal distance to travel. Positive numbers will scroll the
+     *                 content to the left.
+     * @param dy       Vertical distance to travel. Positive numbers will scroll the
+     *                 content up.
      * @param duration Duration of the scroll in milliseconds.
      */
     public void startScroll(int startX, int startY, int dx, int dy, int duration) {
@@ -150,23 +150,23 @@ class ScrollerCompat {
      * Start scrolling based on a fling gesture. The distance travelled will
      * depend on the initial velocity of the fling.
      *
-     * @param startX Starting point of the scroll (X)
-     * @param startY Starting point of the scroll (Y)
+     * @param startX    Starting point of the scroll (X)
+     * @param startY    Starting point of the scroll (Y)
      * @param velocityX Initial velocity of the fling (X) measured in pixels per
-     *        second.
+     *                  second.
      * @param velocityY Initial velocity of the fling (Y) measured in pixels per
-     *        second
-     * @param minX Minimum X value. The scroller will not scroll past this
-     *        point.
-     * @param maxX Maximum X value. The scroller will not scroll past this
-     *        point.
-     * @param minY Minimum Y value. The scroller will not scroll past this
-     *        point.
-     * @param maxY Maximum Y value. The scroller will not scroll past this
-     *        point.
+     *                  second
+     * @param minX      Minimum X value. The scroller will not scroll past this
+     *                  point.
+     * @param maxX      Maximum X value. The scroller will not scroll past this
+     *                  point.
+     * @param minY      Minimum Y value. The scroller will not scroll past this
+     *                  point.
+     * @param maxY      Maximum Y value. The scroller will not scroll past this
+     *                  point.
      */
     public void fling(int startX, int startY, int velocityX, int velocityY,
-            int minX, int maxX, int minY, int maxY) {
+                      int minX, int maxX, int minY, int maxY) {
         mScroller.fling(startX, startY, velocityX, velocityY, minX, maxX, minY, maxY);
     }
 

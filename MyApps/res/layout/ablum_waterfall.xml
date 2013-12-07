@@ -4,22 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <com.nathan.myapps.widget.waterfall.MultiColumnPTRListView
-        xmlns:mclv="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/mclv_theme_waterfall"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingLeft="4dp"
-        android:paddingRight="4dp"
-        mclv:plaColumnNumber="2"
-        mclv:plaLandscapeColumnNumber="3" />
 
-</LinearLayout><!--
-         <com.nathan.myapps.widget.gridview.StaggeredGridView
-        android:id="@+id/staggeredGridView1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        staggered:drawSelectorOnTop="true"
-        staggered:numColumns="2" />
--->
+
+</LinearLayout>
 

@@ -25,7 +25,7 @@ import android.widget.Scroller;
  */
 class ScrollerCompatIcs {
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
-	public static float getCurrVelocity(Scroller scroller) {
+    public static float getCurrVelocity(Scroller scroller) {
         return scroller.getCurrVelocity();
     }
 } 

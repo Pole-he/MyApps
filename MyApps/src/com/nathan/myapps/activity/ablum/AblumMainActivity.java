@@ -18,16 +18,14 @@ import com.nathan.myapps.utils.DataHandler;
 import com.nathan.myapps.utils.Logger;
 
 import com.nathan.myapps.widget.gridview.StaggeredGridView;
-import com.nathan.myapps.widget.waterfall.MultiColumnListView.OnLoadMoreListener;
-import com.nathan.myapps.widget.waterfall.MultiColumnPTRListView;
-import com.nathan.myapps.widget.waterfall.MultiColumnPTRListView.OnRefreshListener;
+
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
 public class AblumMainActivity extends ActionBarActivity {
 
-    private MultiColumnPTRListView mMCLVEvent;
+
 
     private List<PicItem> mPicList = new ArrayList<PicItem>();
     private StaggeredAdapter adapter;
@@ -46,7 +44,12 @@ public class AblumMainActivity extends ActionBarActivity {
         getData(30, mCurrentPage);
     }
 
-    private void getData(int tag, int start) {
+    private void findViewById ( ) {
+        // TODO Auto-generated method stub
+        
+}
+
+private void getData(int tag, int start) {
         HttpVolleyRequest<PicListJson> request = new HttpVolleyRequest<PicListJson>(this);
         request.HttpVolleyRequestGet(DataHandler.instance().getAblum(tag, start),
                 PicListJson.class, PicItem.class, createMyReqSuccessListener(),
@@ -54,13 +57,11 @@ public class AblumMainActivity extends ActionBarActivity {
     }
 
     private void setListerner() {
-         mMCLVEvent.setOnRefreshListener(mOnRefreshListener);
-         mMCLVEvent.setOnLoadMoreListener(mOnLoadMoreListener);
+
     }
 
     private void init() {
          adapter = new StaggeredAdapter(this, mPicList);
-         mMCLVEvent.setAdapter(adapter);
 //        int margin = getResources().getDimensionPixelSize(R.dimen.play_innser_recommend_margin_top);
 //
 //        gridView.setItemMargin(margin); // set the GridView margin
@@ -74,30 +75,7 @@ public class AblumMainActivity extends ActionBarActivity {
         
     }
 
-    private void findViewById() {
-         mMCLVEvent = (MultiColumnPTRListView)
-         this.findViewById(R.id.mclv_theme_waterfall);
-       // gridView = (StaggeredGridView) this.findViewById(R.id.staggeredGridView1);
-    }
-
-    private OnRefreshListener mOnRefreshListener = new OnRefreshListener()
-    {
-
-        @Override
-        public void onRefresh() {
-
-        }
-    };
-
-    private OnLoadMoreListener mOnLoadMoreListener = new OnLoadMoreListener()
-    {
-
-        @Override
-        public void onLoadMore() {
-            mCurrentPage = mCurrentPage + 20;
-            getData(30, mCurrentPage);
-        }
-    };
+    
 
     @SuppressWarnings("rawtypes")
     private Listener<PicListJson> createMyReqSuccessListener() {

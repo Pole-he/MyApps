@@ -12,11 +12,11 @@ public class PicItem implements Serializable {
 
     public String like_count;
     public String picture_big_url;
-    public String picture_height;
+    public int picture_height;
     public String picture_id;
     public String picture_raw_url;
     public String picture_small_url;
-    public String picture_width;
+    public int picture_width;
     public String user_id;
     public String user_name;
 
