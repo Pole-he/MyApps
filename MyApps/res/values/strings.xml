@@ -13,4 +13,11 @@
     <string name="pull_to_refresh_refreshing_label">载入中…</string>
     <string name="pull_to_refresh_done_label">刷新完毕</string>
 
+    <item name="water_position" type="id"></item>
+
+    <string name="download">下载</string>
+    <string name="share">分享</string>
+    <string name="favorite">喜欢</string>
+    <string name="pic_square_like">喜欢</string>
+
 </resources>

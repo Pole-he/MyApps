@@ -45,20 +45,24 @@
         </activity>
         <activity
             android:name="com.nathan.myapps.activity.at.AnimeTasteActivity"
-            android:logo="@drawable/ab_icon"
+            android:logo="@drawable/popo_icon"
             android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.nathan.myapps.activity.at.AnimeTasteDetailActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:logo="@drawable/ab_icon" />
+            android:logo="@drawable/popo_icon" />
         <activity
             android:name="com.nathan.myapps.activity.ablum.AblumMainActivity"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:label="ABLUM"
+            android:logo="@drawable/popo_icon" 
             android:name="com.nathan.myapps.activity.ablum.AblumListActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.nathan.myapps.activity.ablum.AblumDetailActivity"
             android:screenOrientation="portrait" >
         </activity>
     </application>

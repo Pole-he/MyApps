@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_detail"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/black" >
+
+    <RelativeLayout
+        android:id="@+id/layout_detail_main"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+        </android.support.v4.view.ViewPager>
+
+        <RelativeLayout
+            android:id="@+id/top_bar"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/title_bar_height"
+            android:background="#33000000" >
+
+            <ImageView
+                android:id="@+id/btn_back"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:scaleType="centerInside"
+                android:src="@drawable/picdetail_back_selector" />
+
+            <TextView
+                android:id="@+id/count"
+                style="@style/title_text"
+                android:layout_toRightOf="@+id/btn_back"
+                android:text="15/30"
+                android:textColor="@color/white" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/bottom_bar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:visibility="visible" >
+
+            <LinearLayout
+                android:id="@+id/bottom_bar_first"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent_seventy_percent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/btn_like"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:drawableTop="@drawable/pic_detail_like_btn_bg"
+                    android:gravity="center_horizontal"
+                    android:text="@string/favorite"
+                    android:textColor="#ffb1b1b1"
+                    android:textSize="13.0dip" />
+
+                <TextView
+                    android:id="@+id/btn_save"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:drawableTop="@drawable/pic_detail_save_btnbg"
+                    android:gravity="center_horizontal"
+                    android:text="@string/download"
+                    android:textColor="#ffb1b1b1"
+                    android:textSize="13.0dip" />
+
+                <TextView
+                    android:id="@+id/btn_share"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:drawableTop="@drawable/pic_detail_share_btnbg"
+                    android:gravity="center_horizontal"
+                    android:text="@string/share"
+                    android:textColor="#ffb1b1b1"
+                    android:textSize="13.0dip" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+</FrameLayout>

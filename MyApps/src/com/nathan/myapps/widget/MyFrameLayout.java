@@ -62,7 +62,7 @@ public class MyFrameLayout extends FrameLayout {
         FrameLayout.LayoutParams tvLytp3 = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
         tvLytp3.gravity = Gravity.CENTER;
         tv3.setLayoutParams(tvLytp3);
-        tv3.setText("AT!");
+        tv3.setText("ANIMATION");
         flThird.addView(tv3);
 
         flFour = new FrameLayout(context);

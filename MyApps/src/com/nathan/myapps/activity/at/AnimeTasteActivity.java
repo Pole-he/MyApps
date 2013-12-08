@@ -23,6 +23,7 @@ import com.nathan.myapps.request.RequestManager;
 import com.nathan.myapps.utils.DataHandler;
 import com.nathan.myapps.widget.AtNetworkImageView;
 import com.nathan.myapps.widget.FixedSpeedScroller;
+import com.nathan.myapps.widget.LoadingView ;
 import com.viewpagerindicator.UnderlinePageIndicator;
 
 import android.annotation.SuppressLint;
@@ -58,8 +59,6 @@ public class AnimeTasteActivity extends ActionBarActivity implements OnScrollLis
         OnClickListener {
 
     private ListView lvVideo;
-    private TextView tvLoading;
-    private FrameLayout flLoading;
     private LayoutInflater mLayoutInflater;
     private UnderlinePageIndicator mShowIndicator;
     private ViewPager mShowPager;
@@ -67,6 +66,7 @@ public class AnimeTasteActivity extends ActionBarActivity implements OnScrollLis
     private int mCurrentPage = 0;
     private VideoListAdapter mVideoListAdapter;
     private List<VideoItem> listVideo = new ArrayList<VideoItem>();
+    private LoadingView mLoadingView;
 
     private boolean isReversible = true;
     /**
@@ -109,19 +109,13 @@ public class AnimeTasteActivity extends ActionBarActivity implements OnScrollLis
         HttpVolleyRequest<ListJson> request = new HttpVolleyRequest<ListJson>(this);
         request.HttpVolleyRequestGet(DataHandler.instance().getList(mCurrentPage), ListJson.class,
                 VideoItem.class, createMyReqSuccessListener(), createMyReqErrorListener());
-        tvLoading.setVisibility(View.VISIBLE);
-        flLoading.setVisibility(View.VISIBLE);
-        Animation loading = AnimationUtils.loadAnimation(this, R.anim.rotate_loading);
-        tvLoading.startAnimation(loading);
+       showLoadingView ( ) ;
     }
 
     private void init() {
         mVideoListAdapter = new VideoListAdapter(AnimeTasteActivity.this, listVideo);
         lvVideo.setAdapter(mVideoListAdapter);
 
-        Typeface typeFace = Typeface.createFromAsset(getAssets(), "fonts/BelshawDonutRobot.ttf");
-        // 应用字体
-        tvLoading.setTypeface(typeFace);
 
         try {
             Field mField = ViewPager.class.getDeclaredField("mScroller");
@@ -137,10 +131,24 @@ public class AnimeTasteActivity extends ActionBarActivity implements OnScrollLis
         }
     }
 
+    private void showLoadingView ( ) {
+            if ( mLoadingView == null ) {
+                    mLoadingView = new LoadingView ( this , 3) ;
+            }
+            if ( ! mLoadingView.isShowing ( ) ) {
+                    mLoadingView.show ( ) ;
+            }
+    }
+    
+    private void dimissLoadingView()
+    {
+            if(mLoadingView.isShowing ( ) )
+            {
+                    mLoadingView.dismiss();
+            }
+    }
     private void findViewById() {
         lvVideo = (ListView) this.findViewById(R.id.videoList);
-        tvLoading = (TextView) this.findViewById(R.id.loading);
-        flLoading = (FrameLayout) this.findViewById(R.id.loading_layout);
         mLayoutInflater = LayoutInflater.from(this);
         this.lvVideo.setOnScrollListener(this);
         View localView = this.mLayoutInflater.inflate(R.layout.at_gallery_item, null, false);
@@ -158,9 +166,7 @@ public class AnimeTasteActivity extends ActionBarActivity implements OnScrollLis
             @Override
             public void onResponse(ListJson response) {
                 mUpdating = false;
-                tvLoading.clearAnimation();
-                tvLoading.setVisibility(View.GONE);
-                flLoading.setVisibility(View.GONE);
+                dimissLoadingView ( ) ;
                 if (mCurrentPage == 0) {
 
                     ViewPagerAdapter mVpAdapter = new ViewPagerAdapter(
@@ -191,9 +197,7 @@ public class AnimeTasteActivity extends ActionBarActivity implements OnScrollLis
             @Override
             public void onErrorResponse(VolleyError error) {
                 mUpdating = false;
-                tvLoading.clearAnimation();
-                tvLoading.setVisibility(View.GONE);
-                flLoading.setVisibility(View.GONE);
+                dimissLoadingView ( ) ;
             }
         };
     }

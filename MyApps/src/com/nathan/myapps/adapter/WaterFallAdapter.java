@@ -1,17 +1,20 @@
 package com.nathan.myapps.adapter;
 
+import java.io.Serializable ;
 import java.util.List;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.ImageLoader.ImageListener;
 import com.nathan.myapps.MyApplication;
 import com.nathan.myapps.R;
+import com.nathan.myapps.activity.ablum.AblumDetailActivity ;
 import com.nathan.myapps.bean.ablum.PicItem;
 import com.nathan.myapps.utils.Logger;
 import com.nathan.myapps.widget.AtNetworkImageView;
 import com.nathan.myapps.widget.WaterFallNetworkImageView ;
 import com.nathan.myapps.widget.ScaleImageView;
 
+import android.R.integer ;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -89,7 +92,8 @@ public class WaterFallAdapter extends BaseAdapter {
          holder.imageView.setImageUrl(pic.picture_small_url,
                          MyApplication.getInstance().mImageLoader);
 
-        holder.imageView.setTag(pic);
+        holder.imageView.setTag(list);
+        holder.imageView.setTag ( R.id.water_position, position);
         holder.imageView.setOnClickListener(mClickListener);
         return convertView;
     }
@@ -99,7 +103,10 @@ public class WaterFallAdapter extends BaseAdapter {
 
         @Override
         public void onClick(View v) {
-
+                Intent intent = new Intent(mContext,AblumDetailActivity.class);
+                intent.putExtra("data", (Serializable)v.getTag ( ));
+                intent.putExtra("intoPosition", (Integer)v.getTag ( R.id.water_position ));
+                mContext.startActivity(intent);
         }
     };
 
