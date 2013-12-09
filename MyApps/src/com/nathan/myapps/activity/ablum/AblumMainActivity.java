@@ -1,107 +1,48 @@
 package com.nathan.myapps.activity.ablum;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.Response.Listener;
 import com.nathan.myapps.R;
-import com.nathan.myapps.adapter.StaggeredAdapter;
-import com.nathan.myapps.adapter.WaterFallAdapter;
-import com.nathan.myapps.bean.ablum.PicItem;
-import com.nathan.myapps.bean.ablum.PicListJson;
-
-import com.nathan.myapps.request.HttpVolleyRequest;
-
-import com.nathan.myapps.utils.DataHandler;
-import com.nathan.myapps.utils.Logger;
-
-import com.nathan.myapps.widget.gridview.StaggeredGridView;
-
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
+import android.view.MenuItem;
 
 public class AblumMainActivity extends ActionBarActivity {
-
-
-
-    private List<PicItem> mPicList = new ArrayList<PicItem>();
-    private StaggeredAdapter adapter;
-    private int mCurrentPage = 0;
-
-    private StaggeredGridView gridView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ablum_waterfall);
+        setContentView(R.layout.ablum_main);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setBackgroundDrawable(
+                getResources().getDrawable(R.drawable.bbuton_success));
+
         findViewById();
         init();
-        setListerner();
-        getData(30, mCurrentPage);
-    }
-
-    private void findViewById ( ) {
-        // TODO Auto-generated method stub
-        
-}
-
-private void getData(int tag, int start) {
-        HttpVolleyRequest<PicListJson> request = new HttpVolleyRequest<PicListJson>(this);
-        request.HttpVolleyRequestGet(DataHandler.instance().getAblum(tag, start),
-                PicListJson.class, PicItem.class, createMyReqSuccessListener(),
-                createMyReqErrorListener());
-    }
-
-    private void setListerner() {
 
     }
 
     private void init() {
-         adapter = new StaggeredAdapter(this, mPicList);
-//        int margin = getResources().getDimensionPixelSize(R.dimen.play_innser_recommend_margin_top);
-//
-//        gridView.setItemMargin(margin); // set the GridView margin
-//
-//        gridView.setPadding(margin, 0, margin, 0); // have the margin on the
-//                                                   // sides as well
-//
-//        adapter = new StaggeredAdapter(this, mPicList);
-//
-//        gridView.setAdapter(adapter);
-        
+        FragmentTransaction t = this.getSupportFragmentManager().beginTransaction();
+        t.replace(R.id.content, new AblumListFragment(), "content");
+        t.commit();
     }
 
-    
+    private void findViewById() {
+        // TODO Auto-generated method stub
 
-    @SuppressWarnings("rawtypes")
-    private Listener<PicListJson> createMyReqSuccessListener() {
-        return new Listener<PicListJson>()
-        {
-
-            @SuppressWarnings("unchecked")
-            @Override
-            public void onResponse(PicListJson response) {
-                if (mCurrentPage == 0) {
-                   // mPicList.clear();
-                }
-                mPicList.addAll((List<PicItem>) response.data.pictures);
-                adapter.notifyDataSetChanged();
-            }
-        };
     }
 
-    private Response.ErrorListener createMyReqErrorListener() {
-        return new Response.ErrorListener()
-        {
+    public boolean onOptionsItemSelected(MenuItem paramMenuItem) {
 
-            @Override
-            public void onErrorResponse(VolleyError error) {
+        switch (paramMenuItem.getItemId()) {
+        case android.R.id.home:
+            finish();
+            break;
+        }
+        return super.onOptionsItemSelected(paramMenuItem);
 
-            }
-        };
     }
 }

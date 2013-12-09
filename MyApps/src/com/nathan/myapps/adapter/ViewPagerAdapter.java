@@ -56,7 +56,6 @@ public class ViewPagerAdapter extends PagerAdapter
     @Override
     public Object instantiateItem(ViewGroup container, int position)
     {
-        Log.e(TAG, "instantiateItem" + position);
         position = position % mViews.size();
 
         if(mViews.get(position).getParent() ==null)
@@ -71,7 +70,6 @@ public class ViewPagerAdapter extends PagerAdapter
     @Override
     public void destroyItem(ViewGroup container, int position, Object object)
     {
-        Log.e(TAG, "destroyItem" + position);
 //        position = position % mViews.size();
 //        container.removeView(mViews.get(position));        
     }  

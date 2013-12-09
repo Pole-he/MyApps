@@ -41,7 +41,7 @@ public class RequestManager {
 		//mRequestQueue = Volley.newRequestQueue(context);
 		
         File sdDir = Environment.getExternalStorageDirectory();// 获取跟目录
-        File file = new File(sdDir, "nathan");
+        File file = new File(sdDir, "Popo/cache");
         if(!file.exists())
         {
             file.mkdir();

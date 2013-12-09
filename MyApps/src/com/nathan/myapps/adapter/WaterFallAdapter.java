@@ -55,7 +55,7 @@ public class WaterFallAdapter extends BaseAdapter {
         final ViewHolder holder;
 
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.row_staggered_demo, null);
+            convertView = mInflater.inflate(R.layout.ablum_item, null);
             holder = new ViewHolder();
             holder.imageView = (WaterFallNetworkImageView) convertView
                     .findViewById(R.id.imageView1);
@@ -108,7 +108,7 @@ public class WaterFallAdapter extends BaseAdapter {
         public void onClick(View v) {
             ViewHolder holder = (ViewHolder) v.getTag();
             holder.tvNum.setText((Integer.valueOf(holder.tvNum.getText().toString()) + 1) + "");
-            PicItem pic = (PicItem) holder.imageView.getTag();
+            PicItem pic = ((List<PicItem>) holder.imageView.getTag()).get((Integer) holder.imageView.getTag(R.id.water_position));
             pic.like_count = (Integer.valueOf(pic.like_count) + 1) + "";
         }
     };
