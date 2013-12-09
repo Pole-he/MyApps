@@ -16,6 +16,7 @@
 package uk.co.senab.photoview;
 
 import com.android.volley.toolbox.NetworkImageView ;
+import com.nathan.myapps.widget.LoadListenerImageView;
 
 import android.content.Context;
 import android.graphics.Matrix;
@@ -29,7 +30,7 @@ import uk.co.senab.photoview.PhotoViewAttacher.OnMatrixChangedListener;
 import uk.co.senab.photoview.PhotoViewAttacher.OnPhotoTapListener;
 import uk.co.senab.photoview.PhotoViewAttacher.OnViewTapListener;
 
-public class PhotoView extends NetworkImageView implements IPhotoView {
+public class PhotoView extends LoadListenerImageView implements IPhotoView {
 
     private final PhotoViewAttacher mAttacher;
 

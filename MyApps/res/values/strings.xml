@@ -19,5 +19,6 @@
     <string name="share">分享</string>
     <string name="favorite">喜欢</string>
     <string name="pic_square_like">喜欢</string>
+    <string name="load">LOAD</string>
 
 </resources>

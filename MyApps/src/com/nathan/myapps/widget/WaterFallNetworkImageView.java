@@ -2,6 +2,7 @@ package com.nathan.myapps.widget ;
 
 import android.content.Context ;
 import android.graphics.Bitmap ;
+import android.graphics.Color;
 import android.graphics.ColorMatrixColorFilter ;
 import android.graphics.drawable.BitmapDrawable ;
 import android.graphics.drawable.ColorDrawable ;
@@ -53,8 +54,9 @@ public class WaterFallNetworkImageView extends NetworkImageView {
         } ;
         
         private void init ( ) {
-                setDefaultImageResId(R.drawable.placeholder_thumb);
-                setErrorImageResId(R.drawable.placeholder_fail);
+//                setDefaultImageResId(R.drawable.placeholder_thumb);
+//                setErrorImageResId(R.drawable.placeholder_fail);
+            setBackgroundColor(getResources().getColor(R.color.white_1));
         }
         
 //        @ Override

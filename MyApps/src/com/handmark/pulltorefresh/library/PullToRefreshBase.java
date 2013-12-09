@@ -292,7 +292,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	}
 
 	@Override
-	public final void onRefreshComplete() {
+	public void onRefreshComplete() {
 		if (isRefreshing()) {
 			setState(State.RESET);
 		}

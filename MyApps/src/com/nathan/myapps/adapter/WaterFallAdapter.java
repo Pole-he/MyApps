@@ -1,30 +1,23 @@
 package com.nathan.myapps.adapter;
 
-import java.io.Serializable ;
+import java.io.Serializable;
 import java.util.List;
 
-import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.ImageLoader.ImageListener;
 import com.nathan.myapps.MyApplication;
 import com.nathan.myapps.R;
-import com.nathan.myapps.activity.ablum.AblumDetailActivity ;
+import com.nathan.myapps.activity.ablum.AblumDetailActivity;
 import com.nathan.myapps.bean.ablum.PicItem;
-import com.nathan.myapps.utils.Logger;
-import com.nathan.myapps.widget.AtNetworkImageView;
-import com.nathan.myapps.widget.WaterFallNetworkImageView ;
-import com.nathan.myapps.widget.ScaleImageView;
+import com.nathan.myapps.widget.WaterFallNetworkImageView;
 
-import android.R.integer ;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver.OnPreDrawListener;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 
 public class WaterFallAdapter extends BaseAdapter {
 
@@ -64,9 +57,15 @@ public class WaterFallAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.row_staggered_demo, null);
             holder = new ViewHolder();
-            holder.imageView = (WaterFallNetworkImageView) convertView.findViewById(R.id.imageView1);
-//            holder.imageView.setDefaultImageResId ( R.drawable.placeholder_thumb ) ;
-//            holder.imageView.setErrorImageResId ( R.drawable.placeholder_fail ) ;
+            holder.imageView = (WaterFallNetworkImageView) convertView
+                    .findViewById(R.id.imageView1);
+            holder.flLike = (FrameLayout) convertView.findViewById(R.id.ablum_item_like);
+            holder.tvNum = (TextView) convertView.findViewById(R.id.ablum_item_num);
+
+            // holder.imageView.setDefaultImageResId (
+            // R.drawable.placeholder_thumb ) ;
+            // holder.imageView.setErrorImageResId ( R.drawable.placeholder_fail
+            // ) ;
             convertView.setTag(holder);
         }
         else {
@@ -76,42 +75,59 @@ public class WaterFallAdapter extends BaseAdapter {
         final PicItem pic = list.get(position);
         holder.imageView.mWidth = pic.picture_width;
         holder.imageView.mHeight = pic.picture_height;
-//        ImageListener listener = ImageLoader.getImageListener(holder.imageView,
-//                android.R.color.black, R.drawable.placeholder_fail);
-//        MyApplication.getInstance().mImageLoader.get(pic.picture_small_url, listener);
+        // ImageListener listener =
+        // ImageLoader.getImageListener(holder.imageView,
+        // android.R.color.black, R.drawable.placeholder_fail);
+        // MyApplication.getInstance().mImageLoader.get(pic.picture_small_url,
+        // listener);
 
-//         holder.imageView.getViewTreeObserver().addOnPreDrawListener(new
-//         OnPreDrawListener()
-//         {
-//        
-//         @Override
-//         public boolean onPreDraw() {
-//         return true;
-//         }
-//         });
-         holder.imageView.setImageUrl(pic.picture_small_url,
-                         MyApplication.getInstance().mImageLoader);
-
+        // holder.imageView.getViewTreeObserver().addOnPreDrawListener(new
+        // OnPreDrawListener()
+        // {
+        //
+        // @Override
+        // public boolean onPreDraw() {
+        // return true;
+        // }
+        // });
+        holder.imageView.setImageUrl(pic.picture_small_url,
+                MyApplication.getInstance().mImageLoader);
         holder.imageView.setTag(list);
-        holder.imageView.setTag ( R.id.water_position, position);
+        holder.imageView.setTag(R.id.water_position, position);
         holder.imageView.setOnClickListener(mClickListener);
+        holder.tvNum.setText(pic.like_count);
+        holder.flLike.setOnClickListener(mClickLike);
+        holder.flLike.setTag(holder);
         return convertView;
     }
 
+    private OnClickListener mClickLike = new OnClickListener()
+    {
+
+        @Override
+        public void onClick(View v) {
+            ViewHolder holder = (ViewHolder) v.getTag();
+            holder.tvNum.setText((Integer.valueOf(holder.tvNum.getText().toString()) + 1) + "");
+            PicItem pic = (PicItem) holder.imageView.getTag();
+            pic.like_count = (Integer.valueOf(pic.like_count) + 1) + "";
+        }
+    };
     private OnClickListener mClickListener = new OnClickListener()
     {
 
         @Override
         public void onClick(View v) {
-                Intent intent = new Intent(mContext,AblumDetailActivity.class);
-                intent.putExtra("data", (Serializable)v.getTag ( ));
-                intent.putExtra("intoPosition", (Integer)v.getTag ( R.id.water_position ));
-                mContext.startActivity(intent);
+            Intent intent = new Intent(mContext, AblumDetailActivity.class);
+            intent.putExtra("data", (Serializable) v.getTag());
+            intent.putExtra("intoPosition", (Integer) v.getTag(R.id.water_position));
+            mContext.startActivity(intent);
         }
     };
 
     static class ViewHolder {
 
-            WaterFallNetworkImageView imageView;
+        FrameLayout flLike;
+        TextView tvNum;
+        WaterFallNetworkImageView imageView;
     }
 }
