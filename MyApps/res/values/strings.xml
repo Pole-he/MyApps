@@ -20,5 +20,15 @@
     <string name="favorite">喜欢</string>
     <string name="pic_square_like">喜欢</string>
     <string name="load">LOAD</string>
+    <string name="ablum_1">美女</string>
+    <string name="ablum_2">明星</string>
+    <string name="ablum_3">搞笑</string>
+    <string name="ablum_4">动漫</string>
+    <string name="ablum_5">影视</string>
+    <string name="ablum_6">壁纸</string>
+    
+    <string name="no_internet">网络故障，请检查你的网络</string>
+    <string name="generic_server_down">网络不给力，请求超时</string>
+    <string name="generic_error">服务器脑瘫了</string>
 
 </resources>

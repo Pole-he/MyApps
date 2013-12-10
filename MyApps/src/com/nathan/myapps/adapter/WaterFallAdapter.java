@@ -24,10 +24,12 @@ public class WaterFallAdapter extends BaseAdapter {
     private List<PicItem> list;
     private Context mContext;
     private LayoutInflater mInflater = null;
+    private String type;
 
-    public WaterFallAdapter(Context context, List<PicItem> list) {
+    public WaterFallAdapter(Context context, List<PicItem> list, String type) {
         this.mContext = context;
         this.list = list;
+        this.type = type;
         mInflater = LayoutInflater.from(mContext);
     }
 
@@ -120,6 +122,7 @@ public class WaterFallAdapter extends BaseAdapter {
             Intent intent = new Intent(mContext, AblumDetailActivity.class);
             intent.putExtra("data", (Serializable) v.getTag());
             intent.putExtra("intoPosition", (Integer) v.getTag(R.id.water_position));
+            intent.putExtra("type", type);
             mContext.startActivity(intent);
         }
     };

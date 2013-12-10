@@ -6,6 +6,7 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,12 @@ public class AblumListFragment extends BaseFragment {
     private PullToRefreshStaggeredGridView ptrstgv;
     private LoadingView mLoadingView;
     private Context mContext;
+    private String type;
+
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        this.type = getArguments().getString("type");
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -71,14 +78,37 @@ public class AblumListFragment extends BaseFragment {
                 createMyReqErrorListener());
     }
 
+    // 30-美女 68-明星 168-搞笑 5-壁纸
+    private int getCountFromType(String type) {
+        if ("美女".equals(type)) {
+            return 30;
+        }
+        else if ("明星".equals(type)) {
+            return 68;
+        }
+        else if ("搞笑".equals(type)) {
+            return 165;
+        }
+        else if ("壁纸".equals(type)) {
+            return 5;
+        }
+        else if ("动漫".equals(type)) {
+            return 1;
+        }
+        else if ("影视".equals(type)) {
+            return 100;
+        }
+        return 0;
+    }
+
     @Override
     public void init() {
-        adapter = new WaterFallAdapter(mContext, mPicList);
+        adapter = new WaterFallAdapter(mContext, mPicList, type);
         ptrstgv.setAdapter(adapter);
         ptrstgv.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
         // ptrstgv.getRefreshableView().setHeaderView(new Button(mContext));
         showLoadingView();
-        getData(30, mCurrentPage);
+        getData(getCountFromType(type), mCurrentPage);
     }
 
     private OnRefreshListener<StaggeredGridView> mRefresh = new OnRefreshListener<StaggeredGridView>()
@@ -87,7 +117,7 @@ public class AblumListFragment extends BaseFragment {
         @Override
         public void onRefresh(PullToRefreshBase<StaggeredGridView> refreshView) {
             mCurrentPage = 0;
-            getData(30, mCurrentPage);
+            getData(getCountFromType(type), mCurrentPage);
         }
     };
 
@@ -97,7 +127,7 @@ public class AblumListFragment extends BaseFragment {
         @Override
         public void onLoadmore() {
             mCurrentPage = mCurrentPage + 20;
-            getData(30, mCurrentPage);
+            getData(getCountFromType(type), mCurrentPage);
             showLoadingView();
 
         }
@@ -147,5 +177,13 @@ public class AblumListFragment extends BaseFragment {
                 dimissLoadingView();
             }
         };
+    }
+
+    public static Fragment newInstance(String type) {
+        AblumListFragment f = new AblumListFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("type", type);
+        f.setArguments(bundle);
+        return f;
     }
 }

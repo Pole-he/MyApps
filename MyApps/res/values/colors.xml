@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="top_bar_blue">#ff56b2f6</color>
     <color name="transparent_thirty_percent">#4c000000</color>
     <color name="transparent_fifty_percent">#80000000</color>
     <color name="transparent_seventy_percent">#b2000000</color>
@@ -21,6 +22,7 @@
     <color name="main_third">#1aabda</color>
     <color name="main_four">#ecbb55</color>
     <color name="white_1">#f1f2f4</color>
+    <color name="white_title">#f4f4f4</color>
     <color name="bbutton_danger">#ffd9534f</color>
     <color name="bbutton_danger_edge">#ffd43f3a</color>
     <color name="bbutton_danger_pressed">#ffd2322d</color>
@@ -45,5 +47,9 @@
     <color name="bbutton_info_pressed_edge">#ff269abc</color>
     <color name="bbutton_info_disabled">#ff5bc0de</color>
     <color name="bbutton_info_disabled_edge">#a546b8da</color>
+    <color name="alert">#CC0000</color>
+    <color name="confirm">#FF8800</color>
+    <color name="info">#669900</color>
+    <color name="custom">#0099CC</color>
 
 </resources>

@@ -2,7 +2,6 @@ package com.nathan.myapps.activity;
 
 
 import com.nathan.myapps.R;
-import com.nathan.myapps.activity.ablum.AblumListActivity;
 import com.nathan.myapps.activity.ablum.AblumMainActivity;
 import com.nathan.myapps.activity.at.AnimeTasteActivity;
 import com.nathan.myapps.widget.MyFrameLayout;

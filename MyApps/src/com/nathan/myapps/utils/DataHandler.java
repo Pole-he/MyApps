@@ -72,7 +72,7 @@ public class DataHandler {
      * 相册
      * 
      * @param tag
-     *            30-美女 68-明星 168-搞笑 5-壁纸
+     *            30-美女 68-明星 165-搞笑 5-壁纸 100-影视 1-动漫 
      * @param start
      * @return
      */

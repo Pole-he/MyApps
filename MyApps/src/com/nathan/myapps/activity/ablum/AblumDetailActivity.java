@@ -65,7 +65,7 @@ public class AblumDetailActivity extends ActionBarActivity implements OnClickLis
         tvCount.setText((intoPostion+1) + "/" + picList.size());
         tvLike.setText(getResources().getString(R.string.favorite)
                 + picList.get(intoPostion).like_count);
-        tvTitle.setText("美女");
+        tvTitle.setText(getIntent().getStringExtra("type"));
     }
 
     private void findViewById() {

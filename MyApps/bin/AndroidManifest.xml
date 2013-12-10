@@ -58,11 +58,6 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:logo="@drawable/popo_icon" 
-            android:name="com.nathan.myapps.activity.ablum.AblumListActivity"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
             android:name="com.nathan.myapps.activity.ablum.AblumDetailActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" >
         </activity>

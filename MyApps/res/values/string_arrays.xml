@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="pic_type">
+        <item>美女</item>
+        <item>明星</item>
+        <item>搞笑</item>
+        <item>动漫</item>
+        <item>影视</item>
+        <item>壁纸</item>
+    </string-array>
+
+</resources>
