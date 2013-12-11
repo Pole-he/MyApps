@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent_fifty_percent"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp" >
+
+                <com.nathan.myapps.widget.CircleImageView
+                    android:id="@+id/iconUserPic"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/icon_avatar_default" />
+
+                <TextView
+                    android:id="@+id/iconUserName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/iconUserPic"
+                    android:drawablePadding="5dp"
+                    android:drawableRight="@drawable/user_v"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/iconUserTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/iconUserName"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/iconUserPic"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:layout_marginBottom="2dp" >
+
+                <com.android.volley.toolbox.NetworkImageView
+                    android:id="@+id/cover"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"
+                     />
+
+                <ImageView
+                    android:id="@+id/musicPlay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/icon_music_circle_play" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/social_music_circle_pic_fg" />
+
+                <TextView
+                    android:id="@+id/musicTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_margin="7dp"
+                    android:drawableLeft="@drawable/icon_social_song"
+                    android:drawablePadding="7dp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/white" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/musicContet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <FrameLayout
+                android:id="@+id/fl_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_music_item_bar"
+                android:padding="5dp" >
+
+                <TextView
+                    android:id="@+id/tv_comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:drawableLeft="@drawable/icon_social_reply"
+                    android:drawablePadding="5dp"
+                    android:text="@string/icon_comment"
+                    android:textColor="@color/white" />
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="@color/black" />
+
+            <FrameLayout
+                android:id="@+id/fl_forward"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_music_item_bar"
+                android:padding="5dp" >
+
+                <TextView
+                    android:id="@+id/tv_forward"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:drawableLeft="@drawable/icon_social_repost"
+                    android:drawablePadding="5dp"
+                    android:text="@string/icon_forward"
+                    android:textColor="@color/white" />
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="@color/black" />
+
+            <FrameLayout
+                android:id="@+id/fl_collect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_music_item_bar"
+                android:padding="5dp" >
+
+                <TextView
+                    android:id="@+id/tv_collect"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:drawableLeft="@drawable/icon_favorite_mark_no"
+                    android:drawablePadding="5dp"
+                    android:text="@string/icon_collect"
+                    android:textColor="@color/white" />
+            </FrameLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

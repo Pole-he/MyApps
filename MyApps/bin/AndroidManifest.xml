@@ -61,6 +61,11 @@
             android:name="com.nathan.myapps.activity.ablum.AblumDetailActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" >
         </activity>
+                <activity
+            android:logo="@drawable/popo_icon" 
+            android:name="com.nathan.myapps.activity.music.MusicListActivity"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>

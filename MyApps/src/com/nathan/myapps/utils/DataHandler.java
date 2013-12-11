@@ -95,4 +95,9 @@ public class DataHandler {
         arrayOfObject[13] = "middle";
         return String.format(URLs.ABLUM.url, arrayOfObject);
     }
+    
+    public String getMusic(int page)
+    {
+        return URLs.MUSIC.found_url;
+    }
 }
