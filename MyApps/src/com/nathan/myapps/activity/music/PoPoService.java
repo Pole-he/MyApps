@@ -2,6 +2,7 @@ package com.nathan.myapps.activity.music;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import com.nathan.myapps.R;
@@ -18,117 +19,125 @@ import android.util.Log;
 
 public class PoPoService extends Service {
 
-	private MediaPlayer mpr = new MediaPlayer();
-	private List<String> songs = new ArrayList<String>();
-	private int currentPosition;
+    private MediaPlayer mpr = new MediaPlayer();
+    private List<String> songs = new ArrayList<String>();
+    private int currentPosition;
 
-	private NotificationManager nm;
-	private static final int NOTIFY_ID = R.layout.playlist;
+    private NotificationManager nm;
+    private static final int NOTIFY_ID = R.layout.playlist;
 
-	@Override
-	public void onCreate() {
-		super.onCreate();
-		nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-	}
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+    }
 
-	@Override
-	public void onDestroy() {
-		mpr.stop();
-		mpr.release();
-		nm.cancel(NOTIFY_ID);
-	}
+    @Override
+    public void onDestroy() {
+        mpr.stop();
+        mpr.release();
+        nm.cancel(NOTIFY_ID);
+    }
 
-	public IBinder getBinder() {
-		return mBinder;
-	}
+    public IBinder getBinder() {
+        return mBinder;
+    }
 
-	private void playSong(String file) {
-		Log.i("playSong:", file);
-		try {
+    private void playSong(String file) {
+        Log.i("playSong:", file);
+        try {
 
-			Notification notification = new Notification();
-			nm.notify(NOTIFY_ID, notification);
-			Log.i("playSong:", "------------------------");
-			mpr.reset();
-			mpr.setDataSource(file);
-			mpr.prepare();
-			mpr.start();
-			mpr.setOnCompletionListener(new OnCompletionListener() {
-				public void onCompletion(MediaPlayer arg0) {
-					nextSong();
-				}
-			});
-		} catch (IOException e) {
-			Log.e(getString(R.string.app_name), e.getMessage());
-		}
-	}
+            Notification notification = new Notification();
+            nm.notify(NOTIFY_ID, notification);
+            Log.i("playSong:", "------------------------");
+            mpr.reset();
+            mpr.setDataSource(file);
+            mpr.prepare();
+            mpr.start();
+            mpr.setOnCompletionListener(new OnCompletionListener()
+            {
 
-	private void nextSong() {
-		// Check if last song or not
-		if (++currentPosition >= songs.size()) {
-			currentPosition = 0;
-			nm.cancel(NOTIFY_ID);
-		} else {
-			playSong(songs.get(currentPosition));
-		}
-	}
+                public void onCompletion(MediaPlayer arg0) {
+                    nextSong();
+                }
+            });
+        }
+        catch (IOException e) {
+            Log.e(getString(R.string.app_name), e.getMessage());
+        }
+    }
 
-	private void prevSong() {
-		if (mpr.getCurrentPosition() < 3000 && currentPosition >= 1) {
-			playSong(songs.get(--currentPosition));
-		} else {
-			playSong(songs.get(currentPosition));
-		}
-	}
+    private void nextSong() {
+        // Check if last song or not
+        if (++currentPosition >= songs.size()) {
+            currentPosition = 0;
+            nm.cancel(NOTIFY_ID);
+        }
+        else {
+            playSong(songs.get(currentPosition));
+        }
+    }
 
-	private final PoPoInterface.Stub mBinder = new PoPoInterface.Stub() {
-		public void playFile(int position) throws DeadObjectException {
-			Log.i("playFile:", Integer.toString(position));
-			try {
-				currentPosition = position;
-				playSong(songs.get(position));
-			} catch (IndexOutOfBoundsException e) {
-				Log.e(getString(R.string.app_name), e.getMessage());
-			}
-		}
+    private void prevSong() {
+        if (mpr.getCurrentPosition() < 3000 && currentPosition >= 1) {
+            playSong(songs.get(--currentPosition));
+        }
+        else {
+            playSong(songs.get(currentPosition));
+        }
+    }
 
-		public void addSongPlaylist(String song) throws DeadObjectException {
-			songs.add(song);
-		}
+    private final PoPoInterface.Stub mBinder = new PoPoInterface.Stub()
+    {
 
-		public void clearPlaylist() throws DeadObjectException {
-			songs.clear();
-		}
+        public void playFile(int position) throws DeadObjectException {
+            Log.i("playFile:", Integer.toString(position));
+            try {
+                currentPosition = position;
+                playSong(songs.get(position));
+            }
+            catch (IndexOutOfBoundsException e) {
+                Log.e(getString(R.string.app_name), e.getMessage());
+            }
+        }
 
-		public void skipBack() throws DeadObjectException {
-			prevSong();
+        public void addSongPlaylist(String song) throws DeadObjectException {
+            songs.add(song);
+        }
 
-		}
+        public void addSongAllPlaylist(List<String> song) throws DeadObjectException {
+            songs.addAll(song);
+        }
 
-		public void skipForward() throws DeadObjectException {
-			nextSong();
-		}
+        public void clearPlaylist() throws DeadObjectException {
+            songs.clear();
+        }
 
-		public void pause() throws DeadObjectException {
-			Notification notification = new Notification();
-			nm.notify(NOTIFY_ID, notification);
-			mpr.pause();
-		}
+        public void skipBack() throws DeadObjectException {
+            prevSong();
 
-		public void stop() throws DeadObjectException {
-			nm.cancel(NOTIFY_ID);
-			mpr.stop();
-		}
-	};
+        }
 
-	@Override
-	public IBinder onBind(Intent intent) {
-		// TODO Auto-generated method stub
-		return mBinder;
-	}
+        public void skipForward() throws DeadObjectException {
+            nextSong();
+        }
 
- 
+        public void pause() throws DeadObjectException {
+            Notification notification = new Notification();
+            nm.notify(NOTIFY_ID, notification);
+            mpr.pause();
+        }
 
+        public void stop() throws DeadObjectException {
+            nm.cancel(NOTIFY_ID);
+            mpr.stop();
+        }
+    };
 
+    @Override
+    public IBinder onBind(Intent intent) {
+        // TODO Auto-generated method stub
+        return mBinder;
+    }
 
 }

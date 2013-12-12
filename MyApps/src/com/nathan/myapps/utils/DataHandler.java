@@ -1,6 +1,7 @@
 package com.nathan.myapps.utils;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -72,12 +73,12 @@ public class DataHandler {
      * 相册
      * 
      * @param tag
-     *            30-美女 68-明星 165-搞笑 5-壁纸 100-影视 1-动漫 
+     *            30-美女 68-明星 165-搞笑 5-壁纸 100-影视 1-动漫
      * @param start
      * @return
      */
     public String getAblum(int tag, int start) {
- 
+
         Object[] arrayOfObject = new Object[14];
         arrayOfObject[0] = "dbf0faa5-95ed-4b16-8841-44cd47132d70";
         arrayOfObject[1] = "d8:b3:77:37:27:7b";
@@ -91,13 +92,24 @@ public class DataHandler {
         arrayOfObject[9] = "356440046688758";
         arrayOfObject[10] = Integer.valueOf(tag);
         arrayOfObject[11] = Integer.valueOf(start);
-        arrayOfObject[12] = Integer.valueOf(20) ;
+        arrayOfObject[12] = Integer.valueOf(20);
         arrayOfObject[13] = "middle";
         return String.format(URLs.ABLUM.url, arrayOfObject);
     }
-    
-    public String getMusic(int page)
-    {
+
+    public String getMusic(int page) {
         return URLs.MUSIC.found_url;
+    }
+
+    public String getMusicPlay(List<String> song_id) {
+
+        StringBuffer song = new StringBuffer();
+        for (String songId : song_id) {
+            song.append(songId);
+            song.append("%2C");
+        }
+        Object[] arrayOfObject = new Object[1];
+        arrayOfObject[0] = song.toString();
+        return String.format(URLs.MUSIC.music_url, arrayOfObject) + URLs.MUSIC.music_url_end;
     }
 }

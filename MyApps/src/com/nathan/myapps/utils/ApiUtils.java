@@ -44,8 +44,9 @@ public class ApiUtils {
     public static String DateToString(Date date, String format) {
         SimpleDateFormat formater = new SimpleDateFormat(format);
         String strDateTime = "";
-        if (date != null)
+        if (date != null) {
             strDateTime = formater.format(date);
+        }
         return strDateTime;
     }
 

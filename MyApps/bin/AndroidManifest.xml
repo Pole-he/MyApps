@@ -66,6 +66,9 @@
             android:name="com.nathan.myapps.activity.music.MusicListActivity"
             android:screenOrientation="portrait" >
         </activity>
+        
+       <service android:enabled="true" android:name="com.nathan.myapps.activity.music.PoPoService" android:process=":remote" />
+                
     </application>
 
 </manifest>

@@ -1,11 +1,10 @@
 package com.nathan.myapps.bean.music;
 
 import java.io.Serializable;
+
 import java.util.Date;
 import java.util.List;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 
 public class MusicItem implements Serializable {
@@ -15,7 +14,7 @@ public class MusicItem implements Serializable {
      */
     private static final long serialVersionUID = 0000000006L;
     public int comment_count;
-    public Date create_at;
+    public String create_at;
     public int favorite_count;
     public String id;
     public Song song;

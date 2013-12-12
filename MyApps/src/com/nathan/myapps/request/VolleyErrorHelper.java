@@ -3,6 +3,8 @@ package com.nathan.myapps.request;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.json.JSONException;
+
 import android.content.Context;
 
 import com.android.volley.AuthFailureError;
@@ -39,6 +41,7 @@ public class VolleyErrorHelper {
         return context.getResources().getString(R.string.generic_error);
     }
 
+    
     /**
      * Determines whether the error is related to network
      * 
