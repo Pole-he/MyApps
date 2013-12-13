@@ -34,5 +34,8 @@
     <string name="icon_comment">评论</string>
     <string name="icon_forward">转发</string>
     <string name="icon_collect">收藏</string>
+    
+    <string name="register_text">注册</string>
+    <string name="login_text">登录</string>
 
 </resources>

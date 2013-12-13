@@ -22,13 +22,17 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.nathan.myapps.activity.MainActivity"
+            android:name="com.nathan.myapps.activity.WelcomeLoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name="com.nathan.myapps.activity.MainActivity" >
         </activity>
         <activity
             android:name="com.nathan.myapps.activity.at.VideoViewPlayingActivity"
@@ -53,22 +57,24 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:logo="@drawable/popo_icon" />
         <activity
-            android:logo="@drawable/popo_icon" 
             android:name="com.nathan.myapps.activity.ablum.AblumMainActivity"
+            android:logo="@drawable/popo_icon"
             android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.nathan.myapps.activity.ablum.AblumDetailActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" >
         </activity>
-                <activity
-            android:logo="@drawable/popo_icon" 
+        <activity
             android:name="com.nathan.myapps.activity.music.MusicListActivity"
+            android:logo="@drawable/popo_icon"
             android:screenOrientation="portrait" >
         </activity>
-        
-       <service android:enabled="true" android:name="com.nathan.myapps.activity.music.PoPoService" android:process=":remote" />
-                
+
+        <service
+            android:name="com.nathan.myapps.activity.music.PoPoService"
+            android:enabled="true"
+            android:process=":remote" />
     </application>
 
 </manifest>

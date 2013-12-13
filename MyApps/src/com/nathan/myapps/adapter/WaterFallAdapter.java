@@ -3,6 +3,8 @@ package com.nathan.myapps.adapter;
 import java.io.Serializable;
 import java.util.List;
 
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.ImageLoader.ImageListener;
 import com.nathan.myapps.MyApplication;
 import com.nathan.myapps.R;
 import com.nathan.myapps.activity.ablum.AblumDetailActivity;
@@ -77,11 +79,10 @@ public class WaterFallAdapter extends BaseAdapter {
         final PicItem pic = list.get(position);
         holder.imageView.mWidth = pic.picture_width;
         holder.imageView.mHeight = pic.picture_height;
-        // ImageListener listener =
-        // ImageLoader.getImageListener(holder.imageView,
-        // android.R.color.black, R.drawable.placeholder_fail);
-        // MyApplication.getInstance().mImageLoader.get(pic.picture_small_url,
-        // listener);
+        
+//        ImageListener listener = ImageLoader.getImageListener(holder.imageView,
+//                android.R.color.black, R.drawable.placeholder_fail);
+//        MyApplication.getInstance().mImageLoader.get(pic.picture_small_url, listener);
 
         // holder.imageView.getViewTreeObserver().addOnPreDrawListener(new
         // OnPreDrawListener()
@@ -110,7 +111,8 @@ public class WaterFallAdapter extends BaseAdapter {
         public void onClick(View v) {
             ViewHolder holder = (ViewHolder) v.getTag();
             holder.tvNum.setText((Integer.valueOf(holder.tvNum.getText().toString()) + 1) + "");
-            PicItem pic = ((List<PicItem>) holder.imageView.getTag()).get((Integer) holder.imageView.getTag(R.id.water_position));
+            PicItem pic = ((List<PicItem>) holder.imageView.getTag())
+                    .get((Integer) holder.imageView.getTag(R.id.water_position));
             pic.like_count = (Integer.valueOf(pic.like_count) + 1) + "";
         }
     };
