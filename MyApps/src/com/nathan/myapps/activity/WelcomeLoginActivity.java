@@ -1,16 +1,32 @@
 package com.nathan.myapps.activity;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
+
+import org.apache.http.conn.ConnectTimeoutException;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.nathan.myapps.R;
 import com.nathan.myapps.utils.Logger;
+import com.tencent.open.HttpStatusException;
+import com.tencent.open.NetworkUnavailableException;
+
+import com.tencent.tauth.Constants;
+import com.tencent.tauth.IRequestListener;
+import com.tencent.tauth.IUiListener;
+import com.tencent.tauth.Tencent;
+import com.tencent.tauth.UiError;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Message;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
@@ -41,9 +57,11 @@ public class WelcomeLoginActivity extends Activity {
     private Drawable mPicture_2;
     private Drawable mPicture_3;
 
+    public Tencent mTencent;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-      //  requestWindowFeature(Window.FEATURE_NO_TITLE);
+        // requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.welcom_login);
         findViewById();
         init();
@@ -141,8 +159,7 @@ public class WelcomeLoginActivity extends Activity {
         {
 
             public void onClick(View v) {
-                startActivity(new Intent(WelcomeLoginActivity.this, MainActivity.class));
-                finish();
+                onClickLogin();
             }
         });
     }
@@ -153,8 +170,7 @@ public class WelcomeLoginActivity extends Activity {
     private void init() {
         initAnim();
         initPicture();
-        Typeface typeFace = Typeface.createFromAsset(getAssets(),
-                "fonts/BelshawDonutRobot.ttf");
+        Typeface typeFace = Typeface.createFromAsset(getAssets(), "fonts/BelshawDonutRobot.ttf");
         // 应用字体
         mShowText.setTypeface(typeFace);
         /**
@@ -163,6 +179,8 @@ public class WelcomeLoginActivity extends Activity {
         mShowPicture.setImageDrawable(mPicture_1);
         mShowText.setText("儿时友,莫相忘");
         mShowPicture.startAnimation(mFadeIn);
+
+        mTencent = Tencent.createInstance("100577807", this.getApplicationContext());
     }
 
     /**
@@ -198,4 +216,128 @@ public class WelcomeLoginActivity extends Activity {
         }
 
     }
+
+    private void onClickLogin() {
+        startActivity(new Intent(WelcomeLoginActivity.this, MainActivity.class));
+        finish();
+        if (!mTencent.isSessionValid()) {
+            IUiListener listener = new BaseUiListener()
+            {
+
+                @Override
+                protected void doComplete(JSONObject values) {
+                    updateUserInfo();
+                }
+            };
+            mTencent.login(this, "all", listener);
+        }
+        else {
+            mTencent.logout(this);
+            updateUserInfo();
+        }
+    }
+
+    private class BaseUiListener implements IUiListener {
+
+        @Override
+        public void onComplete(JSONObject response) {
+            doComplete(response);
+        }
+
+        protected void doComplete(JSONObject values) {
+
+        }
+
+        @Override
+        public void onError(UiError e) {
+            Logger.e("MainActivity.this", "onError: " + e.errorDetail);
+
+        }
+
+        @Override
+        public void onCancel() {
+
+        }
+    }
+
+    private void updateUserInfo() {
+        if (mTencent != null && mTencent.isSessionValid()) {
+            IRequestListener requestListener = new IRequestListener()
+            {
+
+                @Override
+                public void onUnknowException(Exception e, Object state) {
+                    // TODO Auto-generated method stub
+
+                }
+
+                @Override
+                public void onSocketTimeoutException(SocketTimeoutException e, Object state) {
+                    // TODO Auto-generated method stub
+
+                }
+
+                @Override
+                public void onNetworkUnavailableException(NetworkUnavailableException e,
+                        Object state) {
+                    // TODO Auto-generated method stub
+
+                }
+
+                @Override
+                public void onMalformedURLException(MalformedURLException e, Object state) {
+                    // TODO Auto-generated method stub
+
+                }
+
+                @Override
+                public void onJSONException(JSONException e, Object state) {
+                    // TODO Auto-generated method stub
+
+                }
+
+                @Override
+                public void onIOException(IOException e, Object state) {
+                    // TODO Auto-generated method stub
+
+                }
+
+                @Override
+                public void onHttpStatusException(HttpStatusException e, Object state) {
+                    // TODO Auto-generated method stub
+
+                }
+
+                @Override
+                public void onConnectTimeoutException(ConnectTimeoutException e, Object state) {
+                    // TODO Auto-generated method stub
+
+                }
+
+                @Override
+                public void onComplete(final JSONObject response, Object state) {
+                    // TODO Auto-generated method stub
+                    Message msg = new Message();
+                    msg.obj = response;
+                    msg.what = 0;
+                    new Thread()
+                    {
+
+                        @Override
+                        public void run() {
+                            if (response.has("figureurl")) {
+                                Bitmap bitmap = null;
+                                // bitmap =
+                                // Util.getbitmap(response.getString("figureurl_qq_2"));
+                            }
+                        }
+
+                    }.start();
+                }
+            };
+            mTencent.requestAsync(Constants.GRAPH_SIMPLE_USER_INFO, null, Constants.HTTP_GET,
+                    requestListener, null);
+        }
+    }
+
 }

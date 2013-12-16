@@ -61,7 +61,6 @@ public class AblumListFragment extends BaseFragment {
 
     }
 
-    
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         findViews(view);
@@ -130,7 +129,6 @@ public class AblumListFragment extends BaseFragment {
             mCurrentPage = mCurrentPage + 20;
             getData(getCountFromType(type), mCurrentPage);
             showLoadingView();
-
         }
     };
 

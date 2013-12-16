@@ -695,9 +695,10 @@ public class StaggeredGridView extends ViewGroup {
                     mGetToTop = false;
                     lazyload = true;
 
-                    if (!loadlock) {
+                    if (!loadlock && System.currentTimeMillis() - mOldTime > 700) {
                         mLoadListener.onLoadmore();
                         loadlock = true;
+
                     }
                 }
             }
@@ -746,8 +747,12 @@ public class StaggeredGridView extends ViewGroup {
         return deltaY == 0 || movedBy != 0;
     }
 
+    private long mOldTime;
+
     public void initLock() {
+        mOldTime = System.currentTimeMillis();
         loadlock = false;
+
     }
 
     private final boolean contentFits() {
@@ -2325,7 +2330,7 @@ public class StaggeredGridView extends ViewGroup {
             position = in.readInt();
             // in.readIntArray(topOffsets);
             topOffsets = in.createIntArray();
-            this.mapping = new ArrayList<ColMap>(); 
+            this.mapping = new ArrayList<ColMap>();
             in.readTypedList(mapping, ColMap.CREATOR);
         }
 
