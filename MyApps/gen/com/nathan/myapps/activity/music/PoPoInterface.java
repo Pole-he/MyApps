@@ -1,6 +1,6 @@
 /*
  * This file is auto-generated.  DO NOT MODIFY.
- * Original file: C:\\Users\\Administrator\\Documents\\GitHub\\MyApps\\MyApps\\src\\com\\nathan\\myapps\\activity\\music\\PoPoInterface.aidl
+ * Original file: /Users/pole-he/Documents/Android/MyApps/MyApps/src/com/nathan/myapps/activity/music/PoPoInterface.aidl
  */
 package com.nathan.myapps.activity.music;
 public interface PoPoInterface extends android.os.IInterface
