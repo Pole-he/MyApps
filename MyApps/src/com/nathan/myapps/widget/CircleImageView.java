@@ -98,9 +98,10 @@ public class CircleImageView extends NetworkImageView {
             mLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
             mLinePaint.setStyle(Style.STROKE);
             // You can use it to change the width of the line
-            mLinePaint.setStrokeWidth(5);
+            mLinePaint.setStrokeWidth(4);
             // You can use it to change the color of the line
             mLinePaint.setColor(Color.WHITE);
+            mLinePaint.setAlpha(210);
         }
         return mLinePaint;
     }
@@ -123,16 +124,16 @@ public class CircleImageView extends NetworkImageView {
         int centerY = height / 2;
         int radius = Math.min(centerX, centerY);
         Bitmap result = null;
-        result = Bitmap.createBitmap(radius * 2 + 4, radius * 2 + 4, Config.ARGB_8888);
+        result = Bitmap.createBitmap(radius * 2 + 8, radius * 2 + 8, Config.ARGB_8888);
         Canvas canvas = new Canvas(result);
         // canvas.drawCircle(radius, radius, radius - SPACING_LINE,
         // getCirclePaint());
         getCirclePaint().setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
-        canvas.drawBitmap(bit, 2.0f - (centerX - radius), 2.0f - (centerY - radius), null);
+        canvas.drawBitmap(bit, 4.0f - (centerX - radius), 4.0f - (centerY - radius), null);
         // //outer
         // canvas.drawCircle(radius, radius, radius, getLinePaint());
         // //inner
-        canvas.drawCircle(radius + 2.0f, radius + 2.0f, radius - 1, getLinePaint());
+        canvas.drawCircle(radius + 4.0f, radius + 4.0f, radius+2, getLinePaint());
         // reset
         getCirclePaint().setXfermode(null);
         // recycle

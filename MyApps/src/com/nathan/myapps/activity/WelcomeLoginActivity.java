@@ -26,6 +26,7 @@ import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.view.Window;
@@ -34,6 +35,7 @@ import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,8 +44,7 @@ public class WelcomeLoginActivity extends Activity {
 
     private ImageView mShowPicture;
     private TextView mShowText;
-    private TextView mRegister;
-    private TextView mLogin;
+    private ImageButton iBtnQQ;
     /**
      * 三个切换的动画
      */
@@ -58,6 +59,7 @@ public class WelcomeLoginActivity extends Activity {
     private Drawable mPicture_3;
 
     public Tencent mTencent;
+    private static final String SCOPE = "get_user_info, get_simple_userinfo, add_share";// 权限：读取用户信息并分享信息
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,8 +76,7 @@ public class WelcomeLoginActivity extends Activity {
     private void findViewById() {
         mShowPicture = (ImageView) findViewById(R.id.welcome_bg);
         mShowText = (TextView) findViewById(R.id.guide_content);
-        mRegister = (TextView) findViewById(R.id.fast_register);
-        mLogin = (TextView) findViewById(R.id.loginButton);
+        iBtnQQ = (ImageButton)findViewById(R.id.loginQQ);
     }
 
     /**
@@ -133,29 +134,22 @@ public class WelcomeLoginActivity extends Activity {
                  * 我这里只是简单的采用获取当前显示的图片来进行判断。
                  */
                 if (mShowPicture.getDrawable().equals(mPicture_1)) {
-                    mShowText.setText("同学情,请珍藏");
+                    mShowText.setText(getResources().getString(R.string.login_sentence_2));
                     mShowPicture.setImageDrawable(mPicture_2);
                 }
                 else if (mShowPicture.getDrawable().equals(mPicture_2)) {
-                    mShowText.setText("共奋斗,同分享");
+                    mShowText.setText(getResources().getString(R.string.login_sentence_3));
                     mShowPicture.setImageDrawable(mPicture_3);
                 }
                 else if (mShowPicture.getDrawable().equals(mPicture_3)) {
-                    mShowText.setText("儿时友,莫相忘");
+                    mShowText.setText(getResources().getString(R.string.login_sentence_1));
                     mShowPicture.setImageDrawable(mPicture_1);
                 }
                 mShowPicture.startAnimation(mFadeIn);
             }
         });
-        mRegister.setOnClickListener(new OnClickListener()
-        {
 
-            public void onClick(View v) {
-                Toast.makeText(WelcomeLoginActivity.this, "暂时无法提供此功能", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        mLogin.setOnClickListener(new OnClickListener()
+        iBtnQQ.setOnClickListener(new OnClickListener()
         {
 
             public void onClick(View v) {
@@ -177,7 +171,7 @@ public class WelcomeLoginActivity extends Activity {
          * 界面刚开始显示的内容
          */
         mShowPicture.setImageDrawable(mPicture_1);
-        mShowText.setText("儿时友,莫相忘");
+        mShowText.setText(getResources().getString(R.string.login_sentence_1));
         mShowPicture.startAnimation(mFadeIn);
 
         mTencent = Tencent.createInstance("100577807", this.getApplicationContext());
@@ -207,8 +201,8 @@ public class WelcomeLoginActivity extends Activity {
         try {
             AssetManager asm = this.getAssets();
             mPicture_1 = Drawable.createFromStream(asm.open("login_1.jpg"), null);
-            mPicture_2 = Drawable.createFromStream(asm.open("login_3.jpg"), null);
-            mPicture_3 = Drawable.createFromStream(asm.open("login_4.jpg"), null);
+            mPicture_2 = Drawable.createFromStream(asm.open("login_2.jpg"), null);
+            mPicture_3 = Drawable.createFromStream(asm.open("login_3.jpg"), null);
         }
         catch (IOException e) {
             // TODO Auto-generated catch block
@@ -218,18 +212,20 @@ public class WelcomeLoginActivity extends Activity {
     }
 
     private void onClickLogin() {
-        startActivity(new Intent(WelcomeLoginActivity.this, MainActivity.class));
-        finish();
+        // startActivity(new Intent(WelcomeLoginActivity.this,
+        // MainActivity.class));
+        // finish();
         if (!mTencent.isSessionValid()) {
             IUiListener listener = new BaseUiListener()
             {
 
                 @Override
                 protected void doComplete(JSONObject values) {
+                    Logger.e("values", values.toString());
                     updateUserInfo();
                 }
             };
-            mTencent.login(this, "all", listener);
+            mTencent.login(this, SCOPE, listener);
         }
         else {
             mTencent.logout(this);
@@ -242,6 +238,7 @@ public class WelcomeLoginActivity extends Activity {
         @Override
         public void onComplete(JSONObject response) {
             doComplete(response);
+            Logger.e("MainActivity.this", "onComplete");
         }
 
         protected void doComplete(JSONObject values) {
@@ -256,7 +253,7 @@ public class WelcomeLoginActivity extends Activity {
 
         @Override
         public void onCancel() {
-
+            Logger.e("MainActivity.this", "onCancel");
         }
     }
 
@@ -320,24 +317,34 @@ public class WelcomeLoginActivity extends Activity {
                     Message msg = new Message();
                     msg.obj = response;
                     msg.what = 0;
-                    new Thread()
-                    {
-
-                        @Override
-                        public void run() {
-                            if (response.has("figureurl")) {
-                                Bitmap bitmap = null;
-                                // bitmap =
-                                // Util.getbitmap(response.getString("figureurl_qq_2"));
-                            }
-                        }
-
-                    }.start();
+                    mHandler.sendMessage(msg);
                 }
             };
             mTencent.requestAsync(Constants.GRAPH_SIMPLE_USER_INFO, null, Constants.HTTP_GET,
                     requestListener, null);
         }
     }
+    Handler mHandler = new Handler() {
 
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 0) {
+                JSONObject response = (JSONObject) msg.obj;
+                if (response.has("nickname")) {
+                    try {
+
+                        Intent intent = new Intent(WelcomeLoginActivity.this,
+                                PoPoMainActivity.class);
+                         intent.putExtra("picUrl", response.getString("figureurl_2"));
+                         intent.putExtra("name", response.getString("nickname"));
+                         startActivity(intent);
+                         finish();
+                    } catch (JSONException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    };
 }

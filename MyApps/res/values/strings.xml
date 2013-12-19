@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="author_name">- Nathan</string>
     <string name="app_name">PoPo</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
@@ -34,8 +35,10 @@
     <string name="icon_comment">评论</string>
     <string name="icon_forward">转发</string>
     <string name="icon_collect">收藏</string>
-    
     <string name="register_text">注册</string>
     <string name="login_text">登录</string>
+    <string name="login_sentence_1">Whatever is worth doing is worth doing well</string>
+    <string name="login_sentence_2">The hard part isn’t making the decision. It’s living with it</string>
+    <string name="login_sentence_3">If you love the life you live,you will live a life of love</string>
 
 </resources>
