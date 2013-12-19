@@ -1,6 +1,7 @@
 package com.nathan.myapps.activity;
 
 import com.nathan.myapps.R;
+import com.nathan.myapps.db.UserInfoData;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -18,6 +19,7 @@ public class SplashScreenActivity extends Activity {
 
     private ImageView ivScreen;
     private TextView tvLogo, tvAuthor;
+    private UserInfoData userDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +31,8 @@ public class SplashScreenActivity extends Activity {
     }
 
     private void init() {
+        
+        userDb = new UserInfoData(this);
         Typeface typeFace = Typeface.createFromAsset(getAssets(), "fonts/CooperBlackStd.otf");
         // 应用字体
         tvLogo.setTypeface(typeFace);
@@ -91,7 +95,17 @@ public class SplashScreenActivity extends Activity {
                                     // TODO Auto-generated catch block
                                     e.printStackTrace();
                                 }
-                                startActivity(new Intent(SplashScreenActivity.this, WelcomeLoginActivity.class));
+                                if(userDb.getUserInfo().size()>0)
+                                {
+                                    Intent intent = new Intent(SplashScreenActivity.this,
+                                            PoPoMainActivity.class);
+                                     intent.putExtra("picUrl",  userDb.getUserInfo().get(1));
+                                     intent.putExtra("name", userDb.getUserInfo().get(0));
+                                     startActivity(intent);
+                                }else
+                                {
+                                    startActivity(new Intent(SplashScreenActivity.this, WelcomeLoginActivity.class));
+                                }
                                 finish();
                             }
                         }).start();

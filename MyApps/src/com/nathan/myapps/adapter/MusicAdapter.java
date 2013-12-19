@@ -49,11 +49,14 @@ public class MusicAdapter extends BaseAdapter {
     private List<MusicItem> list;
     private Context mContext;
     private LayoutInflater mInflater = null;
+    private List<Boolean> listStatus;
 
     public MusicAdapter(List<MusicItem> list, Context context) {
         this.list = list;
         mContext = context;
         mInflater = LayoutInflater.from(mContext);
+
+        listStatus = new ArrayList<Boolean>();
     }
 
     @Override
@@ -126,6 +129,13 @@ public class MusicAdapter extends BaseAdapter {
         viewHolder.tv_collection.setText(music.favorite_count + "");
         viewHolder.musicPlay.setTag(music);
         viewHolder.musicPlay.setTag(R.id.music_flag, true);
+
+        if (listStatus.get(position)) {
+            viewHolder.musicPlay.setImageResource(R.drawable.icon_music_circle_pause);
+        }
+        else {
+            viewHolder.musicPlay.setImageResource(R.drawable.icon_music_circle_play);
+        }
         viewHolder.musicPlay.setOnClickListener(mPlayClick);
         return convertView;
     }
@@ -146,13 +156,16 @@ public class MusicAdapter extends BaseAdapter {
         TextView tv_collection;
     }
 
+    private int mLastPosition = 0;
+    private View mLastView;
     private OnClickListener mPlayClick = new OnClickListener()
     {
 
         @Override
         public void onClick(View view) {
-            if ((Boolean) view.getTag(R.id.music_flag)) {
-                MusicItem music = (MusicItem) view.getTag();
+            MusicItem music = (MusicItem) view.getTag();
+            int mPosition = list.indexOf(music);
+            if (!listStatus.get(mPosition)) {
                 List<String> songId = new ArrayList<String>();
                 songId.add(music.song.song_id);
                 if (music.songlist != null) {
@@ -161,14 +174,24 @@ public class MusicAdapter extends BaseAdapter {
                     }
                 }
                 getData(songId);
+                listStatus.set(mLastPosition, false);
+                if (mLastView != null) {
+                    ((ImageView) mLastView).setImageResource(R.drawable.icon_music_circle_play);
+                }
                 ((ImageView) view).setImageResource(R.drawable.icon_music_circle_pause);
-                view.setTag(R.id.music_flag, false);
+
+                listStatus.set(mPosition, true);
+
+                mLastPosition = mPosition;
+                mLastView = view;
+
             }
             else {
                 ((MusicListActivity) mContext).stopMusic();
-                view.setTag(R.id.music_flag, true);
                 ((ImageView) view).setImageResource(R.drawable.icon_music_circle_play);
+                listStatus.set(mPosition, false);
             }
+
         }
 
     };
@@ -208,5 +231,17 @@ public class MusicAdapter extends BaseAdapter {
             public void onErrorResponse(VolleyError error) {
             }
         };
+    }
+
+    public void initListStatus(int size) {
+        for (int i = 0; i < size; i++) {
+            listStatus.set(i, false);
+        }
+    }
+
+    public void setListStatus(int size) {
+        for (int i = 0; i < size; i++) {
+            listStatus.add(false);
+        }
     }
 }

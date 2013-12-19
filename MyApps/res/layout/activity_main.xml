@@ -11,6 +11,12 @@
         android:layout_weight="1"
         android:background="@drawable/gradient_main_first_bg" >
 
+        <ImageView
+            android:id="@+id/iv_background"
+            android:scaleType="fitXY"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -19,10 +25,9 @@
 
             <com.nathan.myapps.widget.CircleImageView
                 android:id="@+id/userPic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:src="@drawable/popo_icon" />
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center" />
 
             <TextView
                 android:id="@+id/userName"

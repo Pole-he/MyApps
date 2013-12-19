@@ -9,6 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.nathan.myapps.R;
+import com.nathan.myapps.db.UserInfoData;
 import com.nathan.myapps.utils.Logger;
 import com.tencent.open.HttpStatusException;
 import com.tencent.open.NetworkUnavailableException;
@@ -60,6 +61,7 @@ public class WelcomeLoginActivity extends Activity {
 
     public Tencent mTencent;
     private static final String SCOPE = "get_user_info, get_simple_userinfo, add_share";// 权限：读取用户信息并分享信息
+    private String access_takoen;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -221,7 +223,13 @@ public class WelcomeLoginActivity extends Activity {
 
                 @Override
                 protected void doComplete(JSONObject values) {
-                    Logger.e("values", values.toString());
+                    try {
+                        access_takoen = values.getString("access_token");
+                    }
+                    catch (JSONException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
                     updateUserInfo();
                 }
             };
@@ -332,7 +340,9 @@ public class WelcomeLoginActivity extends Activity {
                 JSONObject response = (JSONObject) msg.obj;
                 if (response.has("nickname")) {
                     try {
-
+                        
+                        UserInfoData db = new UserInfoData(WelcomeLoginActivity.this);
+                        db.insert(response.getString("nickname"), response.getString("figureurl_2"), access_takoen);
                         Intent intent = new Intent(WelcomeLoginActivity.this,
                                 PoPoMainActivity.class);
                          intent.putExtra("picUrl", response.getString("figureurl_2"));

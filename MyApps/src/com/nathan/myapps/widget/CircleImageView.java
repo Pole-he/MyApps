@@ -23,7 +23,7 @@ import android.net.Uri;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-public class CircleImageView extends NetworkImageView {
+public class CircleImageView extends LoadListenerImageView {
 
     private Context mContext;
 

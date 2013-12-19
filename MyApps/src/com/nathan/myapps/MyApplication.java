@@ -13,12 +13,7 @@ import android.graphics.Bitmap.CompressFormat;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-/**
- * Example application for adding an L1 image cache to Volley.
- * 
- * @author Trey Robinson
- * 
- */
+
 public class MyApplication extends Application {
 
     private static int DISK_IMAGECACHE_SIZE = 1024 * 1024 * 10;

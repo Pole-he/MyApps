@@ -109,6 +109,7 @@ public class MusicListActivity extends ActionBarActivity {
                 dimissLoadingView();
 
                 listMusic.addAll((List<MusicItem>) response.data);
+                mMusicListAdapter.setListStatus(listMusic.size());
                 mMusicListAdapter.notifyDataSetChanged();
 
             }
@@ -183,6 +184,11 @@ public class MusicListActivity extends ActionBarActivity {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
+    
+    public void onDestroy() {
+        super.onDestroy();
+        unbindService(mConnection);
     }
 
 }
