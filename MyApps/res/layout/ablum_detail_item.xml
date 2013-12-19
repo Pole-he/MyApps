@@ -1,13 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@color/black"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="@color/black" >
 
     <uk.co.senab.photoview.PhotoView
         android:id="@+id/imageView1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="match_parent" />
+
+    <FrameLayout
+        android:id="@+id/flLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" >
+
+<!--         <ProgressBar
+            android:id="@+id/pb_home_new_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminateBehavior="repeat"
+            android:indeterminateDrawable="@drawable/progressbar_pic_view"
+            android:indeterminateOnly="true"
+            android:visibility="visible" /> -->
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="false"
+            android:indeterminateDrawable="@drawable/progressbar_pic_view"
+            android:indeterminateDuration="1000" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/load"
+            android:textColor="@color/white"
+            android:textSize="13dp" />
+    </FrameLayout>
 
 </FrameLayout>

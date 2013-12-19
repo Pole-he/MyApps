@@ -130,7 +130,7 @@ public class AnimeTasteDetailActivity extends ActionBarActivity implements OnCli
         switch (v.getId()) {
         case R.id.pre_play_button:
             intent.setClass(this, VideoViewPlayingActivity.class);
-            intent.setData(Uri.parse((String) v.getTag()));
+            intent.setData(Uri.parse(getHDVideoUrl((String) v.getTag())));
             startActivity(intent);
             break;
         default:
@@ -141,6 +141,16 @@ public class AnimeTasteDetailActivity extends ActionBarActivity implements OnCli
             break;
         }
 
+    }
+
+    private static String getCommonVideoUrl(String paramString) {
+        Long localLong = Long.valueOf((long) Math.ceil(System.currentTimeMillis() / 1000L));
+        return paramString.replace("type//", "type/flv/ts/" + localLong + "/useKeyframe/0/");
+    }
+
+    private static String getHDVideoUrl(String paramString) {
+        Long localLong = Long.valueOf((long) (Math.ceil(System.currentTimeMillis() / 1000L)));
+        return paramString.replace("type//", "type/hd2/ts/" + localLong + "/useKeyframe/0/");
     }
 
     @SuppressWarnings("rawtypes")

@@ -30,10 +30,16 @@
                 android:src="@drawable/picdetail_back_selector" />
 
             <TextView
-                android:id="@+id/count"
+                android:id="@+id/title"
                 style="@style/title_text"
                 android:layout_toRightOf="@+id/btn_back"
-                android:text="15/30"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/count"
+                style="@style/title_text"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
                 android:textColor="@color/white" />
         </RelativeLayout>
 
@@ -42,51 +48,45 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:background="@color/transparent_seventy_percent"
             android:gravity="center_vertical"
-            android:orientation="vertical"
-            android:visibility="visible" >
+            android:orientation="horizontal" >
 
-            <LinearLayout
-                android:id="@+id/bottom_bar_first"
-                android:layout_width="fill_parent"
+            <TextView
+                android:id="@+id/btn_like"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/transparent_seventy_percent"
-                android:gravity="center_vertical"
-                android:orientation="horizontal" >
+                android:layout_weight="1.0"
+                android:clickable="true"
+                android:drawableTop="@drawable/pic_detail_like_btn_bg"
+                android:gravity="center_horizontal"
+                android:text="@string/favorite"
+                android:textColor="#ffb1b1b1"
+                android:textSize="13.0dip" />
 
-                <TextView
-                    android:id="@+id/btn_like"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.0"
-                    android:drawableTop="@drawable/pic_detail_like_btn_bg"
-                    android:gravity="center_horizontal"
-                    android:text="@string/favorite"
-                    android:textColor="#ffb1b1b1"
-                    android:textSize="13.0dip" />
+            <TextView
+                android:id="@+id/btn_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:clickable="true"
+                android:drawableTop="@drawable/pic_detail_save_btnbg"
+                android:gravity="center_horizontal"
+                android:text="@string/download"
+                android:textColor="#ffb1b1b1"
+                android:textSize="13.0dip" />
 
-                <TextView
-                    android:id="@+id/btn_save"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.0"
-                    android:drawableTop="@drawable/pic_detail_save_btnbg"
-                    android:gravity="center_horizontal"
-                    android:text="@string/download"
-                    android:textColor="#ffb1b1b1"
-                    android:textSize="13.0dip" />
-
-                <TextView
-                    android:id="@+id/btn_share"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.0"
-                    android:drawableTop="@drawable/pic_detail_share_btnbg"
-                    android:gravity="center_horizontal"
-                    android:text="@string/share"
-                    android:textColor="#ffb1b1b1"
-                    android:textSize="13.0dip" />
-            </LinearLayout>
+            <TextView
+                android:id="@+id/btn_share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:clickable="true"
+                android:drawableTop="@drawable/pic_detail_share_btnbg"
+                android:gravity="center_horizontal"
+                android:text="@string/share"
+                android:textColor="#ffb1b1b1"
+                android:textSize="13.0dip" />
         </LinearLayout>
     </RelativeLayout>
 

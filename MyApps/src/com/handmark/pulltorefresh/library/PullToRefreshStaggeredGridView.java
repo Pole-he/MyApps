@@ -1,7 +1,7 @@
 package com.handmark.pulltorefresh.library;
 
-import com.nathan.myapps.R ;
-import com.nathan.myapps.widget.gridview.StaggeredGridView ;
+import com.nathan.myapps.R;
+import com.nathan.myapps.widget.gridview.StaggeredGridView;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -33,12 +33,14 @@ public class PullToRefreshStaggeredGridView extends PullToRefreshBase<StaggeredG
         return Orientation.VERTICAL;
     }
 
+    StaggeredGridView stgv;
+
     @Override
     protected StaggeredGridView createRefreshableView(Context context, AttributeSet attrs) {
-        StaggeredGridView stgv;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
             stgv = new InternalStaggeredGridViewSDK9(context, attrs);
-        } else {
+        }
+        else {
             stgv = new StaggeredGridView(context, attrs);
         }
 
@@ -51,13 +53,53 @@ public class PullToRefreshStaggeredGridView extends PullToRefreshBase<StaggeredG
     }
 
     @Override
+    public void onRefreshComplete() {
+        stgv.initLock();
+        super.onRefreshComplete();
+    }
+
+    // @Override
+    // protected boolean isReadyForPullStart() {
+    // return mRefreshableView.mGetToTop;
+    // }
+    //
+    // @Override
+    // protected boolean isReadyForPullEnd() {
+    // return false;
+    // }
+    @Override
     protected boolean isReadyForPullStart() {
-        return mRefreshableView.mGetToTop;
+        boolean result = false;
+        View v = mRefreshableView.getChildAt(0);
+        if (mRefreshableView.getFirstPosition() == 0) {
+            if (v != null) {
+                // getTop() and getBottom() are relative to the ListView,
+                // so if getTop() is negative, it is not fully visible
+                boolean isTopFullyVisible = v.getTop() >= 0;
+
+                result = isTopFullyVisible;
+            }
+        }
+        return result;
     }
 
     @Override
     protected boolean isReadyForPullEnd() {
-        return false;
+        boolean result = false;
+        int last = mRefreshableView.getChildCount() - 1;
+        View v = mRefreshableView.getChildAt(last);
+
+        int firstVisiblePosition = mRefreshableView.getFirstPosition();
+        int visibleItemCount = mRefreshableView.getChildCount();
+        int itemCount = mRefreshableView.getItemCount();
+        if (firstVisiblePosition + visibleItemCount >= itemCount) {
+            if (v != null) {
+                boolean isLastFullyVisible = v.getBottom() <= mRefreshableView.getHeight();
+
+                result = isLastFullyVisible;
+            }
+        }
+        return result;
     }
 
     public void setAdapter(BaseAdapter adapter) {
@@ -72,15 +114,16 @@ public class PullToRefreshStaggeredGridView extends PullToRefreshBase<StaggeredG
         }
 
         @Override
-        protected boolean overScrollBy(int deltaX, int deltaY, int scrollX, int scrollY, int scrollRangeX,
-                                       int scrollRangeY, int maxOverScrollX, int maxOverScrollY, boolean isTouchEvent) {
+        protected boolean overScrollBy(int deltaX, int deltaY, int scrollX, int scrollY,
+                int scrollRangeX, int scrollRangeY, int maxOverScrollX, int maxOverScrollY,
+                boolean isTouchEvent) {
 
-            final boolean returnValue = super.overScrollBy(deltaX, deltaY, scrollX, scrollY, scrollRangeX,
-                    scrollRangeY, maxOverScrollX, maxOverScrollY, isTouchEvent);
+            final boolean returnValue = super.overScrollBy(deltaX, deltaY, scrollX, scrollY,
+                    scrollRangeX, scrollRangeY, maxOverScrollX, maxOverScrollY, isTouchEvent);
 
             // Does all of the hard work...
-            OverscrollHelper.overScrollBy(PullToRefreshStaggeredGridView.this, deltaX, scrollX, deltaY, scrollY,
-                    getScrollRange(), isTouchEvent);
+            OverscrollHelper.overScrollBy(PullToRefreshStaggeredGridView.this, deltaX, scrollX,
+                    deltaY, scrollY, getScrollRange(), isTouchEvent);
 
             return returnValue;
         }
@@ -92,7 +135,8 @@ public class PullToRefreshStaggeredGridView extends PullToRefreshBase<StaggeredG
             int scrollRange = 0;
             if (getChildCount() > 0) {
                 View child = getChildAt(0);
-                scrollRange = Math.max(0, child.getHeight() - (getHeight() - getPaddingBottom() - getPaddingTop()));
+                scrollRange = Math.max(0, child.getHeight()
+                        - (getHeight() - getPaddingBottom() - getPaddingTop()));
             }
             return scrollRange;
         }

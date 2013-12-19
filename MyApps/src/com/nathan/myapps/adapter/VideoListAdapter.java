@@ -9,6 +9,7 @@ import com.nathan.myapps.R;
 import com.nathan.myapps.activity.at.AnimeTasteDetailActivity;
 import com.nathan.myapps.activity.at.VideoViewPlayingActivity;
 import com.nathan.myapps.bean.at.VideoItem;
+import com.nathan.myapps.utils.UrlUtils;
 import com.nathan.myapps.utils.VideoUtils;
 import com.nathan.myapps.widget.AtNetworkImageView;
 
@@ -73,7 +74,7 @@ public class VideoListAdapter extends BaseAdapter {
         // R.drawable.placeholder_thumb, R.drawable.placeholder_fail);
         // MyApplication.getInstance().mImageLoader.get(video.HomePic,
         // listener);
-        viewHolder.iv_pic.setImageUrl(video.HomePic, MyApplication.getInstance().mImageLoader);
+        viewHolder.iv_pic.setImageUrl(UrlUtils.removeSpace(video.HomePic), MyApplication.getInstance().mImageLoader);
         viewHolder.iv_pic.setTag(video);
         
         viewHolder.tv_title.setText(video.Name);

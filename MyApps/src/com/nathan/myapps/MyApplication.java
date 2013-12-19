@@ -56,20 +56,6 @@ public class MyApplication extends Application {
         RequestManager.init(this);
         mImageLoader = new ImageLoader(RequestManager.getRequestQueue(), new BitmapCache());
         _preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        createImageCache();
-    }
-
-    /**
-     * Create the image cache. Uses Memory Cache by default. Change to Disk for
-     * a Disk based LRU implementation.
-     */
-    private void createImageCache() {
-        // ImageCacheManager.getInstance().init(this,
-        // this.getPackageCodePath()
-        // , DISK_IMAGECACHE_SIZE
-        // , DISK_IMAGECACHE_COMPRESS_FORMAT
-        // , DISK_IMAGECACHE_QUALITY
-        // , CacheType.MEMORY);
     }
 
     /**

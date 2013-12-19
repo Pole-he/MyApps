@@ -26,6 +26,7 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.nathan.myapps.MyApplication;
 import com.nathan.myapps.utils.DateDeserializerUtils;
+import com.nathan.myapps.utils.DateSerializerUtils;
 
 /**
  * Wrapper for Volley requests to facilitate parsing of json responses.
@@ -41,6 +42,8 @@ public class GsonRequest<T> extends Request<T> {
     private Gson mGson = new GsonBuilder()
     .registerTypeAdapter(java.util.Date.class,
             new DateDeserializerUtils())
+    .registerTypeAdapter(java.util.Date.class,
+            new DateSerializerUtils())
     .enableComplexMapKeySerialization()
     .setDateFormat(DateFormat.LONG)
     .create();

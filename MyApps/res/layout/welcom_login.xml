@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+    <ImageView
+        android:id="@+id/welcome_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/popo_icon" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonLayout"
+        android:layout_marginBottom="24.0dip"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/guide_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="32.0dip"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            android:textSize="28.0sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/buttonLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20.0dip"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/fast_register"
+            android:layout_width="126.0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/register_button"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="@string/register_text"
+            android:textColor="#ffffffff"
+            android:textSize="20.0sp" />
+
+        <TextView
+            android:id="@+id/loginButton"
+            android:layout_width="126.0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8.0dip"
+            android:background="@drawable/local_login_button"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="@string/login_text"
+            android:textColor="#ffffffff"
+            android:textSize="20.0sp" />
+    </LinearLayout>
+
+</RelativeLayout>
