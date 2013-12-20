@@ -4,6 +4,12 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true" />
+
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="17" />
@@ -98,7 +104,7 @@
         </activity>
 
         <service
-            android:name="com.nathan.myapps.activity.music.PoPoService"
+            android:name="com.nathan.myapps.activity.music.service.PoPoService"
             android:enabled="true"
             android:process=":remote" />
     </application>

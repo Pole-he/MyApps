@@ -7,13 +7,14 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.Request.Method;
 import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
 import com.baidu.cyberplayer.utils.T;
 import com.nathan.myapps.MyApplication;
 import com.nathan.myapps.R;
 import com.nathan.myapps.adapter.VideoListAdapter;
+import com.nathan.myapps.adapter.ViewFlowImageAdapter;
 import com.nathan.myapps.adapter.ViewPagerAdapter;
 import com.nathan.myapps.bean.at.ListJson;
 import com.nathan.myapps.bean.at.VideoItem;
@@ -22,12 +23,15 @@ import com.nathan.myapps.request.HttpVolleyRequest;
 import com.nathan.myapps.request.RequestManager;
 import com.nathan.myapps.utils.DataHandler;
 import com.nathan.myapps.widget.AtNetworkImageView;
+import com.nathan.myapps.widget.CircleFlowIndicator;
 import com.nathan.myapps.widget.FixedSpeedScroller;
-import com.nathan.myapps.widget.LoadingView ;
-import com.viewpagerindicator.UnderlinePageIndicator;
+import com.nathan.myapps.widget.LayersLayout;
+import com.nathan.myapps.widget.LoadingView;
+import com.nathan.myapps.widget.ViewFlow;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -60,13 +64,13 @@ public class AnimeTasteActivity extends ActionBarActivity implements OnScrollLis
 
     private ListView lvVideo;
     private LayoutInflater mLayoutInflater;
-    private UnderlinePageIndicator mShowIndicator;
-    private ViewPager mShowPager;
     private Boolean mUpdating = true;// 防止多次加载
     private int mCurrentPage = 0;
     private VideoListAdapter mVideoListAdapter;
     private List<VideoItem> listVideo = new ArrayList<VideoItem>();
     private LoadingView mLoadingView;
+    private ViewFlow mShowViewFlow;
+    private LayersLayout layersLayout;
 
     private boolean isReversible = true;
     /**
@@ -109,52 +113,41 @@ public class AnimeTasteActivity extends ActionBarActivity implements OnScrollLis
         HttpVolleyRequest<ListJson> request = new HttpVolleyRequest<ListJson>(this);
         request.HttpVolleyRequestGet(DataHandler.instance().getList(mCurrentPage), ListJson.class,
                 VideoItem.class, createMyReqSuccessListener(), createMyReqErrorListener());
-       showLoadingView ( ) ;
+        showLoadingView();
     }
 
     private void init() {
         mVideoListAdapter = new VideoListAdapter(AnimeTasteActivity.this, listVideo);
         lvVideo.setAdapter(mVideoListAdapter);
+    }
 
-
-        try {
-            Field mField = ViewPager.class.getDeclaredField("mScroller");
-            mField.setAccessible(true);
-            FixedSpeedScroller mScroller = new FixedSpeedScroller(mShowPager.getContext(),
-                    new AccelerateInterpolator());
-            // 可以用setDuration的方式调整速率
-            // mScroller.setmDuration(10000);
-            mField.set(mShowPager, mScroller);
+    private void showLoadingView() {
+        if (mLoadingView == null) {
+            mLoadingView = new LoadingView(this, 3);
         }
-        catch (Exception e) {
-            e.printStackTrace();
+        if (!mLoadingView.isShowing()) {
+            mLoadingView.show();
         }
     }
 
-    private void showLoadingView ( ) {
-            if ( mLoadingView == null ) {
-                    mLoadingView = new LoadingView ( this , 3) ;
-            }
-            if ( ! mLoadingView.isShowing ( ) ) {
-                    mLoadingView.show ( ) ;
-            }
+    private void dimissLoadingView() {
+        if (mLoadingView.isShowing()) {
+            mLoadingView.dismiss();
+        }
     }
-    
-    private void dimissLoadingView()
-    {
-            if(mLoadingView.isShowing ( ) )
-            {
-                    mLoadingView.dismiss();
-            }
-    }
+
     private void findViewById() {
         lvVideo = (ListView) this.findViewById(R.id.videoList);
+        layersLayout = (LayersLayout) findViewById(R.id.layerslayout);// 获得自定义图层，对触屏事件进行重定向
+
         mLayoutInflater = LayoutInflater.from(this);
         this.lvVideo.setOnScrollListener(this);
         View localView = this.mLayoutInflater.inflate(R.layout.at_gallery_item, null, false);
         this.lvVideo.addHeaderView(localView);
-        this.mShowPager = ((ViewPager) localView.findViewById(R.id.pager));
-        this.mShowIndicator = ((UnderlinePageIndicator) localView.findViewById(R.id.indicator));
+        this.mShowViewFlow = ((ViewFlow) localView.findViewById(R.id.viewflow));
+        CircleFlowIndicator indic = (CircleFlowIndicator) findViewById(R.id.viewflowindic);
+        mShowViewFlow.setFlowIndicator(indic);
+        
     }
 
     @SuppressWarnings("rawtypes")
@@ -166,21 +159,20 @@ public class AnimeTasteActivity extends ActionBarActivity implements OnScrollLis
             @Override
             public void onResponse(ListJson response) {
                 mUpdating = false;
-                dimissLoadingView ( ) ;
+                dimissLoadingView();
                 if (mCurrentPage == 0) {
 
-                    ViewPagerAdapter mVpAdapter = new ViewPagerAdapter(
-                            getViewPager((List<VideoItem>) response.feature));
-                    mShowPager.setAdapter(mVpAdapter);
-                    // mShowPager.setCurrentItem(initPositon);
-                    // mShowPager.setOnPageChangeListener(new
-                    // MyPageChangeListener());
-                    mShowPager.setOnTouchListener(new MyTouchListener());
-                    // mShowIndicator.setCount(response.feature.size());
-                    startTimer(response.feature.size());
-                    mShowIndicator.setOnPageChangeListener(new MyPageChangeListener());
-                    mShowIndicator.setViewPager(mShowPager);
-                    mShowIndicator.setFades(false);
+                    ViewFlowImageAdapter mVpAdapter = new ViewFlowImageAdapter(
+                            AnimeTasteActivity.this, (List<VideoItem>) response.feature);
+
+                    mShowViewFlow.setAdapter(mVpAdapter);
+                    mShowViewFlow.setmSideBuffer(((List<VideoItem>) response.feature).size()); // 实际图片张数，
+                    // 我的ImageAdapter实际图片张数为3
+                    //mShowViewFlow.setOnTouchListener(new MyTouchListener());
+                    mShowViewFlow.setTimeSpan(4500);
+                    mShowViewFlow.setSelection(((List<VideoItem>) response.feature).size() * 1000); // 设置初始位置
+                    mShowViewFlow.startAutoFlowTimer(); // 启动自动播放
+                    layersLayout.setView(mShowViewFlow);
                 }
 
                 listVideo.addAll((List<VideoItem>) response.list);
@@ -197,46 +189,9 @@ public class AnimeTasteActivity extends ActionBarActivity implements OnScrollLis
             @Override
             public void onErrorResponse(VolleyError error) {
                 mUpdating = false;
-                dimissLoadingView ( ) ;
+                dimissLoadingView();
             }
         };
-    }
-
-    private void startTimer(final int count) {
-        // Handler对象更新UI
-        mHandler = new Handler()
-        {
-
-            public void handleMessage(Message msg) {
-                mShowPager.setCurrentItem(currentPosition);
-            }
-        };
-        // 启动线程，监控是否要自动滑动
-        timer = new Timer();
-        timer.schedule(new TimerTask()
-        {
-
-            public void run() {
-                while (true) {
-                    if (isContinue) {
-                        if (currentPosition == 0) {
-                            isReversible = true;
-                        }
-                        if (currentPosition == count - 1) {
-                            isReversible = false;
-                        }
-                        if (isReversible) {
-                            ++currentPosition;
-                        }
-                        else {
-                            --currentPosition;
-                        }
-                        mHandler.sendEmptyMessage(0);
-                        sleep(4000);
-                    }
-                }
-            }
-        }, 4000);
     }
 
     // 为ViewPager添加图片
@@ -388,5 +343,12 @@ public class AnimeTasteActivity extends ActionBarActivity implements OnScrollLis
         Intent intent = new Intent(this, AnimeTasteDetailActivity.class);
         intent.putExtra("VideoItem", (VideoItem) v.getTag());
         startActivity(intent);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Pass any configuration change to the drawer toggls
+        mShowViewFlow.onConfigurationChanged(newConfig);
     }
 }

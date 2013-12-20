@@ -1,4 +1,4 @@
-package com.nathan.myapps.activity.music;
+package com.nathan.myapps.activity.music.service;
 interface PoPoInterface {
     void clearPlaylist();
     void addSongPlaylist( in String song );

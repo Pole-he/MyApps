@@ -3,21 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/show_gallery"
     android:layout_width="fill_parent"
-    android:layout_height="200.0dip"
+    android:layout_height="200dp"
     android:orientation="vertical" >
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/pager"
-        android:layout_width="fill_parent"
-        android:layout_height="198.0dip" />
+    <com.nathan.myapps.widget.ViewFlow
+        android:id="@+id/viewflow"
+        android:layout_width="match_parent"
+        android:layout_height="198.0dip" >
+    </com.nathan.myapps.widget.ViewFlow>
 
-    <com.viewpagerindicator.UnderlinePageIndicator
-        android:id="@+id/indicator"
-        android:layout_width="fill_parent"
+    <com.nathan.myapps.widget.CircleFlowIndicator
+        android:id="@+id/viewflowindic"
+        android:layout_width="match_parent"
         android:layout_height="2.0dip"
+        android:layout_gravity="center_horizontal|bottom"
         android:background="#ffcccccc"
-        app:fadeDelay="1000"
-        app:fadeLength="1000"
-        app:selectedColor="@color/indicatorBlue" />
+        app:activeColor="#FF33B5E5"
+        app:activeType="fill"
+        app:circleSeparation="20dip"
+        app:inactiveColor="#ffffff"
+        app:inactiveType="fill"
+        app:radius="4dip" />
 
 </LinearLayout>

@@ -21,7 +21,7 @@ public class Logger {
      * @param v
      */
     public static void v(String tag, String v) {
-       //  Log.v(tag, v);
+         Log.v(tag, v);
     }
 
     /**
@@ -31,7 +31,7 @@ public class Logger {
      * @param d
      */
     public static void d(String tag, String d) {
-      //   Log.d(tag, d);
+         Log.d(tag, d);
     }
 
     /**
@@ -41,7 +41,7 @@ public class Logger {
      * @param i
      */
     public static void i(String tag, String i) {
-       //  Log.i(tag, i);
+         Log.i(tag, i);
     }
 
     /**
@@ -51,6 +51,6 @@ public class Logger {
      * @param e
      */
     public static void w(String tag, String w) {
-       //  Log.w(tag, w);
+         Log.w(tag, w);
     }
 }
