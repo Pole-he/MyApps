@@ -1,4 +1,4 @@
-package com.nathan.myapps.activity.music;
+package com.nathan.myapps.activity.music.service;
 
 import java.io.IOException;
 import java.util.ArrayList;

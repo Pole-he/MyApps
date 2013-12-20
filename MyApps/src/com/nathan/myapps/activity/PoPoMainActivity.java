@@ -6,17 +6,23 @@ import com.nathan.myapps.R;
 import com.nathan.myapps.activity.ablum.AblumMainActivity;
 import com.nathan.myapps.activity.at.AnimeTasteActivity;
 import com.nathan.myapps.activity.music.MusicListActivity;
+import com.nathan.myapps.activity.music.service.PoPoInterface;
+import com.nathan.myapps.activity.music.service.ServiceToken;
 import com.nathan.myapps.bitmap.BitmapUtil;
 import com.nathan.myapps.bitmap.StackBlurManager;
 import com.nathan.myapps.db.UserInfoData;
 import com.nathan.myapps.request.RequestManager;
+import com.nathan.myapps.utils.MusicUtils;
 import com.nathan.myapps.widget.CircleImageView;
 import com.nathan.myapps.widget.MyFrameLayout;
 import com.nathan.myapps.widget.SimpleImageLoadingListener;
 
 import android.os.Bundle;
+import android.os.IBinder;
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.view.Menu;
@@ -29,14 +35,13 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class PoPoMainActivity extends Activity implements OnClickListener {
+public class PoPoMainActivity extends Activity implements OnClickListener{
 
     private MyFrameLayout mfLayout;
     private TextView tvName;
     private CircleImageView cvPic;
     private ImageView ivMenu;
     private ImageView ivBackground;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

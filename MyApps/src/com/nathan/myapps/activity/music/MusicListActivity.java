@@ -4,11 +4,15 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.Response.Listener;
 import com.nathan.myapps.R;
 import com.nathan.myapps.activity.at.AnimeTasteActivity;
+import com.nathan.myapps.activity.music.service.PoPoInterface;
+import com.nathan.myapps.activity.music.service.PoPoService;
+import com.nathan.myapps.activity.music.service.ServiceToken;
 import com.nathan.myapps.adapter.MusicAdapter;
 import com.nathan.myapps.adapter.VideoListAdapter;
 import com.nathan.myapps.adapter.ViewPagerAdapter;
@@ -20,11 +24,13 @@ import com.nathan.myapps.request.HttpVolleyRequest;
 import com.nathan.myapps.utils.ApiUtils;
 import com.nathan.myapps.utils.DataHandler;
 import com.nathan.myapps.utils.Logger;
+import com.nathan.myapps.utils.MusicUtils;
 import com.nathan.myapps.widget.LoadingView;
 
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -33,15 +39,14 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 import android.widget.ListView;
 
-public class MusicListActivity extends ActionBarActivity {
+public class MusicListActivity extends ActionBarActivity implements ServiceConnection {
 
     private ListView lvMusic;
     private List<MusicItem> listMusic = new ArrayList<MusicItem>();
     private MusicAdapter mMusicListAdapter;
     private LoadingView mLoadingView;
 
-    private PoPoInterface mPoPoInterface;
-
+    private ServiceToken mToken;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
@@ -58,8 +63,7 @@ public class MusicListActivity extends ActionBarActivity {
     }
 
     private void blindServer() {
-        this.bindService(new Intent(MusicListActivity.this, PoPoService.class), mConnection,
-                Context.BIND_AUTO_CREATE);
+
     }
 
     @SuppressWarnings("rawtypes")
@@ -138,25 +142,13 @@ public class MusicListActivity extends ActionBarActivity {
 
     }
 
-    private ServiceConnection mConnection = new ServiceConnection()
-    {
-
-        public void onServiceConnected(ComponentName className, IBinder service) {
-            mPoPoInterface = PoPoInterface.Stub.asInterface((IBinder) service);
-
-        }
-
-        public void onServiceDisconnected(ComponentName className) {
-            mPoPoInterface = null;
-        }
-    };
 
     public void getListSong(List<String> songUrl) {
         try {
-            mPoPoInterface.clearPlaylist();
-            mPoPoInterface.addSongAllPlaylist(songUrl);
+            MusicUtils.mService.clearPlaylist();
+            MusicUtils.mService.addSongAllPlaylist(songUrl);
             
-            mPoPoInterface.playFile((int) (Math.random()*songUrl.size()));
+            MusicUtils.mService.playFile((int) (Math.random()*songUrl.size()));
         }
         catch (RemoteException e) {
             // TODO Auto-generated catch block
@@ -167,7 +159,7 @@ public class MusicListActivity extends ActionBarActivity {
 
     public void stopMusic() {
         try {
-            mPoPoInterface.pause();
+            MusicUtils.mService.pause();
         }
         catch (RemoteException e) {
             // TODO Auto-generated catch block
@@ -178,7 +170,7 @@ public class MusicListActivity extends ActionBarActivity {
     public void nextMusic()
     {
         try {
-            mPoPoInterface.skipForward();
+            MusicUtils.mService.skipForward();
         }
         catch (RemoteException e) {
             // TODO Auto-generated catch block
@@ -188,7 +180,36 @@ public class MusicListActivity extends ActionBarActivity {
     
     public void onDestroy() {
         super.onDestroy();
-        unbindService(mConnection);
+      //  unbindService(mConnection);
+    }
+
+    protected void onStart() {
+
+        // Bind to Service
+        mToken = MusicUtils.bindToService(this, this);
+
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        // Unbind
+        if (MusicUtils.mService != null)
+            MusicUtils.unbindFromService(mToken);
+
+        //TODO: clear image cache
+
+        super.onStop();
+    }
+    
+    @Override
+    public void onServiceConnected(ComponentName name, IBinder obj) {
+        MusicUtils.mService = PoPoInterface.Stub.asInterface(obj);
+    }
+
+    @Override
+    public void onServiceDisconnected(ComponentName name) {
+        MusicUtils.mService = null;
     }
 
 }
