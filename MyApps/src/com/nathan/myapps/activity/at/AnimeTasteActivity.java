@@ -101,7 +101,7 @@ public class AnimeTasteActivity extends ActionBarActivity implements OnScrollLis
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setBackgroundDrawable(
-                getResources().getDrawable(R.drawable.bbuton_info));
+                getResources().getDrawable(R.drawable.actionbar_animation));
         findViewById();
         init();
         getData(mCurrentPage);

@@ -61,7 +61,7 @@ public class CircleFlowIndicator extends View implements FlowIndicator, Animatio
                 inactiveDefaultColor);
 
         // 检索半径
-        radius = a.getDimension(R.styleable.CircleFlowIndicator_radius, 4.0f);
+        radius = a.getDimension(R.styleable.CircleFlowIndicator_radius_circle, 4.0f);
 
         circleSeparation = a.getDimension(R.styleable.CircleFlowIndicator_circleSeparation, 2
                 * radius + radius);
@@ -69,7 +69,7 @@ public class CircleFlowIndicator extends View implements FlowIndicator, Animatio
         // 检索淡出时间
         fadeOutTime = a.getInt(R.styleable.CircleFlowIndicator_fadeOut, 0);
 
-        mCentered = a.getBoolean(R.styleable.CircleFlowIndicator_centered, false);
+        mCentered = a.getBoolean(R.styleable.CircleFlowIndicator_centered_circle, false);
 
         initColors(activeColor, inactiveColor, activeType, inactiveType);
     }

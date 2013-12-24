@@ -1,63 +1,72 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".PoPoMainActivity" >
 
-    <RelativeLayout
+    <com.nathan.myapps.widget.AnimationImageSwitcher
+        android:id="@+id/bg_image"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@drawable/gradient_main_first_bg" >
+        android:layout_height="match_parent" />
 
-        <ImageView
-            android:id="@+id/iv_background"
-            android:scaleType="fitXY"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="0dp"
+            android:layout_weight="1" >
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:orientation="vertical" >
+            <ImageView
+                android:id="@+id/iv_background"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY" />
 
-            <com.nathan.myapps.widget.CircleImageView
-                android:id="@+id/userPic"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_gravity="center" />
-
-            <TextView
-                android:id="@+id/userName"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="8dp"
-                android:shadowColor="@color/black"
-                android:shadowDx="1"
-                android:shadowDy="1"
-                android:shadowRadius="1"
-                android:textColor="@color/white_1"
-                android:textSize="20sp" />
-        </LinearLayout>
+                android:layout_centerInParent="true"
+                android:orientation="vertical" >
 
-        <ImageView
-            android:id="@+id/iv_activity_main_menu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_margin="10dp"
-            android:src="@drawable/btn_icon_menu" />
-    </RelativeLayout>
+                <com.nathan.myapps.widget.CircleImageView
+                    android:id="@+id/userPic"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center" />
 
-    <com.nathan.myapps.widget.MyFrameLayout
-        android:id="@+id/mf_activity_main_layout"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@color/black" />
+                <TextView
+                    android:id="@+id/userName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="1"
+                    android:textColor="@color/white_1"
+                    android:textSize="20sp" />
+            </LinearLayout>
 
-</LinearLayout>
+            <ImageView
+                android:id="@+id/iv_activity_main_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_margin="10dp"
+                android:src="@drawable/btn_icon_menu" />
+        </RelativeLayout>
+
+        <com.nathan.myapps.widget.MyFrameLayout
+            android:id="@+id/mf_activity_main_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+             />
+    </LinearLayout>
+
+</RelativeLayout>

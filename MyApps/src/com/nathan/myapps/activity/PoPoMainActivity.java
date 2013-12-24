@@ -1,5 +1,9 @@
 package com.nathan.myapps.activity;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.android.volley.VolleyError;
 import com.nathan.myapps.MyApplication;
 import com.nathan.myapps.R;
@@ -12,7 +16,9 @@ import com.nathan.myapps.bitmap.BitmapUtil;
 import com.nathan.myapps.bitmap.StackBlurManager;
 import com.nathan.myapps.db.UserInfoData;
 import com.nathan.myapps.request.RequestManager;
+import com.nathan.myapps.utils.ApiUtils;
 import com.nathan.myapps.utils.MusicUtils;
+import com.nathan.myapps.widget.AnimationImageSwitcher;
 import com.nathan.myapps.widget.CircleImageView;
 import com.nathan.myapps.widget.MyFrameLayout;
 import com.nathan.myapps.widget.SimpleImageLoadingListener;
@@ -23,8 +29,11 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,13 +44,15 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class PoPoMainActivity extends Activity implements OnClickListener{
+public class PoPoMainActivity extends Activity implements OnClickListener {
 
     private MyFrameLayout mfLayout;
     private TextView tvName;
     private CircleImageView cvPic;
     private ImageView ivMenu;
     private ImageView ivBackground;
+    private AnimationImageSwitcher is_bg;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,12 +80,15 @@ public class PoPoMainActivity extends Activity implements OnClickListener{
 
                     @Override
                     public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                        StackBlurManager blur = new StackBlurManager(BitmapUtil
-                                .Bytes2Bimap(RequestManager.getRequestQueue().getCache()
-                                        .get(getIntent().getStringExtra("picUrl")).data));
-                        ivBackground.setImageBitmap(blur.processNatively(5));
-                        Animation anim = AnimationUtils.loadAnimation(PoPoMainActivity.this, R.anim.bgblur_alpha_in);
-                        ivBackground.startAnimation(anim);
+                        // StackBlurManager blur = new
+                        // StackBlurManager(BitmapUtil
+                        // .Bytes2Bimap(RequestManager.getRequestQueue().getCache()
+                        // .get(getIntent().getStringExtra("picUrl")).data));
+                        // ivBackground.setImageBitmap(blur.processNatively(5));
+                        // Animation anim =
+                        // AnimationUtils.loadAnimation(PoPoMainActivity.this,
+                        // R.anim.bgblur_alpha_in);
+                        // ivBackground.startAnimation(anim);
                     }
 
                     @Override
@@ -82,14 +96,42 @@ public class PoPoMainActivity extends Activity implements OnClickListener{
                     }
                 });
 
+        List<Drawable> list = new ArrayList<Drawable>();
+        try {
+            AssetManager asm = this.getAssets();
+            List<String> fileName = ApiUtils.getFilePaths(this, "main");
+            for (String name : fileName) {
+                list.add((BitmapDrawable) Drawable.createFromStream(asm.open("main/"+name), null));
+            }
+
+        }
+        catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        is_bg.setImageDrawable(list.get(0));
+        is_bg.setImageList(list);
+
     }
 
+    @Override
+    protected void onResume() {
+        is_bg.startAutoFlowTimer();
+        super.onResume();
+    }
+    
+    @Override
+    protected void onStop() {
+        is_bg.stop();
+        super.onStop();
+    }
     private void findViewById() {
         mfLayout = (MyFrameLayout) this.findViewById(R.id.mf_activity_main_layout);
         tvName = (TextView) this.findViewById(R.id.userName);
         cvPic = (CircleImageView) this.findViewById(R.id.userPic);
         ivMenu = (ImageView) this.findViewById(R.id.iv_activity_main_menu);
         ivBackground = (ImageView) this.findViewById(R.id.iv_background);
+        is_bg = (AnimationImageSwitcher) this.findViewById(R.id.bg_image);
     }
 
     @Override

@@ -54,7 +54,7 @@ public class AnimeTasteDetailActivity extends ActionBarActivity implements OnCli
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setBackgroundDrawable(
-                getResources().getDrawable(R.drawable.bbuton_info));
+                getResources().getDrawable(R.drawable.actionbar_animation));
         findViewById();
         getData(5);
         init();

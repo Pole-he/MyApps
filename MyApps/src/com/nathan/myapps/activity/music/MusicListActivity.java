@@ -55,7 +55,7 @@ public class MusicListActivity extends ActionBarActivity implements ServiceConne
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setBackgroundDrawable(
-                getResources().getDrawable(R.drawable.bbuton_danger));
+                getResources().getDrawable(R.drawable.actionbar_music));
         findViewById();
         init();
         getData(0);

@@ -29,7 +29,7 @@ public class AblumMainActivity extends ActionBarActivity implements OnClickListe
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setBackgroundDrawable(
-                getResources().getDrawable(R.drawable.bbuton_success));
+                getResources().getDrawable(R.drawable.actionbar_ablum));
         findViewById();
         init();
         setListener();
