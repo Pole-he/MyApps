@@ -155,4 +155,28 @@ public class ApiUtils {
 
     }
 
+    /**
+     * 04:36 变成秒
+     * 
+     * @param time
+     * @return
+     */
+    public static int getSongTime(String time) {
+        int hour = Integer.valueOf(time.substring(0, 2));
+        int seconds = Integer.valueOf(time.substring(3, 5));
+        return hour * 60 + seconds;
+    }
+
+    /**
+     * 15000 变成 秒
+     * 
+     * @param time
+     * @return
+     */
+    public static String getStringTime(int time) {
+        int hour = time / 60;
+        int seconds = time % 60;
+        return seconds < 10 ? hour + ":0" + seconds : hour + ":" + seconds;
+    }
+
 }

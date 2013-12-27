@@ -5,7 +5,9 @@ interface PoPoInterface {
     
     void addSongAllPlaylist( in List<String> song );
     void playFile( in int position );
- 
+    boolean isPause();
+    int getPosition();
+    int getCurrentDuration();
     void pause();
     void stop();
     void skipForward();

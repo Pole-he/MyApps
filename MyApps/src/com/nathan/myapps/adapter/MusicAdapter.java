@@ -50,6 +50,7 @@ public class MusicAdapter extends BaseAdapter {
     private Context mContext;
     private LayoutInflater mInflater = null;
     private List<Boolean> listStatus;
+    private List<String> song_id = new ArrayList<String>();
 
     public MusicAdapter(List<MusicItem> list, Context context) {
         this.list = list;
@@ -156,7 +157,7 @@ public class MusicAdapter extends BaseAdapter {
         TextView tv_collection;
     }
 
-    private int mLastPosition = 0;
+    private int mLastPosition = -1;
     private View mLastView;
     private OnClickListener mPlayClick = new OnClickListener()
     {
@@ -165,16 +166,27 @@ public class MusicAdapter extends BaseAdapter {
         public void onClick(View view) {
             MusicItem music = (MusicItem) view.getTag();
             int mPosition = list.indexOf(music);
-            if (!listStatus.get(mPosition)) {
-                List<String> songId = new ArrayList<String>();
-                songId.add(music.song.song_id);
-                if (music.songlist != null) {
-                    for (SongList song : music.songlist) {
-                        songId.add(song.song_id);
+            if (mLastPosition != mPosition) {
+                if (song_id.size() == 0) {
+                    for (MusicItem musicItem : list) {
+                        song_id.add(musicItem.song.song_id);
+                        // if(musicItem.songlist!=null)
+                        // {
+                        // for(SongList song : musicItem.songlist)
+                        // {
+                        //
+                        // }
+                        // }
                     }
+                    getData(song_id);
                 }
-                getData(songId);
-                listStatus.set(mLastPosition, false);
+                else {
+                    playPosition(mPosition);
+                }
+
+                if (mLastPosition != -1) {
+                    listStatus.set(mLastPosition, false);
+                }
                 if (mLastView != null) {
                     ((ImageView) mLastView).setImageResource(R.drawable.icon_music_circle_play);
                 }
@@ -187,9 +199,16 @@ public class MusicAdapter extends BaseAdapter {
 
             }
             else {
-                ((MusicListActivity) mContext).stopMusic();
-                ((ImageView) view).setImageResource(R.drawable.icon_music_circle_play);
-                listStatus.set(mPosition, false);
+                if (listStatus.get(mLastPosition)) {
+                    ((MusicListActivity) mContext).pasueMusic();
+                    ((ImageView) view).setImageResource(R.drawable.icon_music_circle_play);
+                    listStatus.set(mLastPosition, false);
+                }
+                else {
+                    ((MusicListActivity) mContext).pasueMusic();
+                    ((ImageView) view).setImageResource(R.drawable.icon_music_circle_pause);
+                    listStatus.set(mLastPosition, true);
+                }
             }
 
         }
@@ -211,16 +230,23 @@ public class MusicAdapter extends BaseAdapter {
             @Override
             public void onResponse(ListMusic response) {
                 List<String> SongUrl = new ArrayList<String>();
+                List<Integer> allTimeList = new ArrayList<Integer>();
                 for (DataSong data : (List<DataSong>) response.data) {
                     if (data.url_list != null) {
-                        for (SongItem song : data.url_list) {
-                            SongUrl.add(song.url);
-                        }
+                        // for (SongItem song : data.url_list) {
+                        // SongUrl.add(song.url);
+                        // }
+                        SongUrl.add(data.url_list.get(data.url_list.size()-1).url);
+                        allTimeList.add(ApiUtils.getSongTime(data.url_list.get(data.url_list.size()-1).duration));
                     }
                 }
-                ((MusicListActivity) mContext).getListSong(SongUrl);
+                ((MusicListActivity) mContext).getListSong(SongUrl,allTimeList, mLastPosition);
             }
         };
+    }
+
+    private void playPosition(int position) {
+        ((MusicListActivity) mContext).playFile(position);
     }
 
     private Response.ErrorListener createMyReqErrorListener() {

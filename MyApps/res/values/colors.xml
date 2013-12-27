@@ -52,5 +52,6 @@
     <color name="confirm">#FF8800</color>
     <color name="info">#669900</color>
     <color name="custom">#0099CC</color>
+    <color name="dialog_title">#ff1b3b43</color>
 
 </resources>

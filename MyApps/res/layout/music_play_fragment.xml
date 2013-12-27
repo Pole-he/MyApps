@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent" >
+
+    <com.nathan.myapps.widget.PlayImageSwitcher
+        android:id="@+id/is_cover"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </com.nathan.myapps.widget.PlayImageSwitcher>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/transparent_thirty_percent" >
+
+        <FrameLayout
+            android:id="@+id/fl_play_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/icon_left_entry" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/media_info"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2.0dip"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/fl_play_back"
+            android:baselineAligned="false"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingBottom="2.0dip"
+            android:paddingTop="2.0dip" >
+
+            <TextView
+                android:id="@+id/play_title"
+                android:layout_width="fill_parent"
+                android:layout_height="0.0dip"
+                android:layout_weight="1.0"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:tag="Title"
+                android:textColor="@color/white"
+                android:textSize="16.0sp" />
+
+            <TextView
+                android:id="@+id/play_artist"
+                android:layout_width="fill_parent"
+                android:layout_height="0.0dip"
+                android:layout_weight="1.0"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:tag="Artist"
+                android:textColor="@color/white_1"
+                android:textSize="12.0sp" />
+
+            <TextView
+                android:id="@+id/play_control_lapse_duration"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:tag="LapseDuration"
+                android:textColor="#ff91b1bb"
+                android:textSize="10.0sp"
+                android:visibility="gone" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <include
+        android:id="@id/frm_control_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        layout="@layout/music_play_fragment_bar" />
+
+</RelativeLayout>

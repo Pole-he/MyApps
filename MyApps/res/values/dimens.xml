@@ -24,5 +24,6 @@
     <dimen name="title_bar_height">48.0dip</dimen>
     <dimen name="title_text_size">18.0dip</dimen>
     <dimen name="padding16">10.699982dip</dimen>
+    <dimen name="play_control_bar_height">56.0dip</dimen>
 
 </resources>

@@ -1,5 +1,7 @@
 package com.nathan.myapps.utils;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -111,5 +113,20 @@ public class DataHandler {
         Object[] arrayOfObject = new Object[1];
         arrayOfObject[0] = song.toString();
         return String.format(URLs.MUSIC.music_url, arrayOfObject) + URLs.MUSIC.music_url_end;
+    }
+
+    public String getSongPic(String title, String artist, String song_id, String singer_id) {
+        Object[] arrayOfObject = new Object[4];
+        try {
+            arrayOfObject[0] = URLEncoder.encode(title,"UTF-8");
+            arrayOfObject[1] = URLEncoder.encode(artist,"UTF-8");
+        }
+        catch (UnsupportedEncodingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        };
+        arrayOfObject[2] = song_id;
+        arrayOfObject[3] = singer_id;
+        return String.format(URLs.MUSIC.song_pic, arrayOfObject);
     }
 }

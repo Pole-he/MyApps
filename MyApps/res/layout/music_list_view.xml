@@ -8,9 +8,31 @@
         android:id="@+id/musicList"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:layout_above="@+id/frm_control_bar"
         android:cacheColorHint="@android:color/transparent"
         android:divider="@null"
         android:listSelector="@android:color/transparent"
         android:scrollbars="none" />
+
+    <include
+        android:id="@id/frm_control_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/play_control_bar_height"
+        android:layout_alignParentBottom="true"
+        layout="@layout/music_play_control_bar" />
+
+    <com.nathan.myapps.widget.SlidingLayer
+        xmlns:slidingLayer="http://schemas.android.com/apk/res/com.nathan.myapps"
+        android:id="@+id/slidingLayer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/transparent" >
+
+        <fragment
+            android:id="@+id/playFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            class="com.nathan.myapps.activity.music.MusicPlayFragment" />
+    </com.nathan.myapps.widget.SlidingLayer>
 
 </RelativeLayout>
