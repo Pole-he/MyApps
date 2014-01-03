@@ -121,11 +121,14 @@
 
     <SeekBar
         android:id="@+id/skb_progress"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="2.0px"
         android:background="#ffb1b1b1"
         android:progressDrawable="@drawable/horizontal_thin_progress"
         android:tag="Guage"
+        android:paddingLeft="-1dp"
+        android:paddingRight="-1dp"
+        android:thumbOffset="0dp"
         android:thumb="@null" />
 
 </RelativeLayout>

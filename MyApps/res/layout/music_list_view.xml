@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/background" >
+    android:background="@drawable/popo_background" >
 
     <ListView
         android:id="@+id/musicList"
@@ -13,9 +13,8 @@
         android:divider="@null"
         android:listSelector="@android:color/transparent"
         android:scrollbars="none" />
-
     <include
-        android:id="@id/frm_control_bar"
+        android:id="@+id/frm_control_bar"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/play_control_bar_height"
         android:layout_alignParentBottom="true"

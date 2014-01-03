@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list
   xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@android:id/secondaryProgress">
+    <item android:id="@android:id/background">
         <clip>
             <nine-patch android:src="@drawable/icon_web_secondary_progress" />
         </clip>
     </item>
     <item android:id="@android:id/progress">
         <clip>
-            <nine-patch android:src="@drawable/icon_web_progress" />
+            <nine-patch android:src="@drawable/icon_web_progress" /> 
         </clip>
     </item>
 </layer-list>
+

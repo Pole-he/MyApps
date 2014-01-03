@@ -27,10 +27,9 @@ public class PlayImageSwitcher extends ImageSwitcher {
     private int index = 0;
     private List<Drawable> listDrawable;
 
-    private Animation  alphaIn,
-            alphaOut;
+    private Animation alphaIn, alphaOut;
     private Handler handler;
-    private long timeSpan = 3000;
+    private long timeSpan = 5000;
 
     public PlayImageSwitcher(Context paramContext) {
         super(paramContext);
@@ -54,7 +53,9 @@ public class PlayImageSwitcher extends ImageSwitcher {
     }
 
     public void stop() {
-        handler.removeCallbacksAndMessages(null);
+        if (handler != null) {
+            handler.removeCallbacksAndMessages(null);
+        }
     }
 
     // 重写了的viewFactory

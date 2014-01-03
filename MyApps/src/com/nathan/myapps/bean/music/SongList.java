@@ -15,5 +15,5 @@ public class SongList implements Serializable{
     public String singer_id;
     public String singer_name;
     public String song_id;
-    public String songe_name;
+    public String song_name;
 }

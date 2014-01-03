@@ -123,9 +123,18 @@ public class MusicAdapter extends BaseAdapter {
         else {
             viewHolder.cover.setImageResource(R.drawable.social_music_circle_bkg);
         }
-        viewHolder.musicTitle.setText(music.song.song_name + " - " + music.song.singer_name);
-        viewHolder.musicContent.setText(music.tweet);
 
+        // 如果是多首歌曲
+        if (music.songlist != null) {
+            viewHolder.musicTitle.setText(music.songlistname);
+            viewHolder.musicTitle.setCompoundDrawables(mContext.getResources().getDrawable(R.drawable.icon_social_songlist), null, null, null);
+        }
+        else {
+            viewHolder.musicTitle.setText(music.song.song_name + " - " + music.song.singer_name);
+            viewHolder.musicTitle.setCompoundDrawables(mContext.getResources().getDrawable(R.drawable.icon_social_song), null, null, null);
+        }
+
+        viewHolder.musicContent.setText(music.tweet);
         viewHolder.tv_comment.setText(music.comment_count + "");
         viewHolder.tv_collection.setText(music.favorite_count + "");
         viewHolder.musicPlay.setTag(music);
@@ -169,14 +178,14 @@ public class MusicAdapter extends BaseAdapter {
             if (mLastPosition != mPosition) {
                 if (song_id.size() == 0) {
                     for (MusicItem musicItem : list) {
-                        song_id.add(musicItem.song.song_id);
-                        // if(musicItem.songlist!=null)
-                        // {
-                        // for(SongList song : musicItem.songlist)
-                        // {
-                        //
-                        // }
-                        // }
+                        if (musicItem.songlist != null) {
+//                            for (SongList song : musicItem.songlist) {
+//
+//                            }
+                            song_id.add(musicItem.songlist.get(0).song_id);
+                        }else{
+                            song_id.add(musicItem.song.song_id);
+                        }
                     }
                     getData(song_id);
                 }
@@ -236,11 +245,12 @@ public class MusicAdapter extends BaseAdapter {
                         // for (SongItem song : data.url_list) {
                         // SongUrl.add(song.url);
                         // }
-                        SongUrl.add(data.url_list.get(data.url_list.size()-1).url);
-                        allTimeList.add(ApiUtils.getSongTime(data.url_list.get(data.url_list.size()-1).duration));
+                        SongUrl.add(data.url_list.get(data.url_list.size() - 1).url);
+                        allTimeList
+                                .add(ApiUtils.getSongTime(data.url_list.get(data.url_list.size() - 1).duration));
                     }
                 }
-                ((MusicListActivity) mContext).getListSong(SongUrl,allTimeList, mLastPosition);
+                ((MusicListActivity) mContext).getListSong(SongUrl, allTimeList, mLastPosition);
             }
         };
     }

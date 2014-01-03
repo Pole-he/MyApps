@@ -41,7 +41,7 @@ public class MusicUtils {
         if (realActivity == null) {
             realActivity = (Activity) context;
         }
-        
+
         ContextWrapper cw = new ContextWrapper(realActivity);
         cw.startService(new Intent(cw, PoPoService.class));
         ServiceBinder sb = new ServiceBinder(callback);
@@ -68,6 +68,20 @@ public class MusicUtils {
         if (sConnectionMap.isEmpty()) {
             mService = null;
         }
+    }
+
+    /**
+     * stop service
+     * @param context
+     */
+    public static void stopService(Context context) {
+        Activity realActivity = ((Activity) context).getParent();
+        if (realActivity == null) {
+            realActivity = (Activity) context;
+        }
+
+        ContextWrapper cw = new ContextWrapper(realActivity);
+        cw.stopService(new Intent(cw, PoPoService.class));
     }
 
 }

@@ -99,9 +99,9 @@ public class PoPoMainActivity extends Activity implements OnClickListener {
         List<Drawable> list = new ArrayList<Drawable>();
         try {
             AssetManager asm = this.getAssets();
-            List<String> fileName = ApiUtils.getFilePaths(this, "main");
+            List<String> fileName = ApiUtils.getFilePaths(this, "blur");
             for (String name : fileName) {
-                list.add((BitmapDrawable) Drawable.createFromStream(asm.open("main/"+name), null));
+                list.add((BitmapDrawable) Drawable.createFromStream(asm.open("blur/"+name), null));
             }
 
         }
@@ -116,7 +116,7 @@ public class PoPoMainActivity extends Activity implements OnClickListener {
 
     @Override
     protected void onResume() {
-        is_bg.startAutoFlowTimer();
+        //is_bg.startAutoFlowTimer();
         super.onResume();
     }
     

@@ -118,13 +118,14 @@ public class DataHandler {
     public String getSongPic(String title, String artist, String song_id, String singer_id) {
         Object[] arrayOfObject = new Object[4];
         try {
-            arrayOfObject[0] = URLEncoder.encode(title,"UTF-8");
-            arrayOfObject[1] = URLEncoder.encode(artist,"UTF-8");
+            arrayOfObject[0] = title == null ? "" : URLEncoder.encode(title, "UTF-8");
+            arrayOfObject[1] = artist == null ? "" : URLEncoder.encode(artist, "UTF-8");
         }
         catch (UnsupportedEncodingException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        };
+        }
+        ;
         arrayOfObject[2] = song_id;
         arrayOfObject[3] = singer_id;
         return String.format(URLs.MUSIC.song_pic, arrayOfObject);

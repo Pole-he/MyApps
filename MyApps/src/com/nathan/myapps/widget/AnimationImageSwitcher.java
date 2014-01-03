@@ -51,6 +51,7 @@ public class AnimationImageSwitcher extends ImageSwitcher {
 
     public void setImageList(List<Drawable> list) {
         listDrawable = list;
+        startAutoFlowTimer();
     }
 
     public void stop() {

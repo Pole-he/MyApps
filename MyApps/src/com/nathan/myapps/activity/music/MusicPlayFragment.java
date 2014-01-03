@@ -1,5 +1,6 @@
 package com.nathan.myapps.activity.music;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.nathan.myapps.R;
@@ -18,6 +19,7 @@ import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -31,6 +33,7 @@ public class MusicPlayFragment extends BaseFragment implements OnClickListener {
     private TextView tvBegin, tvEnd;
     private ImageView ivPre, ivPlay, ivNext;
     private List<Drawable> picBitmap;
+    private RelativeLayout rlBackground;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,9 +57,16 @@ public class MusicPlayFragment extends BaseFragment implements OnClickListener {
         ivNext.setOnClickListener(this);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void init() {
-        // TODO Auto-generated method stub
+        try {
+            rlBackground.setBackgroundDrawable(Drawable.createFromStream(mContext.getAssets().open("blur/blur5.jpg"), null));
+        }
+        catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
     }
 
@@ -72,6 +82,7 @@ public class MusicPlayFragment extends BaseFragment implements OnClickListener {
     {
         this.picBitmap = picBitmap;
         isCover.setImageList(picBitmap);
+        isCover.stop();
         isCover.startAutoFlowTimer();
     }
 
@@ -97,6 +108,7 @@ public class MusicPlayFragment extends BaseFragment implements OnClickListener {
 
     @Override
     public void findViews(View paramView) {
+        rlBackground = (RelativeLayout) paramView.findViewById(R.id.rl_background);
         isCover = (PlayImageSwitcher) paramView.findViewById(R.id.is_cover);
         flBack = (FrameLayout) paramView.findViewById(R.id.fl_play_back);
         tvTitle = (TextView) paramView.findViewById(R.id.play_title);
