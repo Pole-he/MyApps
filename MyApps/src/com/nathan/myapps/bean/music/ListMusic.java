@@ -4,8 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.nathan.myapps.bean.BaseData;
 
-public class ListMusic<T> implements Serializable {
+
+public class ListMusic<T> extends BaseData implements Serializable {
 
     /**
      * @author nathan

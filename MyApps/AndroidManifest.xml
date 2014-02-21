@@ -80,13 +80,19 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="com.nathan.myapps.activity.PoPoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
+        </activity>
+        <activity
             android:name="com.nathan.myapps.activity.at.AnimeTasteActivity"
             android:logo="@drawable/popo_icon"
             android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.nathan.myapps.activity.at.AnimeTasteDetailActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@style/PoPoTranslucent"
             android:logo="@drawable/popo_icon" />
         <activity
             android:name="com.nathan.myapps.activity.ablum.AblumMainActivity"

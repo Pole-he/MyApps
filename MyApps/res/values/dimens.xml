@@ -25,5 +25,10 @@
     <dimen name="title_text_size">18.0dip</dimen>
     <dimen name="padding16">10.699982dip</dimen>
     <dimen name="play_control_bar_height">56.0dip</dimen>
+    
+    <dimen name="menu_center_width">30dp</dimen>
+    <dimen name="menu_height">60.0dip</dimen>
+    <dimen name="menu_bg_height">50.0dip</dimen>
+    <dimen name="menu_radius">40dp</dimen>
 
 </resources>

@@ -5,7 +5,9 @@ import java.util.List;
 import com.nathan.myapps.R;
 import com.nathan.myapps.adapter.ViewPagerAblumAdapter;
 import com.nathan.myapps.bean.ablum.PicItem;
+import com.nathan.myapps.bean.miui.MiuiPic;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -33,6 +35,9 @@ public class AblumDetailActivity extends ActionBarActivity implements OnClickLis
     private TextView tvShare;
 
     private List<PicItem> picList;
+    private List<MiuiPic> miuiList;
+
+    private boolean flag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,17 +60,29 @@ public class AblumDetailActivity extends ActionBarActivity implements OnClickLis
 
     @SuppressWarnings("unchecked")
     private void init() {
-        picList = (List<PicItem>) getIntent().getSerializableExtra("data");
         int intoPostion = getIntent().getIntExtra("intoPosition", 0);
-        ViewPagerAblumAdapter adapter = new ViewPagerAblumAdapter(this, picList);
-        vp.setAdapter(adapter);
-        vp.setCurrentItem(intoPostion);
-        vp.setOnPageChangeListener(mPageChangeListener);
+        if (getIntent().getIntExtra("flag", 0) != 1) {
+            picList = (List<PicItem>) getIntent().getSerializableExtra("data");
+            ViewPagerAblumAdapter adapter = new ViewPagerAblumAdapter(this, picList);
+            vp.setAdapter(adapter);
+            vp.setCurrentItem(intoPostion);
+            vp.setOnPageChangeListener(mPageChangeListener);
 
-        tvCount.setText((intoPostion+1) + "/" + picList.size());
-        tvLike.setText(getResources().getString(R.string.favorite)
-                + picList.get(intoPostion).like_count);
-        tvTitle.setText(getIntent().getStringExtra("type"));
+            tvCount.setText((intoPostion + 1) + "/" + picList.size());
+            tvLike.setText(getResources().getString(R.string.favorite)
+                    + picList.get(intoPostion).like_count);
+            tvTitle.setText(getIntent().getStringExtra("type"));
+        }
+        else {
+            miuiList = (List<MiuiPic>) getIntent().getSerializableExtra("miui");
+            ViewPagerAblumAdapter adapter = new ViewPagerAblumAdapter(this, miuiList, 1);
+            vp.setAdapter(adapter);
+            vp.setCurrentItem(intoPostion);
+            vp.setOnPageChangeListener(mPageChangeListener);
+            tvCount.setText((intoPostion + 1) + "/" + miuiList.size());
+            tvTitle.setText(miuiList.get(intoPostion).name);
+            flag = true;
+        }
     }
 
     private void findViewById() {
@@ -98,9 +115,15 @@ public class AblumDetailActivity extends ActionBarActivity implements OnClickLis
 
         @Override
         public void onPageSelected(int position) {
-            tvCount.setText((position+1) + "/" + picList.size());
-            tvLike.setText(getResources().getString(R.string.favorite)
-                    + picList.get(position).like_count);
+            if (flag) {
+                tvCount.setText((position + 1) + "/" + miuiList.size());
+                tvTitle.setText(miuiList.get(position).name);
+            }
+            else {
+                tvCount.setText((position + 1) + "/" + picList.size());
+                tvLike.setText(getResources().getString(R.string.favorite)
+                        + picList.get(position).like_count);
+            }
         }
 
         @Override
@@ -120,6 +143,7 @@ public class AblumDetailActivity extends ActionBarActivity implements OnClickLis
 
     public void onBackPressed() {
         super.onBackPressed();
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
     @Override
@@ -133,9 +157,8 @@ public class AblumDetailActivity extends ActionBarActivity implements OnClickLis
             break;
         case R.id.btn_like:
             String like = tvLike.getText().toString();
-            int num = Integer.valueOf(like.substring(2, like.length()))+1;
-            tvLike.setText(getResources().getString(R.string.favorite)
-                    + num);
+            int num = Integer.valueOf(like.substring(2, like.length())) + 1;
+            tvLike.setText(getResources().getString(R.string.favorite) + num);
             break;
         }
 

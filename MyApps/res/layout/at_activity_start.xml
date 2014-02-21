@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical" >
 
-        <ListView
+        <com.nathan.myapps.widget.ScrollBackListView
             android:id="@+id/videoList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

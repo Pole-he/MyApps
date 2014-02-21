@@ -40,5 +40,8 @@
     <string name="login_sentence_1">Whatever is worth doing is worth doing well</string>
     <string name="login_sentence_2">The hard part isn’t making the decision. It’s living with it</string>
     <string name="login_sentence_3">If you love the life you live,you will live a life of love</string>
+    
+    <string name="menu_1">P</string>
+    <string name="menu_2">O</string>
 
 </resources>

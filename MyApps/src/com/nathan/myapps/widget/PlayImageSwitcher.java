@@ -1,12 +1,8 @@
 package com.nathan.myapps.widget;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import com.nathan.myapps.utils.Logger;
-
 import android.annotation.SuppressLint;
-import android.app.ActionBar.LayoutParams;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
@@ -15,11 +11,9 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
-import android.widget.ViewSwitcher.ViewFactory;
 
 public class PlayImageSwitcher extends ImageSwitcher {
 
@@ -84,17 +78,19 @@ public class PlayImageSwitcher extends ImageSwitcher {
     }
 
     public void startAutoFlowTimer() {
-        handler = new Handler()
-        {
+        if (handler == null) {
+            handler = new Handler()
+            {
 
-            @Override
-            public void handleMessage(Message msg) {
-                index++;
-                setImageDrawable(listDrawable.get(index % listDrawable.size()));
-                Message message = handler.obtainMessage(0);
-                sendMessageDelayed(message, timeSpan);
-            }
-        };
+                @Override
+                public void handleMessage(Message msg) {
+                    index++;
+                    setImageDrawable(listDrawable.get(index % listDrawable.size()));
+                    Message message = handler.obtainMessage(0);
+                    sendMessageDelayed(message, timeSpan);
+                }
+            };
+        }
 
         Message message = handler.obtainMessage(0);
         handler.sendMessageDelayed(message, timeSpan);

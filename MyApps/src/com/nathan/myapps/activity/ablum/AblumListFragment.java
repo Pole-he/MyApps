@@ -72,7 +72,7 @@ public class AblumListFragment extends BaseFragment {
     @SuppressWarnings("rawtypes")
     private void getData(int tag, int start) {
         HttpVolleyRequest<PicListJson> request = new HttpVolleyRequest<PicListJson>(
-                (Activity) mContext);
+                (Activity) mContext , true);
         request.HttpVolleyRequestGet(DataHandler.instance().getAblum(tag, start),
                 PicListJson.class, PicItem.class, createMyReqSuccessListener(),
                 createMyReqErrorListener());
@@ -98,7 +98,7 @@ public class AblumListFragment extends BaseFragment {
         else if ("影视".equals(type)) {
             return 100;
         }
-        return 0;
+        return 30;
     }
 
     @Override

@@ -26,6 +26,7 @@
             android:layout_alignTop="@+id/thumb"
             android:layout_marginLeft="12.0dip"
             android:layout_toRightOf="@+id/thumb"
+            android:textColor="@color/title_color"
             android:textSize="@dimen/video_list_title"
             android:textStyle="bold" />
 

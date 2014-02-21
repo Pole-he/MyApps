@@ -2,6 +2,8 @@ package com.nathan.myapps.activity.at;
 
 import java.util.List;
 
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
+
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.Request.Method;
@@ -17,6 +19,7 @@ import com.nathan.myapps.request.GsonRequest;
 import com.nathan.myapps.request.HttpVolleyRequest;
 import com.nathan.myapps.request.RequestManager;
 import com.nathan.myapps.utils.DataHandler;
+import com.nathan.myapps.utils.Logger;
 import com.nathan.myapps.widget.AtNetworkImageView;
 
 import android.content.Intent;
@@ -29,13 +32,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class AnimeTasteDetailActivity extends ActionBarActivity implements OnClickListener {
+public class AnimeTasteDetailActivity extends SwipeBackActivity implements OnClickListener {
 
     private AtNetworkImageView mDetailImageView;
     private ImageButton mPrePlayButton;
@@ -49,12 +53,9 @@ public class AnimeTasteDetailActivity extends ActionBarActivity implements OnCli
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.at_activity_play);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setBackgroundDrawable(
-                getResources().getDrawable(R.drawable.actionbar_animation));
         findViewById();
         getData(5);
         init();
@@ -150,6 +151,7 @@ public class AnimeTasteDetailActivity extends ActionBarActivity implements OnCli
 
     private static String getHDVideoUrl(String paramString) {
         Long localLong = Long.valueOf((long) (Math.ceil(System.currentTimeMillis() / 1000L)));
+        Logger.e("",localLong+"//"+Math.ceil(System.currentTimeMillis() / 1000L));
         return paramString.replace("type//", "type/hd2/ts/" + localLong + "/useKeyframe/0/");
     }
 

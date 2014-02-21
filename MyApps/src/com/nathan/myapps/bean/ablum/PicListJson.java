@@ -4,9 +4,10 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.google.gson.JsonObject;
+import com.nathan.myapps.bean.BaseData;
 
 
-public class PicListJson<T> implements Serializable {
+public class PicListJson<T> extends BaseData implements Serializable {
 
     /**
      * @author nathan

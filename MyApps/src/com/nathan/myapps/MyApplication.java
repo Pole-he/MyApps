@@ -1,18 +1,23 @@
 package com.nathan.myapps;
 
+import java.io.File;
 import java.util.Map;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.nathan.myapps.cache.BitmapCache;
+import com.nathan.myapps.cache.BitmapLruCache;
+import com.nathan.myapps.cache.DataCache;
 import com.nathan.myapps.request.RequestManager;
 
+import android.app.ActivityManager;
 import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap.CompressFormat;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.util.Log;
-
 
 public class MyApplication extends Application {
 
@@ -24,10 +29,11 @@ public class MyApplication extends Application {
     private static final String SET_COOKIE_KEY = "Set-Cookie";
     private static final String COOKIE_KEY = "Cookie";
     private static final String SESSION_COOKIE = "JSESSIONID";
-
+    private final static int RATE = 8; // 默认分配最大空间的几分之一
     private SharedPreferences _preferences;
     public ImageLoader mImageLoader;
     static MyApplication instance;
+    public DataCache dataCache;
 
     public MyApplication() {
         instance = this;
@@ -41,7 +47,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-          init();
+        init();
     }
 
     /**
@@ -49,8 +55,60 @@ public class MyApplication extends Application {
      */
     private void init() {
         RequestManager.init(this);
-        mImageLoader = new ImageLoader(RequestManager.getRequestQueue(), new BitmapCache());
+        dataCache = DataCache
+                .get(new File(Environment.getExternalStorageDirectory() + "/Popo/json"));
+
+        // 确定在LruCache中，分配缓存空间大小,默认程序分配最大空间的 1/8
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        int maxSize = manager.getMemoryClass() / RATE; // 比如 64M/8,单位为M
+
+        // BitmapLruCache自定义缓存class，该框架本身支持二级缓存，在BitmapLruCache封装一个软引用缓存
+        mImageLoader = new ImageLoader(RequestManager.getRequestQueue(), new BitmapLruCache(
+                1024 * 1024 * maxSize));
         _preferences = PreferenceManager.getDefaultSharedPreferences(this);
+    }
+
+    public DataCache getCache() {
+        return dataCache;
+    }
+
+    /**
+     * 清除app缓存
+     */
+    public void clearAppCache() {
+        File cacheDir = new File(Environment.getExternalStorageDirectory() + "Popo/cache");
+        clearCacheFolder(cacheDir, System.currentTimeMillis());
+    }
+
+    /**
+     * 清除缓存目录
+     * 
+     * @param dir
+     *            目录
+     * @param numDays
+     *            当前系统时间
+     * @return
+     */
+    private int clearCacheFolder(File dir, long curTime) {
+        int deletedFiles = 0;
+        if (dir != null && dir.isDirectory()) {
+            try {
+                for (File child : dir.listFiles()) {
+                    if (child.isDirectory()) {
+                        deletedFiles += clearCacheFolder(child, curTime);
+                    }
+                    if (child.lastModified() < curTime) {
+                        if (child.delete()) {
+                            deletedFiles++;
+                        }
+                    }
+                }
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return deletedFiles;
     }
 
     /**

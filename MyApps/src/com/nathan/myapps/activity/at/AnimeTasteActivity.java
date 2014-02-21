@@ -27,6 +27,7 @@ import com.nathan.myapps.widget.CircleFlowIndicator;
 import com.nathan.myapps.widget.FixedSpeedScroller;
 import com.nathan.myapps.widget.LayersLayout;
 import com.nathan.myapps.widget.LoadingView;
+import com.nathan.myapps.widget.ScrollBackListView;
 import com.nathan.myapps.widget.ViewFlow;
 
 import android.annotation.SuppressLint;
@@ -62,7 +63,7 @@ import android.widget.TextView;
 public class AnimeTasteActivity extends ActionBarActivity implements OnScrollListener,
         OnClickListener {
 
-    private ListView lvVideo;
+    private ScrollBackListView lvVideo;
     private LayoutInflater mLayoutInflater;
     private Boolean mUpdating = true;// 防止多次加载
     private int mCurrentPage = 0;
@@ -137,7 +138,7 @@ public class AnimeTasteActivity extends ActionBarActivity implements OnScrollLis
     }
 
     private void findViewById() {
-        lvVideo = (ListView) this.findViewById(R.id.videoList);
+        lvVideo = (ScrollBackListView) this.findViewById(R.id.videoList);
         layersLayout = (LayersLayout) findViewById(R.id.layerslayout);// 获得自定义图层，对触屏事件进行重定向
 
         mLayoutInflater = LayoutInflater.from(this);

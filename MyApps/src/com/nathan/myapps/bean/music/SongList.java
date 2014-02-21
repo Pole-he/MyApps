@@ -2,8 +2,10 @@ package com.nathan.myapps.bean.music;
 
 import java.io.Serializable;
 
+import com.nathan.myapps.bean.BaseData;
 
-public class SongList implements Serializable{
+
+public class SongList extends BaseData implements Serializable{
 
     /**
      * 

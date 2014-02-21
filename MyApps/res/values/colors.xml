@@ -24,26 +24,26 @@
     <color name="main_four">#ecbb55</color>
     <color name="white_1">#f1f2f4</color>
     <color name="white_title">#f4f4f4</color>
-    <color name="bbutton_danger">#4cd9534f</color>
-    <color name="bbutton_danger_edge">#4cd43f3a</color>
+    <color name="bbutton_danger">#ffd9534f</color>
+    <color name="bbutton_danger_edge">#ffd43f3a</color>
     <color name="bbutton_danger_pressed">#80d2322d</color>
     <color name="bbutton_danger_pressed_edge">#80ac2925</color>
     <color name="bbutton_danger_disabled">#ffd9534f</color>
     <color name="bbutton_danger_disabled_edge">#a5d43f3a</color>
-    <color name="bbutton_success">#4c24b18e</color>
-    <color name="bbutton_success_edge">#4c23a07E</color>
+    <color name="bbutton_success">#ff24b18e</color>
+    <color name="bbutton_success_edge">#ff23a07E</color>
     <color name="bbutton_success_pressed">#80209B8E</color>
     <color name="bbutton_success_pressed_edge">#80152B3E</color>
     <color name="bbutton_success_disabled">#ff14b18e</color>
     <color name="bbutton_success_disabled_edge">#a54cae4c</color>
-    <color name="bbutton_warning">#4cf0ad4e</color>
-    <color name="bbutton_warning_edge">#4ceea236</color>
+    <color name="bbutton_warning">#fff0ad4e</color>
+    <color name="bbutton_warning_edge">#ffeea236</color>
     <color name="bbutton_warning_pressed">#80ed9c28</color>
     <color name="bbutton_warning_pressed_edge">#80d58512</color>
     <color name="bbutton_warning_disabled">#a5f0ad4e</color>
     <color name="bbutton_warning_disabled_edge">#a5eea236</color>
-    <color name="bbutton_info">#4c5bc0de</color>
-    <color name="bbutton_info_edge">#4c46b8da</color>
+    <color name="bbutton_info">#ff5bc0de</color>
+    <color name="bbutton_info_edge">#ff46b8da</color>
     <color name="bbutton_info_pressed">#8039b3d7</color>
     <color name="bbutton_info_pressed_edge">#80269abc</color>
     <color name="bbutton_info_disabled">#ff5bc0de</color>
@@ -53,5 +53,15 @@
     <color name="info">#669900</color>
     <color name="custom">#0099CC</color>
     <color name="dialog_title">#ff1b3b43</color>
+    <color name="menu_bg">#cc2a2d35</color>
 
+    <color name="title_color">#323232</color>
+    
+    <color name="water_fall_1">#2F70E1</color>
+    <color name="water_fall_2">#53D76A</color>
+    <color name="water_fall_3">#DDAA3B</color>
+    <color name="water_fall_4">#E5000F</color>
+    <color name="water_fall_5">#FAEBD7</color>
+    <color name="water_fall_6">#BFBFBF</color>
+    <color name="water_fall_7">#857570</color>
 </resources>
