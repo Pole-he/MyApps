@@ -1,52 +1,38 @@
 package com.nathan.myapps.request;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.text.DateFormat;
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import android.util.Log;
-
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonSyntaxException;
-import com.google.gson.reflect.TypeToken;
-import com.nathan.myapps.MyApplication;
+import com.nathan.myapps.bean.miui.MiuiPic;
 import com.nathan.myapps.utils.DateDeserializerUtils;
 import com.nathan.myapps.utils.DateSerializerUtils;
 
-/**
- * Wrapper for Volley requests to facilitate parsing of json responses.
- * 
- * @param <T>
- */
 public class GsonRequest<T> extends Request<T> {
 
     /**
      * Gson parser
      */
-    
-    private Gson mGson = new GsonBuilder()
-    .registerTypeAdapter(java.util.Date.class,
-            new DateDeserializerUtils())
-    .registerTypeAdapter(java.util.Date.class,
-            new DateSerializerUtils())
-    .enableComplexMapKeySerialization()
-    .setDateFormat(DateFormat.LONG)
-    .create();
+
+    public Gson mGson = new GsonBuilder()
+            .registerTypeAdapter(java.util.Date.class, new DateDeserializerUtils())
+            .registerTypeAdapter(java.util.Date.class, new DateSerializerUtils())
+            .enableComplexMapKeySerialization().setDateFormat(DateFormat.LONG).create();
 
     private final Class<T> parentClass;
     /**
@@ -58,10 +44,10 @@ public class GsonRequest<T> extends Request<T> {
      * Callback for response delivery
      */
     private final Listener<T> mListener;
-    
+
     private final ErrorListener mErrorListener;
-    
-    private Map<String, String> params = null;
+
+    private Map<String, String> param = null;
 
     /**
      * @param method
@@ -84,7 +70,7 @@ public class GsonRequest<T> extends Request<T> {
         this.mClass = objectClass;
         this.mListener = listener;
         this.mErrorListener = errorListener;
-
+        setTimeOut();
     }
 
     /*
@@ -99,41 +85,54 @@ public class GsonRequest<T> extends Request<T> {
             Class<?> class1, Listener<T> listener, ErrorListener errorListener) {
 
         super(method, url, errorListener);
-        this.params = params;
+        this.param = params;
         this.parentClass = parentClass;
         this.mClass = class1;
         this.mListener = listener;
         this.mErrorListener = errorListener;
+        setTimeOut();
+    }
 
+    // 20秒超时，最大请求次数为1
+    private void setTimeOut() {
+        setRetryPolicy(new DefaultRetryPolicy(30 * 1000, 1, 1.0f));
     }
 
     @Override
     protected Map<String, String> getParams() throws AuthFailureError {
         // TODO Auto-generated method stub
-        return params;
+        return param;
     }
 
     @SuppressWarnings("unchecked")
     @Override
     protected Response<T> parseNetworkResponse(NetworkResponse response) {
         String json;
-        // MyApplication.getInstance().checkSessionCookie(response.headers);
         try {
             json = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
 
         }
         catch (UnsupportedEncodingException e) {
             return Response.error(new ParseError(e));
-
-            // } catch (JsonSyntaxException e) {
-            // return Response.error(new ParseError(e));
         }
-        Type objectType = type(parentClass,mClass);
+        Type objectType;
+        if (mClass != null) {
+            objectType = type(parentClass, mClass);
+        }
+        else {
+            objectType = parentClass;
+        }
+        if (mClass == null && parentClass == null) {
+            objectType = new com.google.gson.reflect.TypeToken<List<MiuiPic>>()
+            {
+            }.getType();
+        }
+
         return (Response<T>) Response.success(mGson.fromJson(json, objectType),
                 HttpHeaderParser.parseCacheHeaders(response));
     }
 
-    static ParameterizedType type(final Class raw, final Type... args) {
+    static ParameterizedType type(final Class<?> raw, final Type... args) {
         return new ParameterizedType()
         {
 

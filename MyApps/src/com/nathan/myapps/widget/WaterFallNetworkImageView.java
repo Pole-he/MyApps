@@ -56,7 +56,7 @@ public class WaterFallNetworkImageView extends NetworkImageView {
         private void init ( ) {
 //                setDefaultImageResId(R.drawable.placeholder_thumb);
 //                setErrorImageResId(R.drawable.placeholder_fail);
-            setBackgroundColor(getResources().getColor(R.color.white_1));
+ //           setBackgroundColor(getResources().getColor(R.color.white_1));
         }
         
 //        @ Override

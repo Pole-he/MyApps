@@ -6,6 +6,21 @@
         <item name="switchStyle">@style/Widget.Holo.Light.CompoundButton.Switch</item>
     </style>
 
+    <style name="PoPoTranslucent" parent="@android:style/Theme.Black.NoTitleBar">
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <style name="PoPoNoTranslucent" parent="@android:style/Theme.Black.NoTitleBar">
+        <item name="android:windowIsTranslucent">false</item>
+    </style>
+
+    <style name="SwipeBackLayout">
+        <item name="edge_size">50dip</item>
+        <item name="shadow_left">@drawable/shadow_left</item>
+        <item name="shadow_right">@drawable/shadow_right</item>
+        <item name="shadow_bottom">@drawable/shadow_bottom</item>
+    </style>
+
     <style name="Widget.Holo.Light.CompoundButton.Switch" parent="@android:style/Widget.CompoundButton">
         <item name="thumb">@drawable/switch_inner_holo_light</item>
         <item name="track">@drawable/switch_track_holo_light</item>

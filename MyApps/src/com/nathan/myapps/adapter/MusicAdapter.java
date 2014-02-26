@@ -12,6 +12,7 @@ import com.android.volley.Response.Listener;
 import com.android.volley.toolbox.NetworkImageView;
 import com.nathan.myapps.MyApplication;
 import com.nathan.myapps.R;
+import com.nathan.myapps.activity.PoPoActivity;
 import com.nathan.myapps.activity.music.MusicListActivity;
 import com.nathan.myapps.adapter.VideoListAdapter.ViewHolder;
 import com.nathan.myapps.bean.at.VideoItem;
@@ -22,6 +23,7 @@ import com.nathan.myapps.bean.music.MusicItem;
 import com.nathan.myapps.bean.music.Song;
 import com.nathan.myapps.bean.music.SongItem;
 import com.nathan.myapps.bean.music.SongList;
+import com.nathan.myapps.fragment.music.MusicListFragment;
 import com.nathan.myapps.request.HttpVolleyRequest;
 import com.nathan.myapps.utils.ApiUtils;
 import com.nathan.myapps.utils.DataHandler;
@@ -127,11 +129,15 @@ public class MusicAdapter extends BaseAdapter {
         // 如果是多首歌曲
         if (music.songlist != null) {
             viewHolder.musicTitle.setText(music.songlistname);
-            viewHolder.musicTitle.setCompoundDrawables(mContext.getResources().getDrawable(R.drawable.icon_social_songlist), null, null, null);
+            viewHolder.musicTitle.setCompoundDrawables(
+                    mContext.getResources().getDrawable(R.drawable.icon_social_songlist), null,
+                    null, null);
         }
         else {
             viewHolder.musicTitle.setText(music.song.song_name + " - " + music.song.singer_name);
-            viewHolder.musicTitle.setCompoundDrawables(mContext.getResources().getDrawable(R.drawable.icon_social_song), null, null, null);
+            viewHolder.musicTitle.setCompoundDrawables(
+                    mContext.getResources().getDrawable(R.drawable.icon_social_song), null, null,
+                    null);
         }
 
         viewHolder.musicContent.setText(music.tweet);
@@ -179,11 +185,12 @@ public class MusicAdapter extends BaseAdapter {
                 if (song_id.size() == 0) {
                     for (MusicItem musicItem : list) {
                         if (musicItem.songlist != null) {
-//                            for (SongList song : musicItem.songlist) {
-//
-//                            }
+                            // for (SongList song : musicItem.songlist) {
+                            //
+                            // }
                             song_id.add(musicItem.songlist.get(0).song_id);
-                        }else{
+                        }
+                        else {
                             song_id.add(musicItem.song.song_id);
                         }
                     }
@@ -250,13 +257,26 @@ public class MusicAdapter extends BaseAdapter {
                                 .add(ApiUtils.getSongTime(data.url_list.get(data.url_list.size() - 1).duration));
                     }
                 }
-                ((MusicListActivity) mContext).getListSong(SongUrl, allTimeList, mLastPosition);
+                if (((Activity) mContext) instanceof MusicListActivity) {
+                    ((MusicListActivity) mContext).getListSong(SongUrl, allTimeList, mLastPosition);
+                }
+                else {
+                    ((MusicListFragment) ((PoPoActivity) mContext).getSupportFragmentManager()
+                            .findFragmentByTag(PoPoActivity.MENU_4)).getListSong(SongUrl,
+                            allTimeList, mLastPosition);
+                }
             }
         };
     }
 
     private void playPosition(int position) {
-        ((MusicListActivity) mContext).playFile(position);
+        if (((Activity) mContext) instanceof MusicListActivity) {
+            ((MusicListActivity) mContext).playFile(position);
+        }
+        else {
+            ((MusicListFragment) ((PoPoActivity) mContext).getSupportFragmentManager()
+                    .findFragmentByTag(PoPoActivity.MENU_4)).playFile(position);
+        }
     }
 
     private Response.ErrorListener createMyReqErrorListener() {

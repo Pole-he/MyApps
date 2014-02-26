@@ -98,7 +98,7 @@ public class SplashScreenActivity extends Activity {
                                 if(userDb.getUserInfo().size()>0)
                                 {
                                     Intent intent = new Intent(SplashScreenActivity.this,
-                                            PoPoMainActivity.class);
+                                            PoPoActivity.class);
                                      intent.putExtra("picUrl",  userDb.getUserInfo().get(1));
                                      intent.putExtra("name", userDb.getUserInfo().get(0));
                                      startActivity(intent);

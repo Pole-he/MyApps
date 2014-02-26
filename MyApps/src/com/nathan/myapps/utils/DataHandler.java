@@ -48,9 +48,9 @@ public class DataHandler {
         localTreeMap.put("page", String.valueOf(paramInt));
         String str = ApiUtils.getAccessToken(localTreeMap, API_SECRET);
         Object[] arrayOfObject = new Object[4];
-        arrayOfObject[0] = "ios";
+        arrayOfObject[0] = Integer.valueOf(paramInt);
         arrayOfObject[1] = Long.valueOf(l);
-        arrayOfObject[2] = Integer.valueOf(paramInt);
+        arrayOfObject[2] = "ios";
         arrayOfObject[3] = str;
         return String.format(URLs.ANIME_TASTE.anime_v2, arrayOfObject);
     }
@@ -129,5 +129,10 @@ public class DataHandler {
         arrayOfObject[2] = song_id;
         arrayOfObject[3] = singer_id;
         return String.format(URLs.MUSIC.song_pic, arrayOfObject);
+    }
+    
+    public String getMiuiPic(int n)
+    {
+        return String.format(URLs.MIUI.data_url, n*40);
     }
 }

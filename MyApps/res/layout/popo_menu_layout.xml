@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:type="http://schemas.android.com/apk/res/com.nathan.myapps"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/menu_bg_height"
+        android:layout_alignParentBottom="true"
+        android:background="@color/menu_bg" >
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" >
+
+            <com.nathan.myapps.widget.TypefaceTextView
+                android:id="@+id/po_menu_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/icon_menu_first_p"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="@string/menu_1"
+                android:textColor="@color/bg_menu_first_p"
+                android:textSize="20sp"
+                type:typefacetext="BrightDiamond" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" >
+
+            <com.nathan.myapps.widget.TypefaceTextView
+                android:id="@+id/po_menu_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/icon_menu_second_o"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="@string/menu_2"
+                android:textColor="@color/bg_menu_second_o"
+                android:textSize="20sp"
+                type:typefacetext="BrightDiamond" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" >
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" >
+
+            <com.nathan.myapps.widget.TypefaceTextView
+                android:id="@+id/po_menu_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/icon_menu_third_p"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="@string/menu_1"
+                android:textColor="@color/bg_menu_third_p"
+                android:textSize="20sp"
+                type:typefacetext="BrightDiamond" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" >
+
+            <com.nathan.myapps.widget.TypefaceTextView
+                android:id="@+id/po_menu_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/icon_menu_four_o"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="@string/menu_2"
+                android:textColor="@color/bg_menu_four_o"
+                android:textSize="20sp"
+                type:typefacetext="BrightDiamond" />
+        </FrameLayout>
+    </LinearLayout>
+
+</merge>

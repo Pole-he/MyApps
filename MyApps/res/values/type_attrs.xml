@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="TypefaceText">
+        <attr name="typefacetext">
+            <enum name="BrightDiamond" value="0" />
+            <enum name="BelshawDonutRobot" value="1" />
+            <enum name="CooperBlackStd" value="2" />
+        </attr>
+    </declare-styleable>
+
+</resources>

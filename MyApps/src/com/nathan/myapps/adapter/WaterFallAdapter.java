@@ -9,8 +9,10 @@ import com.nathan.myapps.MyApplication;
 import com.nathan.myapps.R;
 import com.nathan.myapps.activity.ablum.AblumDetailActivity;
 import com.nathan.myapps.bean.ablum.PicItem;
+import com.nathan.myapps.utils.Logger;
 import com.nathan.myapps.widget.WaterFallNetworkImageView;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -27,6 +29,9 @@ public class WaterFallAdapter extends BaseAdapter {
     private Context mContext;
     private LayoutInflater mInflater = null;
     private String type;
+    
+    private int[] color = {R.color.water_fall_1,R.color.water_fall_2,R.color.water_fall_3,R.color.water_fall_5
+            ,R.color.water_fall_6,R.color.water_fall_7};
 
     public WaterFallAdapter(Context context, List<PicItem> list, String type) {
         this.mContext = context;
@@ -76,6 +81,7 @@ public class WaterFallAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
+        convertView.setBackgroundColor(mContext.getResources().getColor(color[position % 6]));
         final PicItem pic = list.get(position);
         holder.imageView.mWidth = pic.picture_width;
         holder.imageView.mHeight = pic.picture_height;
@@ -126,6 +132,8 @@ public class WaterFallAdapter extends BaseAdapter {
             intent.putExtra("intoPosition", (Integer) v.getTag(R.id.water_position));
             intent.putExtra("type", type);
             mContext.startActivity(intent);
+            ((Activity) mContext).overridePendingTransition(android.R.anim.fade_in,
+                    android.R.anim.fade_out);
         }
     };
 
