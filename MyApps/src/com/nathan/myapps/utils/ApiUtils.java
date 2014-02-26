@@ -26,10 +26,6 @@ public class ApiUtils {
         while (true) {
             if (!localIterator.hasNext())
             {
-<<<<<<< HEAD
-                 Logger.e("///",str1.substring(0, -1 + str1.length()) + paramString+"//");
-=======
->>>>>>> 18bc1fa08fcba301e298662de217eea33eacfaf7
                 return MD5.digest(str1.substring(0, -1 + str1.length()) + paramString);
             }
             String str2 = (String) localIterator.next();
