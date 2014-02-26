@@ -25,7 +25,10 @@ public class ApiUtils {
         Iterator<String> localIterator = localTreeMap.keySet().iterator();
         while (true) {
             if (!localIterator.hasNext())
+            {
+                 Logger.e("///",str1.substring(0, -1 + str1.length()) + paramString+"//");
                 return MD5.digest(str1.substring(0, -1 + str1.length()) + paramString);
+            }
             String str2 = (String) localIterator.next();
             str1 = str1 + str2 + "=" + (String) localTreeMap.get(str2) + "&";
         }
