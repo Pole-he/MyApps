@@ -344,7 +344,7 @@ public class WelcomeLoginActivity extends Activity {
                         UserInfoData db = new UserInfoData(WelcomeLoginActivity.this);
                         db.insert(response.getString("nickname"), response.getString("figureurl_2"), access_takoen);
                         Intent intent = new Intent(WelcomeLoginActivity.this,
-                                PoPoMainActivity.class);
+                                PoPoActivity.class);
                          intent.putExtra("picUrl", response.getString("figureurl_2"));
                          intent.putExtra("name", response.getString("nickname"));
                          startActivity(intent);
