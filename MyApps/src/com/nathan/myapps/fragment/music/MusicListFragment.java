@@ -1,6 +1,7 @@
 package com.nathan.myapps.fragment.music;
 
 import java.util.ArrayList;
+import java.util.HashMap ;
 import java.util.List;
 
 import com.android.volley.Response;
@@ -19,6 +20,7 @@ import com.nathan.myapps.activity.music.xml.IFeedback;
 import com.nathan.myapps.activity.music.xml.PicXml;
 import com.nathan.myapps.activity.music.xml.PicXmlTask;
 import com.nathan.myapps.adapter.MusicAdapter;
+import com.nathan.myapps.bean.music.ListId ;
 import com.nathan.myapps.bean.music.ListMusic;
 import com.nathan.myapps.bean.music.MusicItem;
 import com.nathan.myapps.fragment.BaseFragment;
@@ -50,15 +52,18 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ScaleGestureDetector.OnScaleGestureListener ;
 import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver.OnPreDrawListener;
+import android.widget.AbsListView ;
+import android.widget.AbsListView.OnScrollListener ;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 public class MusicListFragment extends BaseFragment implements ServiceConnection, OnClickListener,
-        IFeedback {
+        IFeedback, OnScrollListener {
 
     private ListView lvMusic;
     private List<MusicItem> listMusic = new ArrayList<MusicItem>();
@@ -66,13 +71,13 @@ public class MusicListFragment extends BaseFragment implements ServiceConnection
     private LoadingView mLoadingView;
 
     private ServiceToken mToken;
-
+    private boolean mUpdating = true;//防止多次加载
     private TextView tvTitle;
     private TextView tvSinger;
     private ImageView ivPlay, ivPause, ivNext;
     private AlphaImageView ivPic;
     private SeekBar sbMusic;
-    private int mCurrentPosition;
+    private int mCurrentPosition =0;
     private int currentTime;
     private int allTime;
     private List<Integer> allTimeList;
@@ -81,6 +86,8 @@ public class MusicListFragment extends BaseFragment implements ServiceConnection
     private boolean hasMeasured = false;
     private MusicPlayFragment mMusicPlayFragment;
     private Context mContext;
+    private String[] musicIds;
+    private HashMap < String , String> param = new HashMap < String , String > ( );
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -93,7 +100,7 @@ public class MusicListFragment extends BaseFragment implements ServiceConnection
         findViews(view);
         init();
         addListeners();
-        getData(0);
+        getMusicId ( );
         blindServer();
         super.onViewCreated(view, bundle);
     }
@@ -102,14 +109,24 @@ public class MusicListFragment extends BaseFragment implements ServiceConnection
 
     }
 
+    //获取音乐列表ID
+    private void getMusicId()
+    {
+            HttpVolleyRequest<ListId> request = new HttpVolleyRequest<ListId>((Activity) mContext, true);
+            request.HttpVolleyRequestGet(DataHandler.instance().getMusicId(),
+                            ListId.class, null, createListSuccessListener(),
+                    createMyReqErrorListener());
+            showLoadingView();
+    }
+    
     @SuppressWarnings("rawtypes")
     private void getData(int mCurrentPage) {
-
-        HttpVolleyRequest<ListMusic> request = new HttpVolleyRequest<ListMusic>((Activity) mContext, true);
-        request.HttpVolleyRequestGet(DataHandler.instance().getMusic(mCurrentPage),
+       param.put ( "msg_ids" , getMsgIds ( mCurrentPage ) );
+        HttpVolleyRequest<ListMusic> request = new HttpVolleyRequest<ListMusic>((Activity) mContext, false);
+        request.HttpVolleyRequestPost(DataHandler.instance().getMusic(mCurrentPage),param,
                 ListMusic.class, MusicItem.class, createMyReqSuccessListener(),
                 createMyReqErrorListener());
-        showLoadingView();
+        
     }
 
     private void showLoadingView() {
@@ -125,9 +142,21 @@ public class MusicListFragment extends BaseFragment implements ServiceConnection
         if (mLoadingView.isShowing()) {
             mLoadingView.dismiss();
         }
+        mUpdating =false;
     }
 
 
+    private String  getMsgIds(int currentPage)
+    {
+            String str = "";
+            for(int i=currentPage ;i<currentPage+20;i++)
+            {
+                   str = str+musicIds[i]+", ";
+            }
+            str = str.substring ( 0 , str.length ( )-2 );
+            str = "["+str+"]";
+            return str;
+    }
 
 
 //    @Override
@@ -144,7 +173,16 @@ public class MusicListFragment extends BaseFragment implements ServiceConnection
 //        }
 //    }
     
+    private Listener<ListId> createListSuccessListener() {
+        return new Listener<ListId>()
+        {
 
+            public void onResponse(ListId response) {
+                    musicIds = response.data;
+                    getData(0);
+            }
+        };
+    }
     
 
     @SuppressWarnings("rawtypes")
@@ -418,7 +456,7 @@ public class MusicListFragment extends BaseFragment implements ServiceConnection
     @Override
     public void addListeners() {
         // TODO Auto-generated method stub
-
+            lvMusic.setOnScrollListener ( this ) ;
     }
 
     @Override
@@ -493,4 +531,21 @@ public class MusicListFragment extends BaseFragment implements ServiceConnection
         mMusicPlayFragment = (MusicPlayFragment) ((PoPoActivity)mContext).getSupportFragmentManager().findFragmentById(
                 R.id.playFragment);
     }
+
+@ Override
+public void onScroll ( AbsListView view , int firstVisibleItem , int visibleItemCount , int totalItemCount ) {
+      if(!mUpdating && totalItemCount!=0 && view.getLastVisiblePosition ( )==totalItemCount-1)
+      {
+              mUpdating = true;
+              mCurrentPosition = mCurrentPosition +20;
+              getData ( mCurrentPosition );
+      }
+        
+}
+
+@ Override
+public void onScrollStateChanged ( AbsListView view , int scrollState ) {
+        // TODO Auto-generated method stub
+        
+}
 }

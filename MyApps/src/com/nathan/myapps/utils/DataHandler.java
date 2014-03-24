@@ -99,6 +99,11 @@ public class DataHandler {
         return String.format(URLs.ABLUM.url, arrayOfObject);
     }
 
+    public String getMusicId()
+    {
+            return URLs.MUSIC.music_list_url;
+    }
+    
     public String getMusic(int page) {
         return URLs.MUSIC.found_url;
     }
